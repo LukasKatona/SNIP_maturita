@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:maturita/Pages/HomePage/calculator/lockedOverlay.dart';
+import 'package:maturita/Pages/LoginPage/sign_in.dart';
 import 'output.dart';
 import 'input.dart';
 import 'dart:math';
@@ -34,6 +38,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
               ],
             ),
           ),
+          LockedCal(),
         ],
       ),
     );

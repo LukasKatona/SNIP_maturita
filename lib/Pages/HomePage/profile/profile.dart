@@ -8,8 +8,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  final AuthService _auth = AuthService();
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -20,14 +18,31 @@ class _ProfilePageState extends State<ProfilePage> {
             "You are signed in. Do you want to sign out?",
             style: TextStyle(color: Colors.white),
           ),
-          RaisedButton(
-            child: Text("Sign out"),
-            onPressed: () async{
-              await _auth.signOut();
-            },
-          ),
+          SignOutButton(),
         ],
       ),
     );
   }
 }
+
+class SignOutButton extends StatefulWidget {
+  @override
+  _SignOutButtonState createState() => _SignOutButtonState();
+}
+
+class _SignOutButtonState extends State<SignOutButton> {
+
+  final AuthService _auth = AuthService();
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      color: Color(0xFFFF6B00),
+      child: Text("Sign out", style: TextStyle(color: Colors.white),),
+      onPressed: () async{
+        await _auth.signOut();
+      },
+    );
+  }
+}
+

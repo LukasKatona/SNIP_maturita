@@ -45,7 +45,7 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  int bottomSelectedIndex = 0;
+  int bottomSelectedIndex = 1;
   final PageController mainPageController = PageController(initialPage: 1, keepPage: true,);
 
   @override

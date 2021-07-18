@@ -6,6 +6,8 @@ class SignIn extends StatefulWidget {
   _SignInState createState() => _SignInState();
 }
 
+bool lockedCal = false;
+
 class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
@@ -34,6 +36,9 @@ class _SignInState extends State<SignIn> {
                 print("signed in");
                 print(result.uid);
                 print("is anon: " + result.anon.toString());
+                setState(() {
+                  lockedCal = true;
+                });
               }
             },
           ),
