@@ -33,6 +33,7 @@ class _SignInState extends State<SignIn> {
               }else{
                 print("signed in");
                 print(result.uid);
+                print("is anon: " + result.anon.toString());
               }
             },
           ),

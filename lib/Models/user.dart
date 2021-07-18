@@ -1,4 +1,5 @@
 class MyUser {
   final String uid;
-  MyUser({ this.uid });
+  final bool anon;
+  MyUser({ this.uid, this.anon});
 }

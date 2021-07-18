@@ -7,7 +7,7 @@ class AuthService {
 
   // create user object based of firebase user
   MyUser _userFromFirebaseUser(User user) {
-    return user != null ? MyUser(uid: user.uid) : null;
+    return user != null ? MyUser(uid: user.uid, anon: user.isAnonymous) : null;
   }
 
   // auth change user stream
@@ -32,5 +32,13 @@ class AuthService {
   // register with email and password
 
   // sign out
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch(e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
 }

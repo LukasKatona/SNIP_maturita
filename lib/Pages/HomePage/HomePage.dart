@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maturita/Pages/HomePage/profile/profile.dart';
 import 'calculator/input.dart';
 import 'calculator/calculator.dart';
 
@@ -45,7 +46,7 @@ class HomePageState extends State<HomePage> {
   }
 
   int bottomSelectedIndex = 0;
-  final PageController mainPageController = PageController(initialPage: 0, keepPage: true,);
+  final PageController mainPageController = PageController(initialPage: 1, keepPage: true,);
 
   @override
   void initState() {
@@ -79,9 +80,7 @@ class HomePageState extends State<HomePage> {
           Center(
             child: Text('SETTINGS'),
           ),
-          Center(
-            child: Text('PROFILE'),
-          ),
+          ProfilePage(),
           Center(
             child: Text('TUTORIALS'),
           ),
