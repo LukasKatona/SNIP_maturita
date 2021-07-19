@@ -44,5 +44,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-//test of android studio and github
