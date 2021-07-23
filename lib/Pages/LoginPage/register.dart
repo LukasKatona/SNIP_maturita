@@ -3,14 +3,14 @@ import 'package:maturita/Services/auth.dart';
 import 'package:passwordfield/passwordfield.dart';
 import 'LoginPage.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
 bool lockedCal = false;
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -31,10 +31,10 @@ class _SignInState extends State<SignIn> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text("LOG IN", style: TextStyle(color: Colors.white, fontSize: 24),),
+              Text("REGISTER", style: TextStyle(color: Colors.white, fontSize: 24),),
               SizedBox(height: 15,),
               TextFormField(
-                validator: (val) => val.isEmpty ? "enter your email" : null,
+                validator: (val) => val.isEmpty ? "enter a valid email" : null,
                 onChanged: (val) {
                   setState(() {
                     email = val;
@@ -78,8 +78,8 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 15,),
               TextFormField(
-                validator: (val) => val.length < 8 ? "enter your password" : null,
                 obscureText: obscure,
+                validator: (val) => val.length < 8 ? "enter a password with 8+ characters" : null,
                 onChanged: (val) {
                   setState(() {
                     password = val;
@@ -135,9 +135,9 @@ class _SignInState extends State<SignIn> {
                 child: FlatButton(
                   onPressed: () async {
                     if (_formKey.currentState.validate()){
-                      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                       if (result == null){
-                        setState(() => error = "could not sign in");
+                        setState(() => error = "pleace supply a valid email");
                       }
                     }
                   },
@@ -153,7 +153,7 @@ class _SignInState extends State<SignIn> {
                       constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
                       alignment: Alignment.center,
                       child: Text(
-                        "LOG IN",
+                        "REGISTER",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
@@ -168,14 +168,14 @@ class _SignInState extends State<SignIn> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account? ", style: TextStyle(color: Colors.white),),
+                  Text("Already have an account? ", style: TextStyle(color: Colors.white),),
                   GestureDetector(
                       onTap: () {
-                       setState(() {
-                         logInPageController.animateToPage(1, duration: Duration(milliseconds: 500), curve: Curves.ease);
-                       });
+                        setState(() {
+                          logInPageController.animateToPage(0, duration: Duration(milliseconds: 500), curve: Curves.ease);
+                        });
                       },
-                      child: Text("Register", style: TextStyle(color: Color(0xFFFF6B00)),)),
+                      child: Text("Log in", style: TextStyle(color: Color(0xFFFF6B00)),)),
                 ],
               ),
               Visibility(

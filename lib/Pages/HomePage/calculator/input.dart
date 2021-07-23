@@ -186,98 +186,101 @@ class _MyInputState extends State<MyInput> {
   Widget build(BuildContext context) {
     return Container(
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.none,
         children: [
 
-          // INPUT
-          MeasureSize(
-            onChange: (size) {
-              setState(() {
-                inputContainerSize = size*(-1);
-              });
-            },
-            child: Container(
+          // INPUT fields
+          Padding(
+            padding: const EdgeInsets.only(top: 29),
+            child: MeasureSize(
+              onChange: (size) {
+                setState(() {
+                  inputContainerSize = size*(-1);
+                });
+              },
+              child: Container(
 
-              decoration: BoxDecoration(
-                color: Color(0xFF363243),
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(0),
-                    top: Radius.circular(10),
-                  ),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    height: 45,
-                  ),
-                  Visibility(
-                    visible: hideInputBool == false,
-                    child: Form(
-                      key: _formKey,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15.0),
-                        child: Container(
-                          constraints: BoxConstraints(minHeight: 10, maxHeight: 296),
-                          child: ListView.builder(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            shrinkWrap: true,
-                            itemBuilder: _buildSNList,
-                            itemCount: _getSN().length+1,
+                decoration: BoxDecoration(
+                  color: Color(0xFF363243),
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(0),
+                      top: Radius.circular(10),
+                    ),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 45,
+                    ),
+                    Visibility(
+                      visible: hideInputBool == false,
+                      child: Form(
+                        key: _formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15.0),
+                          child: Container(
+                            constraints: BoxConstraints(minHeight: 10, maxHeight: 296),
+                            child: ListView.builder(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              shrinkWrap: true,
+                              itemBuilder: _buildSNList,
+                              itemCount: _getSN().length+1,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ),
-          ),
-
-          // horný rad tlačidiel CLASSFULL INPUT CPASSLESS
-          Positioned.fill(
-            top: inputContainerSize.height,
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: FlatButton(onPressed: (){myKey.currentState.changeClass();},
-                      color: fullOrLess ? Color(0xFFFF8A00) : Color(0xFF1C1926),
-                      height: 59,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(10),
-                            right: Radius.circular(0),
-                          )),
-                      child: Text('CLASSFULL', style: TextStyle(color: Colors.white, fontSize: 16),),
-                    ),
-                  ),
-                  FlatButton(onPressed: (){myKey.currentState.onSubmited();},
-                      color: Color(0xFFFF6B00),
-                      height: 59,
-                      minWidth: 59,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,),
-                      child: Icon((!hideInputBool) ? Icons.publish_rounded : Icons.edit, color: Colors.white, size: 27.0,)),
-                  //color: (add) ? Colors.green : Colors.red,
-                  Expanded(
-                    flex: 1,
-                    child: FlatButton(onPressed: (){myKey.currentState.changeClass();},
-                        color: (!fullOrLess) ? Color(0xFFFF8A00) : Color(0xFF1C1926),
-                        height: 59,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.horizontal(
-                              left: Radius.circular(0),
-                              right: Radius.circular(10),
-                            )),
-                        child: Text('CLASSLESS', style: TextStyle(color: Colors.white, fontSize: 16),)),
-                  ),
-                ],
+                  ],
+                )
               ),
             ),
           ),
+
+          // row of buttons CLASSFULL INPUT CPASSLESS
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: FlatButton(onPressed: (){myKey.currentState.changeClass();},
+                    color: fullOrLess ? Color(0xFFFF8A00) : Color(0xFF1C1926),
+                    height: 59,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.horizontal(
+                          left: Radius.circular(10),
+                          right: Radius.circular(0),
+                        )),
+                    child: Text('CLASSFULL', style: TextStyle(color: Colors.white, fontSize: 16),),
+                  ),
+                ),
+                FlatButton(onPressed: (){myKey.currentState.onSubmited();},
+                    color: Color(0xFFFF6B00),
+                    height: 59,
+                    minWidth: 59,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,),
+                    child: Icon((!hideInputBool) ? Icons.publish_rounded : Icons.edit, color: Colors.white, size: 27.0,)),
+                //color: (add) ? Colors.green : Colors.red,
+                Expanded(
+                  flex: 1,
+                  child: FlatButton(onPressed: (){myKey.currentState.changeClass();},
+                      color: (!fullOrLess) ? Color(0xFFFF8A00) : Color(0xFF1C1926),
+                      height: 59,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.horizontal(
+                            left: Radius.circular(0),
+                            right: Radius.circular(10),
+                          )),
+                      child: Text('CLASSLESS', style: TextStyle(color: Colors.white, fontSize: 16),)),
+                ),
+              ],
+            ),
+          ),
+
+          // container over all other widgets in stack
+          Positioned.fill(child: Container()),
         ],
       ),
     );
