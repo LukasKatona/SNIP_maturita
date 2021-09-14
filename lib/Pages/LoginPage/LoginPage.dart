@@ -7,6 +7,8 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+bool lockedCal = false;
+
 final PageController logInPageController = PageController(initialPage: 0, keepPage: true,);
 
 class _LoginPageState extends State<LoginPage> {

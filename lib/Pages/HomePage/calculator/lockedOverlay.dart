@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maturita/Pages/HomePage/profile/profile.dart';
-import 'package:maturita/Pages/LoginPage/sign_in.dart';
+import 'package:maturita/Pages/LoginPage/LoginPage.dart';
 
+class LockedCal extends StatefulWidget {
+  @override
+  _LockedCalState createState() => _LockedCalState();
+}
 
-class LockedCal extends StatelessWidget {
+class _LockedCalState extends State<LockedCal> {
+
   @override
   Widget build(BuildContext context) {
     return Visibility(

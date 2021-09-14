@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:maturita/Models/user.dart';
+import 'package:maturita/Services/database.dart';
 
 class AuthService {
 
@@ -40,10 +41,21 @@ class AuthService {
   }
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String email, String password, String teacherKey) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
+
+      //create a new document for the user with uid
+      String role;
+      if (teacherKey == null){
+        role = 'student';
+      } else if (teacherKey == '12345678'){
+        role = 'teacher';
+      }
+
+      await DatabaseService(uid: user.uid).updateUserData('no_name', role, user.isAnonymous);
+
       return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());

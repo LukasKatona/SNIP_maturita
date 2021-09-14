@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maturita/Services/auth.dart';
-import 'package:passwordfield/passwordfield.dart';
+import 'package:maturita/shared/design.dart';
 import 'LoginPage.dart';
+import 'package:maturita/shared/loading.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -15,14 +16,22 @@ class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
+  bool loading = false;
+
   String email = '';
   String password = '';
   String error = '';
+  String teacherKey = '';
+  bool teacherReg = false;
   bool obscure = true;
+
+  Color getColor(Set<MaterialState> states) {
+    return Color(0xFFFF6B00);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return loading ? Loading() : Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Container(
         child: Form(
@@ -35,99 +44,55 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 15,),
               TextFormField(
                 validator: (val) => val.isEmpty ? "enter a valid email" : null,
-                onChanged: (val) {
-                  setState(() {
-                    email = val;
-                  });
-                },
+                onChanged: (val) {setState(() => email = val);},
                 style: TextStyle(color: Colors.white),
                 cursorColor: Color(0xFFFF6B00),
-                decoration: InputDecoration(
-                  hintText: "Email",
-                  hintStyle: TextStyle(color: Color(0xFF5B5B5B)),
-                  fillColor: Color(0xFF211D2D), filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF211D2D),
-                      width: 2,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFF6B00),
-                      width: 2,
-                    ),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFF6B00),
-                      width: 2,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Colors.red,
-                      width: 2,
-                    ),
-                  ),
-                ),
+                decoration: snipInputDecoration.copyWith(hintText: "Email"),
               ),
               SizedBox(height: 15,),
               TextFormField(
                 obscureText: obscure,
                 validator: (val) => val.length < 8 ? "enter a password with 8+ characters" : null,
-                onChanged: (val) {
-                  setState(() {
-                    password = val;
-                  });
-                },
+                onChanged: (val) {setState(() => password = val);},
                 style: TextStyle(color: Colors.white),
                 cursorColor: Color(0xFFFF6B00),
-                decoration: InputDecoration(
+                decoration: snipInputDecoration.copyWith(
+                  hintText: "Password",
                   suffixIcon: IconButton(
                     icon: Icon(obscure ? Icons.remove_red_eye_outlined : Icons.remove_red_eye, color: obscure ? Color(0xFF5B5B5B) : Color(0xFFFF6B00)),
-                    onPressed: () {
-                      setState(() {
-                        obscure = !obscure;
-                      });
-                    },
-                  ),
-                  hintText: "Password",
-                  hintStyle: TextStyle(color: Color(0xFF5B5B5B)),
-                  fillColor: Color(0xFF211D2D), filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF211D2D),
-                      width: 2,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFF6B00),
-                      width: 2,
-                    ),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFF6B00),
-                      width: 2,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Colors.red,
-                      width: 2,
-                    ),
+                    onPressed: () {setState(() => obscure = !obscure);},
                   ),
                 ),
+              ),
+              SizedBox(height: 15,),
+              Row(
+                children: [
+                  SizedBox(
+                    height: 59,
+                    child: Checkbox(
+                      value: teacherReg,
+                      onChanged: (val) {setState(() => teacherReg = !teacherReg);},
+                      activeColor: Color(0xFFFF6B00),
+                      fillColor: MaterialStateProperty.resolveWith(getColor),
+                    ),
+                  ),
+                  Visibility(
+                    visible: teacherReg == true,
+                    replacement: Text(
+                        'Register as teacher.',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    child: Expanded(
+                      child: TextFormField(
+                        validator: (val) => val.isEmpty ? "enter a teacher key" : null,
+                        onChanged: (val) {setState(() => teacherKey = val);},
+                        style: TextStyle(color: Colors.white),
+                        cursorColor: Color(0xFFFF6B00),
+                        decoration: snipInputDecoration.copyWith(hintText: "Teacher Key"),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 15,),
               ButtonTheme(
@@ -135,9 +100,13 @@ class _RegisterState extends State<Register> {
                 child: FlatButton(
                   onPressed: () async {
                     if (_formKey.currentState.validate()){
-                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                      setState(() => loading = true);
+                      dynamic result = await _auth.registerWithEmailAndPassword(email, password, teacherKey);
                       if (result == null){
-                        setState(() => error = "pleace supply a valid email");
+                        setState(() {
+                          error = "please supply a valid email";
+                          loading = false;
+                        });
                       }
                     }
                   },
@@ -184,64 +153,6 @@ class _RegisterState extends State<Register> {
                   padding: const EdgeInsets.only(top: 5),
                   child: Text(error, style: TextStyle(color: Colors.red), textAlign: TextAlign.center,),
                 ),
-              ),
-              SizedBox(height: 15,),
-              Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Divider(color: Colors.white,)
-                    ),
-                    Text("  OR  ", style: TextStyle(color: Colors.white, fontSize: 16),),
-                    Expanded(
-                        child: Divider(color: Colors.white,)
-                    ),
-                  ]
-              ),
-              SizedBox(height: 15,),
-              ButtonTheme(
-                padding: EdgeInsets.zero,
-                child: FlatButton(
-                  onPressed: () async{
-                    dynamic result = await _auth.signInAnon();
-                    if (result == null){
-                      print("error signing IN");
-                    }else{
-                      print("signed in");
-                      print(result.uid);
-                      print("is anon: " + result.anon.toString());
-                      setState(() {
-                        lockedCal = true;
-                      });
-                    }
-                  },
-                  child: Ink(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0)
-                    ),
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "CONTINUE AS GUEST",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 15,),
-              Text(
-                "Note: By logging in as a guest, some content of this app will not be available, due to security reasons.",
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
               ),
             ],
           ),

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:maturita/Services/auth.dart';
-import 'package:passwordfield/passwordfield.dart';
+import 'package:maturita/shared/design.dart';
 import 'LoginPage.dart';
+import 'package:maturita/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
 }
 
-bool lockedCal = false;
-
 class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+
+  bool loading = false;
 
   String email = '';
   String password = '';
@@ -22,7 +23,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return loading ? Loading() : Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Container(
         child: Form(
@@ -35,97 +36,23 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 15,),
               TextFormField(
                 validator: (val) => val.isEmpty ? "enter your email" : null,
-                onChanged: (val) {
-                  setState(() {
-                    email = val;
-                  });
-                },
+                onChanged: (val) {setState(() => email = val);},
                 style: TextStyle(color: Colors.white),
                 cursorColor: Color(0xFFFF6B00),
-                decoration: InputDecoration(
-                  hintText: "Email",
-                  hintStyle: TextStyle(color: Color(0xFF5B5B5B)),
-                  fillColor: Color(0xFF211D2D), filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF211D2D),
-                      width: 2,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFF6B00),
-                      width: 2,
-                    ),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFF6B00),
-                      width: 2,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Colors.red,
-                      width: 2,
-                    ),
-                  ),
-                ),
+                decoration: snipInputDecoration.copyWith(hintText: "Email")
               ),
               SizedBox(height: 15,),
               TextFormField(
-                validator: (val) => val.length < 8 ? "enter your password" : null,
                 obscureText: obscure,
-                onChanged: (val) {
-                  setState(() {
-                    password = val;
-                  });
-                },
+                validator: (val) => val.length < 8 ? "enter your password" : null,
+                onChanged: (val) {setState(() => password = val);},
                 style: TextStyle(color: Colors.white),
                 cursorColor: Color(0xFFFF6B00),
-                decoration: InputDecoration(
+                decoration: snipInputDecoration.copyWith(
+                  hintText: "Paswword",
                   suffixIcon: IconButton(
                     icon: Icon(obscure ? Icons.remove_red_eye_outlined : Icons.remove_red_eye, color: obscure ? Color(0xFF5B5B5B) : Color(0xFFFF6B00)),
-                    onPressed: () {
-                      setState(() {
-                        obscure = !obscure;
-                      });
-                    },
-                  ),
-                  hintText: "Password",
-                  hintStyle: TextStyle(color: Color(0xFF5B5B5B)),
-                  fillColor: Color(0xFF211D2D), filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF211D2D),
-                      width: 2,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFF6B00),
-                      width: 2,
-                    ),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFF6B00),
-                      width: 2,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Colors.red,
-                      width: 2,
-                    ),
+                    onPressed: () {setState(() => obscure = !obscure);},
                   ),
                 ),
               ),
@@ -135,9 +62,13 @@ class _SignInState extends State<SignIn> {
                 child: FlatButton(
                   onPressed: () async {
                     if (_formKey.currentState.validate()){
+                      setState(() => loading = true);
                       dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                       if (result == null){
-                        setState(() => error = "could not sign in");
+                        setState(() {
+                          error = "could not sign in";
+                          loading = false;
+                        });
                       }
                     }
                   },
@@ -202,17 +133,14 @@ class _SignInState extends State<SignIn> {
                 padding: EdgeInsets.zero,
                 child: FlatButton(
                   onPressed: () async{
+                    setState(() => loading = true);
                     dynamic result = await _auth.signInAnon();
                     if (result == null){
-                      print("error signing IN");
-                    }else{
-                      print("signed in");
-                      print(result.uid);
-                      print("is anon: " + result.anon.toString());
                       setState(() {
-                        lockedCal = true;
+                        error = "something went wrong";
+                        loading = false;
                       });
-                    }
+                    }else setState(() => lockedCal = true);
                   },
                   child: Ink(
                     decoration: BoxDecoration(

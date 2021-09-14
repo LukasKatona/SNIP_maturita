@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:maturita/Models/sniper.dart';
+import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/HomePage/profile/profile.dart';
+import 'package:maturita/Pages/HomePage/settings/settings.dart';
 import 'calculator/input.dart';
 import 'calculator/calculator.dart';
+import 'package:maturita/Services/database.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -68,54 +73,55 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF100B1F),
+    return StreamProvider<List<Sniper>>.value(
+      value: DatabaseService().snipers,
+      child: Scaffold(
+        backgroundColor: Color(0xFF100B1F),
 
-      body: PageView(
-        controller: mainPageController,
-        onPageChanged: (index) {
-          pageChanged(index);
-        },
-        children: [
-          Center(
-            child: Text('SETTINGS'),
-          ),
-          ProfilePage(),
-          Center(
-            child: Text('TUTORIALS'),
-          ),
-          CalculatorPage(),
-        ],
-      ),
+        body: PageView(
+          controller: mainPageController,
+          onPageChanged: (index) {
+            pageChanged(index);
+          },
+          children: [
+            SettingsPage(),
+            ProfilePage(),
+            Center(
+              child: Text('TUTORIALS'),
+            ),
+            CalculatorPage(),
+          ],
+        ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Color(0xFFFF6B00),
-        currentIndex: bottomSelectedIndex,
-        onTap: (index) {
-          bottomTapped(index);
-        },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            backgroundColor: Color(0xFF1C1926),
-            label: 'Settings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            backgroundColor: Color(0xFF1C1926),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            backgroundColor: Color(0xFF1C1926),
-            label: 'School',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.exposure),
-            backgroundColor: Color(0xFF1C1926),
-            label: 'Calculator',
-          ),
-        ],
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Color(0xFFFF6B00),
+          currentIndex: bottomSelectedIndex,
+          onTap: (index) {
+            bottomTapped(index);
+          },
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              backgroundColor: Color(0xFF1C1926),
+              label: 'Settings',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_box),
+              backgroundColor: Color(0xFF1C1926),
+              label: 'Profile',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              backgroundColor: Color(0xFF1C1926),
+              label: 'School',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.exposure),
+              backgroundColor: Color(0xFF1C1926),
+              label: 'Calculator',
+            ),
+          ],
+        ),
       ),
     );
   }
