@@ -48,13 +48,15 @@ class AuthService {
 
       //create a new document for the user with uid
       String role;
-      if (teacherKey == null){
-        role = 'student';
-      } else if (teacherKey == '12345678'){
+      int idx = email.indexOf("@");
+      String name = email.substring(0, idx).trim();
+      if (teacherKey == '12345678'){
         role = 'teacher';
+      }else{
+        role = 'student';
       }
 
-      await DatabaseService(uid: user.uid).updateUserData('no_name', role, user.isAnonymous);
+      await DatabaseService(uid: user.uid).updateUserData(name, role, user.isAnonymous);
 
       return _userFromFirebaseUser(user);
     } catch(e) {

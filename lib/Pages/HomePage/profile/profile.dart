@@ -19,15 +19,16 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
 
     final snipers = Provider.of<List<Sniper>>(context);
+    final userData = Provider.of<UserData>(context);
 
-    if (snipers != null){
+    if (snipers != null && userData != null){
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 100,),
             Text(
-              "You are signed in. Do you want to sign out?",
+              "You are signed in as ${userData.name}. Do you want to sign out?",
               style: TextStyle(color: Colors.white),
             ),
             SignOutButton(),

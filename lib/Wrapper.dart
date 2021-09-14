@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/LoginPage/LoginPage.dart';
+import 'package:maturita/Services/database.dart';
 import 'package:provider/provider.dart';
 import 'Pages/HomePage/HomePage.dart';
 
@@ -13,7 +14,10 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return LoginPage();
     } else {
-      return HomePage(key: myKey,);
+      return StreamProvider<UserData>.value(
+        value: DatabaseService(uid: user.uid).userData,
+          child: HomePage(key: myKey,)
+      );
     }
   }
 }
