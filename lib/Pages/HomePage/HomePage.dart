@@ -7,6 +7,7 @@ import 'calculator/input.dart';
 import 'calculator/calculator.dart';
 import 'package:maturita/Services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:maturita/shared/design.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -87,7 +88,7 @@ class HomePageState extends State<HomePage> {
             SettingsPage(),
             ProfilePage(),
             Center(
-              child: Text('TUTORIALS'),
+              child: SignOutButton(),
             ),
             CalculatorPage(),
           ],
@@ -102,22 +103,22 @@ class HomePageState extends State<HomePage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              backgroundColor: Color(0xFF1C1926),
+              backgroundColor: MyColorTheme.NavBar,
               label: 'Settings',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_box),
-              backgroundColor: Color(0xFF1C1926),
+              backgroundColor: MyColorTheme.NavBar,
               label: 'Profile',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
-              backgroundColor: Color(0xFF1C1926),
+              backgroundColor: MyColorTheme.NavBar,
               label: 'School',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.exposure),
-              backgroundColor: Color(0xFF1C1926),
+              backgroundColor: MyColorTheme.NavBar,
               label: 'Calculator',
             ),
           ],

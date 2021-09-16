@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maturita/Pages/HomePage/profile/profile.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:provider/provider.dart';
 import 'package:maturita/Models/user.dart';
@@ -15,12 +16,12 @@ class _SettingsPageState extends State<SettingsPage> {
   final _formKey = GlobalKey<FormState>();
 
   String _currentName;
-  String _currentRole;
 
   @override
   Widget build(BuildContext context) {
 
     final userData = Provider.of<UserData>(context);
+    final user = Provider.of<MyUser>(context);
 
     if (userData != null){
       return Center(
@@ -34,19 +35,25 @@ class _SettingsPageState extends State<SettingsPage> {
                 style: TextStyle(color: Colors.white),
               ),
               SizedBox(height: 20,),
-              TextFormField(
-                initialValue: userData.name,
-                decoration: snipInputDecoration.copyWith(hintText: "change name"),
-                validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                onChanged: (val) => setState(() => _currentName = val),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextFormField(
+                  initialValue: userData.name,
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: Color(0xFFFF6B00),
+                  decoration: snipInputDecoration.copyWith(hintText: "enter new name"),
+                  validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                  onChanged: (val) => setState(() => _currentName = val),
+                ),
               ),
               SizedBox(height: 20,),
               ButtonTheme(
                 padding: EdgeInsets.zero,
                 child: FlatButton(
                   onPressed: () async {
-                    print(_currentName);
-                    print(_currentRole);
+                    if(_formKey.currentState.validate()) {
+                      await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.anon);
+                    }
                   },
                   child: Ink(
                     decoration: BoxDecoration(
@@ -71,6 +78,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
               ),
+              SizedBox(height: 20,),
+              SignOutButton(),
             ],
           ),
         ),

@@ -35,7 +35,7 @@ class DatabaseService {
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
-      name: snapshot.get('name') ?? 'jozo',
+      name: snapshot.get('name') ?? '',
       role: snapshot.get('role') ?? '',
       anon: snapshot.get('anon') ?? '',
     );

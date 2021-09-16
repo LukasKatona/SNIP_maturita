@@ -116,61 +116,6 @@ class _SignInState extends State<SignIn> {
                   child: Text(error, style: TextStyle(color: Colors.red), textAlign: TextAlign.center,),
                 ),
               ),
-              SizedBox(height: 15,),
-              Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Divider(color: Colors.white,)
-                    ),
-                    Text("  OR  ", style: TextStyle(color: Colors.white, fontSize: 16),),
-                    Expanded(
-                        child: Divider(color: Colors.white,)
-                    ),
-                  ]
-              ),
-              SizedBox(height: 15,),
-              ButtonTheme(
-                padding: EdgeInsets.zero,
-                child: FlatButton(
-                  onPressed: () async{
-                    setState(() => loading = true);
-                    dynamic result = await _auth.signInAnon();
-                    if (result == null){
-                      setState(() {
-                        error = "something went wrong";
-                        loading = false;
-                      });
-                    }else setState(() => lockedCal = true);
-                  },
-                  child: Ink(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0)
-                    ),
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "CONTINUE AS GUEST",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 15,),
-              Text(
-                "Note: By logging in as a guest, some content of this app will not be available, due to security reasons.",
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
             ],
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:maturita/Models/sniper.dart';
 import 'package:maturita/Models/user.dart';
 import 'package:maturita/Services/auth.dart';
 import 'package:maturita/Services/database.dart';
+import 'package:maturita/shared/design.dart';
 import 'package:provider/provider.dart';
 import 'sniper_tile.dart';
 import 'package:maturita/shared/loading.dart';
@@ -19,6 +20,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
 
     final snipers = Provider.of<List<Sniper>>(context);
+    //final students = snipers.where((element) => element.role == 'student').toList();
+    //final teachers = snipers.where((element) => element.role == 'teacher').toList();
+
     final userData = Provider.of<UserData>(context);
 
     if (snipers != null && userData != null){
@@ -26,15 +30,35 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 100,),
-            Text(
-              "You are signed in as ${userData.name}. Do you want to sign out?",
-              style: TextStyle(color: Colors.white),
+            SizedBox(height: 50,),
+            CircleAvatar(
+              radius: 75,
+              backgroundColor: MyColorTheme.Primary,
+              child: Icon(
+                Icons.person,
+                size: 100,
+              ),
             ),
-            SignOutButton(),
-
+            SizedBox(height: 15,),
+            Text(
+              userData.name,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+            SizedBox(height: 5,),
+            Text(
+              userData.role,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 15,),
             Expanded(
               child: ListView.builder(
+                padding: EdgeInsets.all(0.0),
                 itemCount: snipers.length,
                 itemBuilder: (context, index) {
                   return SniperTile(sniper: snipers[index]);
