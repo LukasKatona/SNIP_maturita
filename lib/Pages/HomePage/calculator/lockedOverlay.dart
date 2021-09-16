@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maturita/Pages/HomePage/profile/profile.dart';
 import 'package:maturita/Pages/LoginPage/LoginPage.dart';
+import 'package:provider/provider.dart';
+import 'package:maturita/Models/user.dart';
 
 class LockedCal extends StatefulWidget {
   @override
@@ -9,11 +11,13 @@ class LockedCal extends StatefulWidget {
 }
 
 class _LockedCalState extends State<LockedCal> {
-
   @override
   Widget build(BuildContext context) {
+
+    final userData = Provider.of<UserData>(context);
+
     return Visibility(
-      visible: lockedCal == true,
+      visible: userData.anon == true,
       child: SizedBox.expand(
           child: Container(
             color: Color(0xFF100B1F),
@@ -25,11 +29,7 @@ class _LockedCalState extends State<LockedCal> {
                   color: Color(0xFFFF6B00),
                   size: 200,
                 ),
-                Text("This content is locked.\nTo continue, please sign in with a verified account.", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: SignOutButton(),
-                ),
+                Text("The calculator is locked.\nTo continue, please contact your teacher.", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
               ],
             ),
           )

@@ -44,7 +44,7 @@ class AuthService {
         role = 'student';
       }
 
-      await DatabaseService(uid: user.uid).updateUserData(name, role, user.isAnonymous);
+      await DatabaseService(uid: user.uid).updateUserData(name, role, true);
 
       return _userFromFirebaseUser(user);
     } catch(e) {

@@ -24,6 +24,7 @@ class DatabaseService {
   List<Sniper> _sniperListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc){
       return Sniper(
+        uid: doc.id,
         name: doc.get('name') ?? '',
         role: doc.get('role') ?? '',
         anon: doc.get('anon') ?? '',

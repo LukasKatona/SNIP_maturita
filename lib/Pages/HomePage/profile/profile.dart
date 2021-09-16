@@ -19,13 +19,20 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
 
-    final snipers = Provider.of<List<Sniper>>(context);
+    var snipers = Provider.of<List<Sniper>>(context);
     //final students = snipers.where((element) => element.role == 'student').toList();
     //final teachers = snipers.where((element) => element.role == 'teacher').toList();
 
     final userData = Provider.of<UserData>(context);
 
     if (snipers != null && userData != null){
+
+      if (userData.role == 'teacher'){
+        snipers = snipers.where((element) => element.role == 'student').toList();
+      } else if (userData.role == 'student'){
+        snipers = snipers.where((element) => element.role == 'student').toList(); // neskor upravit
+      }
+
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

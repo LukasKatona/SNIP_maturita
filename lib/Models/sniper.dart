@@ -1,9 +1,10 @@
 class Sniper {
 
+  final String uid;
   final String name;
   final String role;
-  final bool anon;
+  bool anon;
 
-  Sniper({ this.name, this.role, this.anon });
+  Sniper({ this.uid, this.name, this.role, this.anon });
 
 }
