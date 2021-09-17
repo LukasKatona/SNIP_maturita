@@ -3,6 +3,8 @@ import 'package:maturita/Services/auth.dart';
 import 'package:maturita/shared/design.dart';
 import 'LoginPage.dart';
 import 'package:maturita/shared/loading.dart';
+import 'package:provider/provider.dart';
+import 'package:maturita/Models/variables.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class _RegisterState extends State<Register> {
   bool loading = false;
 
   String email = '';
+  String name = '';
   String password = '';
   String error = '';
   String teacherKey = '';
@@ -31,6 +34,9 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+
+    final variables = Provider.of<Variables>(context);
+
     return loading ? Loading() : Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Container(
@@ -48,6 +54,14 @@ class _RegisterState extends State<Register> {
                 style: TextStyle(color: Colors.white),
                 cursorColor: Color(0xFFFF6B00),
                 decoration: snipInputDecoration.copyWith(hintText: "Email"),
+              ),
+              SizedBox(height: 15,),
+              TextFormField(
+                validator: (val) => val.isEmpty ? "enter your name" : null,
+                onChanged: (val) {setState(() => name = val);},
+                style: TextStyle(color: Colors.white),
+                cursorColor: Color(0xFFFF6B00),
+                decoration: snipInputDecoration.copyWith(hintText: "Name"),
               ),
               SizedBox(height: 15,),
               TextFormField(
@@ -84,7 +98,7 @@ class _RegisterState extends State<Register> {
                     ),
                     child: Expanded(
                       child: TextFormField(
-                        validator: (val) => val.isEmpty ? "enter a teacher key" : null,
+                        validator: (val) => val != variables.teacherKey ? "enter a valid teacher key" : null,
                         onChanged: (val) {setState(() => teacherKey = val);},
                         style: TextStyle(color: Colors.white),
                         cursorColor: Color(0xFFFF6B00),
@@ -101,7 +115,7 @@ class _RegisterState extends State<Register> {
                   onPressed: () async {
                     if (_formKey.currentState.validate()){
                       setState(() => loading = true);
-                      dynamic result = await _auth.registerWithEmailAndPassword(email, password, teacherKey);
+                      dynamic result = await _auth.registerWithEmailAndPassword(email, password, teacherKey, name, variables.teacherKey);
                       if (result == null){
                         setState(() {
                           error = "please supply a valid email";

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/user.dart';
+import 'package:maturita/Models/variables.dart';
 import 'package:maturita/Pages/LoginPage/LoginPage.dart';
 import 'package:maturita/Services/database.dart';
 import 'package:provider/provider.dart';

@@ -29,22 +29,24 @@ class AuthService {
   }
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password, String teacherKey) async {
+  Future registerWithEmailAndPassword(String email, String password, String teacherKey, String name, String correctKey) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
 
       //create a new document for the user with uid
       String role;
-      int idx = email.indexOf("@");
-      String name = email.substring(0, idx).trim();
-      if (teacherKey == '12345678'){
+
+      /*int idx = email.indexOf("@");
+      String name = email.substring(0, idx).trim();*/
+
+      if (teacherKey == correctKey){
         role = 'teacher';
+        await DatabaseService(uid: user.uid).updateUserData(name, role, false);
       }else{
         role = 'student';
+        await DatabaseService(uid: user.uid).updateUserData(name, role, true);
       }
-
-      await DatabaseService(uid: user.uid).updateUserData(name, role, true);
 
       return _userFromFirebaseUser(user);
     } catch(e) {

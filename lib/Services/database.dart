@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maturita/Models/sniper.dart';
 import 'package:maturita/Models/user.dart';
+import 'package:maturita/Models/variables.dart';
+import 'dart:math';
 
 class DatabaseService {
 
@@ -10,6 +12,39 @@ class DatabaseService {
 
   // collection reference
   final CollectionReference snipCollection = FirebaseFirestore.instance.collection('snip');
+  final CollectionReference adminCollection = FirebaseFirestore.instance.collection('admin');
+
+  // update teacher key
+  String generatePassword({
+    bool letter = true,
+    bool isNumber = true,
+    bool isSpecial = true,
+  }) {
+    final length = 20;
+    final letterLowerCase = "abcdefghijklmnopqrstuvwxyz";
+    final letterUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    final number = '0123456789';
+    final special = '@#%^*>\$@?/[]=+';
+
+    String chars = "";
+    if (letter) chars += '$letterLowerCase$letterUpperCase';
+    if (isNumber) chars += '$number';
+    if (isSpecial) chars += '$special';
+
+
+    return List.generate(length, (index) {
+      final indexRandom = Random.secure().nextInt(chars.length);
+      return chars [indexRandom];
+    }).join('');
+  }
+
+  Future updateTeacherKey() async{
+    return await adminCollection.doc('variables').set({
+      'teacherKey': generatePassword(),
+    });
+  }
+
+  // update user data
 
   Future updateUserData(String name, String role, bool anon) async{
     return await snipCollection.doc(uid).set({
@@ -17,6 +52,13 @@ class DatabaseService {
       'role': role,
       'anon': anon,
     });
+  }
+
+  // admin variables from snapshot
+  Variables _variablesFromSnapshot(DocumentSnapshot snapshot) {
+    return Variables(
+      teacherKey: snapshot.get('teacherKey') ?? '',
+    );
   }
 
   // sniper list from snapshot
@@ -40,6 +82,12 @@ class DatabaseService {
       role: snapshot.get('role') ?? '',
       anon: snapshot.get('anon') ?? '',
     );
+  }
+
+  // get admin variables stream
+  Stream<Variables> get variables {
+    return adminCollection.doc('variables').snapshots()
+        .map(_variablesFromSnapshot);
   }
 
   //get sniper stream
