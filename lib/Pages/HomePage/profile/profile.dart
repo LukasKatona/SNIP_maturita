@@ -16,6 +16,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  Color getColor(Set<MaterialState> states) {
+    return Color(0xFFFF6B00);
+  }
+
+  String searchString = '';
+
   @override
   Widget build(BuildContext context) {
 
@@ -27,11 +34,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (snipers != null && userData != null){
 
-      if (userData.role == 'teacher'){
+      if (userData.role == 'admin'){
+        snipers = snipers.where((element) => element.role != 'admin').toList();
+      } else if (userData.role == 'teacher'){
         snipers = snipers.where((element) => element.role == 'student').toList();
       } else if (userData.role == 'student'){
         snipers = snipers.where((element) => element.role == 'student').toList(); // neskor upravit
       }
+
+      if (searchString != ''){
+        snipers = snipers.where((element) => element.name.contains(searchString) || element.role.contains(searchString)).toList();
+      }
+
 
       return Center(
         child: Column(
@@ -60,6 +74,18 @@ class _ProfilePageState extends State<ProfilePage> {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 15,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextFormField(
+                  onChanged: (val) {setState(() => searchString = val);},
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: Color(0xFFFF6B00),
+                  decoration: snipInputDecoration.copyWith(
+                      suffixIcon: Icon(Icons.search, color: MyColorTheme.GreyText, size: 30,),
+                  )
               ),
             ),
             SizedBox(height: 15,),

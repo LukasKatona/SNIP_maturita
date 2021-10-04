@@ -252,7 +252,7 @@ class _MyInputState extends State<MyInput> {
                           left: Radius.circular(10),
                           right: Radius.circular(0),
                         )),
-                    child: Text('CLASSFULL', style: TextStyle(color: Colors.white, fontSize: 16),),
+                    child: Text('CLASSFUL', style: TextStyle(color: Colors.white, fontSize: 16),),
                   ),
                 ),
                 FlatButton(onPressed: (){myKey.currentState.onSubmited();},

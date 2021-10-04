@@ -42,6 +42,7 @@ class MyColorTheme {
   static const Secondary =  Color(0xFF211D2D);
   static const Tertiary =  Color(0xFF363243);
 
+  static const Text = Color(0xFFFFFFFF);
   static const GreyText =  Color(0xFF5B5B5B);
 
   static const Background =  Color(0xFF100B1F);

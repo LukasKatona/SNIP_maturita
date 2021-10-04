@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/variables.dart';
@@ -8,16 +10,17 @@ import 'package:maturita/Models/user.dart';
 import 'package:maturita/Services/database.dart';
 import 'package:maturita/shared/loading.dart';
 import 'package:flutter/services.dart';
+import 'package:animate_icons/animate_icons.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMixin{
 
   final _formKey = GlobalKey<FormState>();
-
+  AnimateIconController copyController = AnimateIconController();
   String _currentName;
 
   @override
@@ -87,23 +90,37 @@ class _SettingsPageState extends State<SettingsPage> {
                 visible: userData.role == 'admin',
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
+                    SizedBox(
+                      height: 59,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        elevation: 0,
+                        color: MyColorTheme.Secondary,
+                        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(variables.teacherKey, style: TextStyle(color: Colors.white),),
-                              FlatButton(
-                                minWidth: 59,
-                                height: 59,
-                                onPressed: (){
-                                  Clipboard.setData(ClipboardData(text: variables.teacherKey));
-                                },
-                                child: Icon(
-                                  Icons.copy,
-                                  size: 40,
-                                  color: MyColorTheme.PrimaryAccent,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text(variables.teacherKey, style: TextStyle(color: Colors.white, fontSize: 16),),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: AnimateIcons(
+                                  startIcon: Icons.file_copy_outlined,
+                                  endIcon: Icons.check,
+                                  startIconColor: MyColorTheme.PrimaryAccent,
+                                  endIconColor: MyColorTheme.PrimaryAccent,
+                                  size: 35,
+                                  controller: copyController,
+                                  onStartIconPress: () {
+                                    Clipboard.setData(ClipboardData(text: variables.teacherKey));
+                                    return true;
+                                  },
+                                  duration: Duration(milliseconds: 300),
+                                  clockwise: false,
                                 ),
                               ),
                             ],
@@ -115,6 +132,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       padding: EdgeInsets.zero,
                       child: FlatButton(
                         onPressed: () async {
+                          var animateToStart = copyController.animateToStart;
+                          animateToStart();
                           await DatabaseService().updateTeacherKey();
                         },
                         child: Ink(

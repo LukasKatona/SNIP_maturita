@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/sniper.dart';
+import 'package:maturita/Pages/HomePage/profile/deleteCard.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:provider/provider.dart';
 import 'package:maturita/Models/user.dart';
@@ -41,18 +42,26 @@ class _SniperTileState extends State<SniperTile> {
                 subtitle: Text(widget.sniper.role, style: TextStyle(color: Colors.white),),
               ),
             ),
-            FlatButton(
-              minWidth: 59,
-              height: 59,
-              onPressed: () async{
-                if (userData.role != 'student'){
-                  await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.anon);
-                }
-              },
-              child: Icon(
-                Icons.calculate,
-                size: 40,
-                color: widget.sniper.anon == false ? MyColorTheme.PrimaryAccent : MyColorTheme.GreyText,
+            Visibility(
+              visible: widget.sniper.role == 'student',
+              child: IconButton(
+                onPressed: () async{
+                  if (userData.role != 'student'){
+                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.anon);
+                  }
+                },
+                icon: Icon(
+                  Icons.calculate,
+                  size: 30,
+                  color: widget.sniper.anon == false ? MyColorTheme.PrimaryAccent : MyColorTheme.GreyText,
+                ),
+              ),
+            ),
+            Visibility(
+              visible: userData.role == 'admin',
+              child: IconButton(
+                onPressed: () => showDialog(context: context, builder: (_) => DeleteDialog(uid: widget.sniper.uid, name: widget.sniper.name, role: widget.sniper.role,)),
+                icon: Icon(Icons.delete, color: MyColorTheme.PrimaryAccent, size: 30,),
               ),
             ),
           ],

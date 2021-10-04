@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maturita/Models/sniper.dart';
 import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/HomePage/profile/profile.dart';
+import 'package:maturita/Pages/HomePage/school/school.dart';
 import 'package:maturita/Pages/HomePage/settings/settings.dart';
 import 'calculator/input.dart';
 import 'calculator/calculator.dart';
@@ -87,9 +88,7 @@ class HomePageState extends State<HomePage> {
           children: [
             SettingsPage(),
             ProfilePage(),
-            Center(
-              child: SignOutButton(),
-            ),
+            SchoolPage(),
             CalculatorPage(),
           ],
         ),
