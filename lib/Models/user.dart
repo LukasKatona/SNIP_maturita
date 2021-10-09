@@ -10,6 +10,8 @@ class UserData {
   final String name;
   final String role;
   bool anon;
+  final int fulXp;
+  final int lessXp;
 
-  UserData({ this.uid, this.name, this.role, this.anon });
+  UserData({ this.uid, this.name, this.role, this.anon, this.fulXp, this.lessXp });
 }

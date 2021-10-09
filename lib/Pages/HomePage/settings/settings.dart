@@ -59,7 +59,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                 child: FlatButton(
                   onPressed: () async {
                     if(_formKey.currentState.validate()) {
-                      await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.anon);
+                      await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp);
                     }
                   },
                   child: Ink(

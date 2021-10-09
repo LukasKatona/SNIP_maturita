@@ -1,25 +1,64 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'classful/classfulPractise.dart';
+import 'package:maturita/Pages/HomePage/school/classlessPractise.dart';
+import 'package:maturita/Services/database.dart';
+import 'package:maturita/Services/height_meter.dart';
 import 'package:maturita/shared/design.dart';
+import 'package:provider/provider.dart';
+import 'package:maturita/Models/user.dart';
+import 'package:maturita/Models/rank.dart';
+import 'dart:math';
 
 class SchoolCard extends StatefulWidget {
 
   final String name;
   final String desc;
-  final String rank;
   final int currentXp;
-  SchoolCard({ this.name, this.desc, this.rank, this.currentXp});
+  final bool fulLess;
+  SchoolCard({ this.name, this.desc, this.currentXp, this.fulLess });
 
   @override
   _SchoolCardState createState() => _SchoolCardState();
 }
 
+int firstByte;
+
 class _SchoolCardState extends State<SchoolCard> {
 
-  int maxXp = 1000;
+  int minXp = 0;
+  int maxXp = 100;
+  double minWidthOfXp = 100;
+  String rank = 'beginner';
+
+  int GenerateFirstByte(){
+    for (int i = 0; i < 9; i++) {
+      if (widget.currentXp > rankList[i].minXp) {
+        if (i < 3) {
+          firstByte = new Random().nextInt(32) + 192;
+        } else if (i < 6) {
+          firstByte = new Random().nextInt(96) + 128;
+        } else if (i <= 9) {
+          do{
+            firstByte = new Random().nextInt(223)+1;
+          }while(firstByte == 127);
+        }
+      }
+    }
+    return firstByte;
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    for (int i = 0; i < 9; i++){
+      if (widget.currentXp > rankList[i].minXp){
+        minXp = rankList[i].minXp;
+        maxXp = rankList[i].maxXp;
+        rank = rankList[i].rank;
+      }
+    }
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -28,33 +67,41 @@ class _SchoolCardState extends State<SchoolCard> {
             Text(widget.name, style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24, fontWeight: FontWeight.bold),),
             Text(widget.desc, style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.center),
             SizedBox(height: 15,),
-            Text('Your Progress: ${widget.rank}', style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16, fontWeight: FontWeight.bold),),
+            Text('Rank: ' + rank, style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16, fontWeight: FontWeight.bold),),
+            SizedBox(height: 15),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(maxXp.toString(), style: TextStyle(color: MyColorTheme.Text)),
+                Text(widget.currentXp.toString() + ' Xp', style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                Text(maxXp.toString() + ' Xp', style: TextStyle(color: MyColorTheme.Text)),
               ],
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 10,),
             Row(
               children: [
-                Expanded(flex: widget.currentXp, child: Container(height: 5, color: MyColorTheme.PrimaryAccent,)),
+                Expanded(flex: widget.currentXp-minXp, child: Container(height: 5, color: MyColorTheme.PrimaryAccent,)),
                 Expanded(flex: maxXp-widget.currentXp, child: Container(height: 5, color: MyColorTheme.GreyText,)),
-              ],
-            ),
-            SizedBox(height: 5,),
-            Row(
-              children: [
-                Expanded(flex: widget.currentXp, child: Text(widget.currentXp.toString(), style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.end)),
-                Expanded(flex: maxXp-widget.currentXp, child: Container()),
               ],
             ),
             SizedBox(height: 20,),
             ButtonTheme(
               padding: EdgeInsets.zero,
               child: FlatButton(
-                onPressed: () {
-
+                onPressed: () async {
+                  if(widget.fulLess){
+                    setState(() {
+                      firstByte = GenerateFirstByte();
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => classfulPractisePage()),
+                    );
+                  }else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => classlessPractisePage()),
+                    );
+                  }
                 },
                 child: Ink(
                   decoration: BoxDecoration(

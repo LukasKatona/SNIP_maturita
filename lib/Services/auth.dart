@@ -42,10 +42,10 @@ class AuthService {
 
       if (teacherKey == correctKey){
         role = 'teacher';
-        await DatabaseService(uid: user.uid).updateUserData(name, role, false);
+        await DatabaseService(uid: user.uid).updateUserData(name, role, false, 0, 0);
       }else{
         role = 'student';
-        await DatabaseService(uid: user.uid).updateUserData(name, role, true);
+        await DatabaseService(uid: user.uid).updateUserData(name, role, true, 0, 0);
       }
 
       return _userFromFirebaseUser(user);

@@ -47,7 +47,7 @@ class _SniperTileState extends State<SniperTile> {
               child: IconButton(
                 onPressed: () async{
                   if (userData.role != 'student'){
-                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.anon);
+                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.anon, widget.sniper.fulXp, widget.sniper.lessXp);
                   }
                 },
                 icon: Icon(
