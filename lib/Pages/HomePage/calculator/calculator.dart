@@ -45,6 +45,16 @@ class _CalculatorPageState extends State<CalculatorPage> {
   }
 }
 
+int DecToBin(input) {
+  int bin = 0, i = 1;
+  while (input > 0) {
+    bin = bin + (input % 2)*i;
+    input = (input/2).floor();
+    i = i * 10;
+  }
+  return bin;
+}
+
 void calculateIP(){
   subnetList.clear();
   var intByte = int.parse(byte);
@@ -66,16 +76,6 @@ void calculateIP(){
       j++;
     }
     return num;
-  }
-
-  int DecToBin(input) {
-    int bin = 0, i = 1;
-    while (input > 0) {
-      bin = bin + (input % 2)*i;
-      input = (input/2).floor();
-      i = i * 10;
-    }
-    return bin;
   }
 
   if (fullOrLess){

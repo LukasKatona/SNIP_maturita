@@ -25,6 +25,7 @@ class _classfulPractisePageState extends State<classfulPractisePage>{
       child: StreamProvider<UserData>.value(
         value: DatabaseService(uid: user.uid).userData,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: MyColorTheme.Background,
             body: ClassFulQuestionsPage(),
         ),

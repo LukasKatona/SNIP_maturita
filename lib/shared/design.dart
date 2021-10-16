@@ -48,3 +48,40 @@ class MyColorTheme {
   static const Background =  Color(0xFF100B1F);
   static const NavBar =  Color(0xFF1C1926);
 }
+
+class ConfirmButtonDecor extends StatefulWidget {
+
+  final bool greenConfirm;
+
+  ConfirmButtonDecor({ this.greenConfirm });
+
+  @override
+  _ConfirmButtonDecorState createState() => _ConfirmButtonDecorState();
+}
+
+class _ConfirmButtonDecorState extends State<ConfirmButtonDecor> {
+  @override
+  Widget build(BuildContext context) {
+    return Ink(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: !widget.greenConfirm ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [Colors.green, Colors.greenAccent],
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+          ),
+          borderRadius: BorderRadius.circular(10.0)
+      ),
+      child: Container(
+        constraints: BoxConstraints(minHeight: 59.0),
+        alignment: Alignment.center,
+        child: Text(
+          "Confirm",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 16
+          ),
+        ),
+      ),
+    );
+  }
+}

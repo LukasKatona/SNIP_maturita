@@ -23,6 +23,8 @@ class SchoolCard extends StatefulWidget {
 }
 
 int firstByte;
+int subnets;
+int hosts;
 
 class _SchoolCardState extends State<SchoolCard> {
 
@@ -31,7 +33,7 @@ class _SchoolCardState extends State<SchoolCard> {
   double minWidthOfXp = 100;
   String rank = 'beginner';
 
-  int GenerateFirstByte(){
+  int GenerateQuestionVars(){
     for (int i = 0; i < 9; i++) {
       if (widget.currentXp > rankList[i].minXp) {
         if (i < 3) {
@@ -51,10 +53,13 @@ class _SchoolCardState extends State<SchoolCard> {
   @override
   Widget build(BuildContext context) {
 
+    final user = Provider.of<MyUser>(context);
+    final userData = Provider.of<UserData>(context);
+
     for (int i = 0; i < 9; i++){
       if (widget.currentXp > rankList[i].minXp){
         minXp = rankList[i].minXp;
-        maxXp = rankList[i].maxXp;
+        minXp == 0 ? maxXp = 32 : maxXp = (rankList[i].minXp)*2;
         rank = rankList[i].rank;
       }
     }
@@ -90,17 +95,28 @@ class _SchoolCardState extends State<SchoolCard> {
                 onPressed: () async {
                   if(widget.fulLess){
                     setState(() {
-                      firstByte = GenerateFirstByte();
+                      firstByte = GenerateQuestionVars();
+                      if (firstByte < 128){
+                        subnets = new Random().nextInt(1024)+1;
+                        hosts = new Random().nextInt(32768)+1;
+                      } else if (firstByte > 127 && firstByte < 192){
+                        subnets = new Random().nextInt(128)+1;
+                        hosts = new Random().nextInt(1024)+1;
+                      } else if (firstByte > 191){
+                        subnets = new Random().nextInt(16)+1;
+                        hosts = new Random().nextInt(32)+1;
+                      }
                     });
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => classfulPractisePage()),
                     );
                   }else{
-                    Navigator.push(
+                    await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, 7000, 10);
+                    /*Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => classlessPractisePage()),
-                    );
+                    );*/
                   }
                 },
                 child: Ink(
