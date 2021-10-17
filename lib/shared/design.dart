@@ -74,7 +74,7 @@ class _ConfirmButtonDecorState extends State<ConfirmButtonDecor> {
         constraints: BoxConstraints(minHeight: 59.0),
         alignment: Alignment.center,
         child: Text(
-          "Confirm",
+          widget.greenConfirm ? "Correct" : "Confirm",
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.white,

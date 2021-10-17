@@ -50,12 +50,7 @@ class _CorrectAnswerPageState extends State<CorrectAnswerPage> {
                   padding: EdgeInsets.zero,
                   child: FlatButton(
                     onPressed: () {
-                      if (questionController.page == 3){
-                        Navigator.pop(context);
-                        setState(() {});
-                      }else{
-                        questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
-                      }
+                      questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
                     },
                     child: Ink(
                       decoration: BoxDecoration(

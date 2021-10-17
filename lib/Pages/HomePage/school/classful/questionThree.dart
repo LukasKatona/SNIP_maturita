@@ -6,6 +6,7 @@ import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/HomePage/calculator/calculator.dart';
 import 'package:maturita/Pages/HomePage/school/classful/classFulQuestionsPage.dart';
 import 'package:maturita/Pages/HomePage/school/classful/correctAnswer.dart';
+import 'package:maturita/Pages/HomePage/school/classful/results.dart';
 import 'package:maturita/Services/database.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:maturita/Pages/HomePage/school/school_card.dart';
@@ -37,6 +38,7 @@ class _QuestionThreeState extends State<QuestionThree> {
         if (_answerSN == _correctSN && _answerHosts == _correctHosts){
           setState(() {
             _greenConfirm = true;
+            correctAnsList[2] = true;
           });
           print("correct");
           await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + 2, userData.lessXp);
@@ -45,6 +47,7 @@ class _QuestionThreeState extends State<QuestionThree> {
           print("incorrect");
           setState(() {
             _wrongAnswer = true;
+            correctAnsList[2] = false;
           });
         }
       }else{

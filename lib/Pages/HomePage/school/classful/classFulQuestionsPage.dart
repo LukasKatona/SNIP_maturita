@@ -5,6 +5,7 @@ import 'package:maturita/Pages/HomePage/school/classful/questionFour.dart';
 import 'package:maturita/Pages/HomePage/school/classful/questionOne.dart';
 import 'package:maturita/Pages/HomePage/school/classful/questionThree.dart';
 import 'package:maturita/Pages/HomePage/school/classful/questionTwo.dart';
+import 'package:maturita/Pages/HomePage/school/classful/results.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:provider/provider.dart';
 import 'package:maturita/Models/user.dart';
@@ -32,6 +33,7 @@ class _ClassFulQuestionsPageState extends State<ClassFulQuestionsPage> {
       QuestionTwo(),
       QuestionThree(),
       QuestionFour(),
+      ResultsPge(),
     ];
 
 
@@ -40,7 +42,7 @@ class _ClassFulQuestionsPageState extends State<ClassFulQuestionsPage> {
           return Column(
             children: [
               SizedBox(height: 75,),
-              Text(questionPageIndex.toString() + " / " + _pages.length.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24, fontWeight: FontWeight.bold),),
+              Text(questionPageIndex == 5 ? "4 / 4" : questionPageIndex.toString() + " / " + (_pages.length-1).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24, fontWeight: FontWeight.bold),),
               Expanded(
                 child: PageView(
                   physics: new NeverScrollableScrollPhysics(),

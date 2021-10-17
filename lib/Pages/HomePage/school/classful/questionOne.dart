@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/HomePage/school/classful/correctAnswer.dart';
 import 'package:maturita/Pages/HomePage/school/classful/classFulQuestionsPage.dart';
+import 'package:maturita/Pages/HomePage/school/classful/results.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:maturita/Pages/HomePage/school/school_card.dart';
 import 'package:maturita/Services/database.dart';
@@ -41,6 +42,7 @@ class _QuestionOneState extends State<QuestionOne> {
         if (_answer == _correctAnswer){
           setState(() {
             _greenConfirm = true;
+            correctAnsList[0] = true;
           });
           print("correct");
           await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + 1, userData.lessXp);
@@ -49,6 +51,7 @@ class _QuestionOneState extends State<QuestionOne> {
           print("incorrect");
           setState(() {
             _wrongAnswer = true;
+            correctAnsList[0] = false;
           });
         }
       }else{

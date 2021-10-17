@@ -5,6 +5,7 @@ import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/HomePage/calculator/calculator.dart';
 import 'package:maturita/Pages/HomePage/school/classful/classFulQuestionsPage.dart';
 import 'package:maturita/Pages/HomePage/school/classful/correctAnswer.dart';
+import 'package:maturita/Pages/HomePage/school/classful/results.dart';
 import 'package:maturita/Services/database.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:maturita/Pages/HomePage/school/school_card.dart';
@@ -57,9 +58,11 @@ class _QuestionFourState extends State<QuestionFour> {
         for (int i = 0; i < 4; i++){
           if (answers[i] == correctAnswers[i]){
             print('${i} is correct');
+            correctAnsList[3+i] = true;
             await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + 2, userData.lessXp);
           }else{
             print('${i} is not correct');
+            correctAnsList[3+i] = false;
             wrongs++;
           }
         }
@@ -68,8 +71,7 @@ class _QuestionFourState extends State<QuestionFour> {
           setState(() {
             _greenConfirm = true;
           });
-          Navigator.pop(context);
-          setState(() {});
+          questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
         }else{
           setState(() {
             _wrongAnswer = true;
