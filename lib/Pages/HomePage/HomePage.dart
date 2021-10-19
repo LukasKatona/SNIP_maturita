@@ -116,7 +116,7 @@ class HomePageState extends State<HomePage> {
               label: 'School',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.exposure),
+              icon: Icon(Icons.calculate),
               backgroundColor: MyColorTheme.NavBar,
               label: 'Calculator',
             ),

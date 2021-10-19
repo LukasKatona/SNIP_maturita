@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:maturita/Models/user.dart';
+import 'package:maturita/Pages/HomePage/school/classful/questionFour.dart';
 import 'package:maturita/Pages/HomePage/school/school_card.dart';
 import 'package:maturita/shared/design.dart';
+import 'package:provider/provider.dart';
 
-class ResultsPge extends StatefulWidget {
+class ResultsPage extends StatefulWidget {
   @override
-  _ResultsPgeState createState() => _ResultsPgeState();
+  _ResultsPageState createState() => _ResultsPageState();
 }
 
-List<bool> correctAnsList = List<bool>(7);
+List<bool> correctAnsList = List<bool>(8);
 
-class _ResultsPgeState extends State<ResultsPge> {
+class _ResultsPageState extends State<ResultsPage> {
 
   int getNumOfCorrectAns() {
     int _correct = 0;
@@ -21,14 +24,24 @@ class _ResultsPgeState extends State<ResultsPge> {
     return _correct;
   }
 
-  int getQestionFourXp() {
+  int getQuestionFourXp() {
     int xp = 0;
-    for (int i = 3; i < correctAnsList.length; i++){
+    for (int i = 4; i < correctAnsList.length; i++){
       if (correctAnsList[i]){
         xp++;
       }
     }
-    return xp;
+    return (xp*2*xpMultiplier);
+  }
+
+  int getQuestionThreeXp() {
+    int xp = 0;
+    for (int i = 2; i < 4; i++){
+      if (correctAnsList[i]){
+        xp++;
+      }
+    }
+    return (xp*xpMultiplier);
   }
 
   @override
@@ -54,7 +67,7 @@ class _ResultsPgeState extends State<ResultsPge> {
                           height: 150,
                           width: 150,
                           child: CircularProgressIndicator(
-                            value: getNumOfCorrectAns()/7,
+                            value: getNumOfCorrectAns()/8,
                             valueColor: AlwaysStoppedAnimation<Color>(MyColorTheme.PrimaryAccent),
                             backgroundColor: MyColorTheme.Primary,
                             strokeWidth: 15,
@@ -66,7 +79,7 @@ class _ResultsPgeState extends State<ResultsPge> {
                             text: TextSpan(
                               style: TextStyle(fontSize: 32),
                               children: <TextSpan>[
-                                TextSpan(text: (getNumOfCorrectAns()/7*100).ceil().toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                                TextSpan(text: (getNumOfCorrectAns()/8*100).ceil().toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
                                 TextSpan(text: "%", style: TextStyle(color: MyColorTheme.Text)),
                               ],
                             ),
@@ -95,8 +108,8 @@ class _ResultsPgeState extends State<ResultsPge> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Text("Class", style: TextStyle(color: correctAnsList[0] ? Colors.green : Colors.red, fontSize: 16),),
-                          Expanded(child: Center(child: Text(correctAnsList[0] ? "+1 XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Text("Class", style: TextStyle(color: correctAnsList[0] ? Colors.green : Colors.red, fontSize: 24),),
+                          Expanded(child: Center(child: Text(correctAnsList[0] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -113,8 +126,8 @@ class _ResultsPgeState extends State<ResultsPge> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Text("Mask", style: TextStyle(color: correctAnsList[1] ? Colors.green : Colors.red, fontSize: 16),),
-                          Expanded(child: Center(child: Text(correctAnsList[1] ? "+1 XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Text("Mask", style: TextStyle(color: correctAnsList[1] ? Colors.green : Colors.red, fontSize: 24),),
+                          Expanded(child: Center(child: Text(correctAnsList[1] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -137,8 +150,8 @@ class _ResultsPgeState extends State<ResultsPge> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Text("Bits", style: TextStyle(color: correctAnsList[2] ? Colors.green : Colors.red, fontSize: 16),),
-                          Expanded(child: Center(child: Text(correctAnsList[2] ? "+2 XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Text("Bits", style: TextStyle(color: correctAnsList[2] && correctAnsList[3] ? Colors.green : Colors.red, fontSize: 24),),
+                          Expanded(child: Center(child: Text("+" + getQuestionThreeXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -155,8 +168,8 @@ class _ResultsPgeState extends State<ResultsPge> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Text("Subnet", style: TextStyle(color: (correctAnsList[3] && correctAnsList[4] && correctAnsList[5] && correctAnsList[6]) ? Colors.green : Colors.red, fontSize: 16),),
-                          Expanded(child: Center(child: Text("+" + getQestionFourXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Text("Subnet", style: TextStyle(color: (correctAnsList[7] && correctAnsList[4] && correctAnsList[5] && correctAnsList[6]) ? Colors.green : Colors.red, fontSize: 24),),
+                          Expanded(child: Center(child: Text("+" + getQuestionFourXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),

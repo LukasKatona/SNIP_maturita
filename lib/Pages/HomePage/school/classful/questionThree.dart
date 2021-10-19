@@ -19,35 +19,49 @@ class QuestionThree extends StatefulWidget {
 
 class _QuestionThreeState extends State<QuestionThree> {
 
-  int _answerSN;
-  int _answerHosts;
-  int _correctSN = (subnets+1).bitLength;
-  int _correctHosts = (hosts+1).bitLength;
   bool _wrongAnswer = false;
   bool _greenConfirm = false;
   bool _warningVisible = false;
 
+  List<int> answers = List<int>(2);
+  List<int> correctAnswers = List<int>(2);
+
+
   @override
   Widget build(BuildContext context) {
+
+    correctAnswers[0] = (subnets+1).bitLength;
+    correctAnswers[1] = (hosts+1).bitLength;
 
     final userData = Provider.of<UserData>(context);
     final user = Provider.of<MyUser>(context);
 
     void _afterConfirm() async {
-      if (_answerSN != null && _answerHosts != null){
-        if (_answerSN == _correctSN && _answerHosts == _correctHosts){
+      if (answers[0] != null && answers[1] != null){
+
+        bool wrong = false;
+        int correct = 0;
+
+        for (int i = 0; i < 2; i++){
+          if (answers[i] == correctAnswers[i]){
+            print('${i} is correct');
+            correct++;
+            correctAnsList[2+i] = true;
+          }else{
+            print('${i} is not correct');
+            correctAnsList[2+i] = false;
+            wrong = true;
+          }
+        }
+        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier*correct), userData.lessXp);
+        if (!wrong){
           setState(() {
             _greenConfirm = true;
-            correctAnsList[2] = true;
           });
-          print("correct");
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + 2, userData.lessXp);
           questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
         }else{
-          print("incorrect");
           setState(() {
             _wrongAnswer = true;
-            correctAnsList[2] = false;
           });
         }
       }else{
@@ -111,10 +125,10 @@ class _QuestionThreeState extends State<QuestionThree> {
                         onChanged: (val) {
                           setState(() {
                             if (val.isNotEmpty){
-                              _answerSN = int.parse(val);
+                              answers[0] = int.parse(val);
                               _warningVisible = false;
                             }else{
-                              _answerSN = null;
+                              answers[0] = null;
                             }
                           });
                         },
@@ -139,10 +153,10 @@ class _QuestionThreeState extends State<QuestionThree> {
                         onChanged: (val) {
                           setState(() {
                             if (val.isNotEmpty){
-                              _answerHosts = int.parse(val);
+                              answers[1] = int.parse(val);
                               _warningVisible = false;
                             }else{
-                              _answerHosts = null;
+                              answers[1] = null;
                             }
                           });
                         },
@@ -180,8 +194,8 @@ class _QuestionThreeState extends State<QuestionThree> {
       );
     }else{
       return CorrectAnswerPage(
-        yourAnswer: "${_answerSN} bits for ${subnets} subnets and ${_answerHosts} bits for ${hosts} hosts.",
-        correctAnswer: "${_correctSN} bits for  ${subnets} subnets and ${_correctHosts} bits for ${hosts} hosts.",
+        yourAnswer: "${answers[0]} bits for ${subnets} subnets and ${answers[1]} bits for ${hosts} hosts.",
+        correctAnswer: "${correctAnswers[0]} bits for  ${subnets} subnets and ${correctAnswers[1]} bits for ${hosts} hosts.",
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(

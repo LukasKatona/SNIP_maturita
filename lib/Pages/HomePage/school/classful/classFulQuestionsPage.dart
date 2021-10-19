@@ -33,7 +33,7 @@ class _ClassFulQuestionsPageState extends State<ClassFulQuestionsPage> {
       QuestionTwo(),
       QuestionThree(),
       QuestionFour(),
-      ResultsPge(),
+      ResultsPage(),
     ];
 
 

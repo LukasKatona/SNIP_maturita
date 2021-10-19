@@ -53,21 +53,22 @@ class _QuestionFourState extends State<QuestionFour> {
     void _afterConfirm() async {
       if (answers[0] != null && answers[1] != null && answers[2] != null && answers[3] != null){
         calAnswer();
-        int wrongs = 0;
+        bool wrong = false;
+        int correct = 0;
 
         for (int i = 0; i < 4; i++){
           if (answers[i] == correctAnswers[i]){
             print('${i} is correct');
-            correctAnsList[3+i] = true;
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + 2, userData.lessXp);
+            correct++;
+            correctAnsList[4+i] = true;
           }else{
             print('${i} is not correct');
-            correctAnsList[3+i] = false;
-            wrongs++;
+            correctAnsList[4+i] = false;
+            wrong = true;
           }
         }
-
-        if (wrongs == 0){
+        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (2*xpMultiplier*correct), userData.lessXp);
+        if (!wrong){
           setState(() {
             _greenConfirm = true;
           });

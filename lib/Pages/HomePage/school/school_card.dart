@@ -25,11 +25,12 @@ class SchoolCard extends StatefulWidget {
 int firstByte;
 int subnets;
 int hosts;
+int xpMultiplier;
 
 class _SchoolCardState extends State<SchoolCard> {
 
   int minXp = 0;
-  int maxXp = 100;
+  int maxXp = 32;
   double minWidthOfXp = 100;
   String rank = 'beginner';
 
@@ -48,6 +49,15 @@ class _SchoolCardState extends State<SchoolCard> {
       }
     }
     return firstByte;
+  }
+
+  int getXpMultiplier(){
+    for (int i = 0; i < 9; i++) {
+      if (widget.currentXp > rankList[i].minXp) {
+        xpMultiplier = (i+1);
+      }
+    }
+    return xpMultiplier;
   }
 
   @override
@@ -84,7 +94,13 @@ class _SchoolCardState extends State<SchoolCard> {
             SizedBox(height: 10,),
             Row(
               children: [
-                Expanded(flex: widget.currentXp-minXp, child: Container(height: 5, color: MyColorTheme.PrimaryAccent,)),
+                Expanded(flex: widget.currentXp-minXp, child: Container(height: 5,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                      ),
+                  ),)),
                 Expanded(flex: maxXp-widget.currentXp, child: Container(height: 5, color: MyColorTheme.GreyText,)),
               ],
             ),
@@ -96,6 +112,7 @@ class _SchoolCardState extends State<SchoolCard> {
                   if(widget.fulLess){
                     setState(() {
                       firstByte = GenerateQuestionVars();
+                      xpMultiplier = getXpMultiplier();
                       if (firstByte < 128){
                         subnets = new Random().nextInt(1024)+1;
                         hosts = new Random().nextInt(32768)+1;

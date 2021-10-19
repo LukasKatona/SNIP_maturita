@@ -45,7 +45,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
             correctAnsList[1] = true;
           });
           print("correct");
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + 1, userData.lessXp);
+          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier), userData.lessXp);
           questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
         }else{
           print("incorrect");
