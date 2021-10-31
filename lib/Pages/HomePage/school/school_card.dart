@@ -1,7 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'classful/classfulPractise.dart';
-import 'package:maturita/Pages/HomePage/school/classlessPractise.dart';
+import 'package:maturita/Pages/HomePage/school/classless/questionThreeLess.dart';
+import 'package:maturita/Pages/HomePage/school/questionsPage.dart';
+import 'practiseProviderPage.dart';
 import 'package:maturita/Services/database.dart';
 import 'package:maturita/Services/height_meter.dart';
 import 'package:maturita/shared/design.dart';
@@ -111,6 +112,7 @@ class _SchoolCardState extends State<SchoolCard> {
                 onPressed: () async {
                   if(widget.fulLess){
                     setState(() {
+                      fulOrLessQuestions = true;
                       firstByte = GenerateQuestionVars();
                       xpMultiplier = getXpMultiplier();
                       if (firstByte < 128){
@@ -124,17 +126,24 @@ class _SchoolCardState extends State<SchoolCard> {
                         hosts = new Random().nextInt(32)+1;
                       }
                     });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => classfulPractisePage()),
-                    );
                   }else{
-                    await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, 7000, 10);
-                    /*Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => classlessPractisePage()),
-                    );*/
+                    setState(() {
+                      fulOrLessQuestions = false;
+                      firstByte = GenerateQuestionVars();
+                      xpMultiplier = getXpMultiplier();
+                      if (firstByte < 128){
+                        hostListForQuestionThree = [Random().nextInt(65536) + 1, Random().nextInt(65536) + 1, Random().nextInt(65536) + 1, Random().nextInt(65536) + 1];
+                      } else if (firstByte > 127 && firstByte < 192){
+                        hostListForQuestionThree = [Random().nextInt(16382) + 1, Random().nextInt(16382) + 1, Random().nextInt(16382) + 1, Random().nextInt(16382) + 1];
+                      } else if (firstByte > 191){
+                        hostListForQuestionThree = [Random().nextInt(62) + 1, Random().nextInt(62) + 1, Random().nextInt(62) + 1, Random().nextInt(62) + 1];
+                      }
+                    });
                   }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PractiseProviderPage()),
+                  );
                 },
                 child: Ink(
                   decoration: BoxDecoration(

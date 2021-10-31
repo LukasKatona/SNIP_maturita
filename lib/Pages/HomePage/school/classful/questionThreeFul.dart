@@ -4,20 +4,20 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/HomePage/calculator/calculator.dart';
-import 'package:maturita/Pages/HomePage/school/classful/classFulQuestionsPage.dart';
-import 'package:maturita/Pages/HomePage/school/classful/correctAnswer.dart';
-import 'package:maturita/Pages/HomePage/school/classful/results.dart';
+import '../questionsPage.dart';
+import '../correctAnswerPage.dart';
+import 'package:maturita/Pages/HomePage/school/classful/resultsPageFul.dart';
 import 'package:maturita/Services/database.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:maturita/Pages/HomePage/school/school_card.dart';
 import 'package:provider/provider.dart';
 
-class QuestionThree extends StatefulWidget {
+class QuestionThreeFul extends StatefulWidget {
   @override
-  _QuestionThreeState createState() => _QuestionThreeState();
+  _QuestionThreeFulState createState() => _QuestionThreeFulState();
 }
 
-class _QuestionThreeState extends State<QuestionThree> {
+class _QuestionThreeFulState extends State<QuestionThreeFul> {
 
   bool _wrongAnswer = false;
   bool _greenConfirm = false;
@@ -46,10 +46,10 @@ class _QuestionThreeState extends State<QuestionThree> {
           if (answers[i] == correctAnswers[i]){
             print('${i} is correct');
             correct++;
-            correctAnsList[2+i] = true;
+            correctAnsListFul[2+i] = true;
           }else{
             print('${i} is not correct');
-            correctAnsList[2+i] = false;
+            correctAnsListFul[2+i] = false;
             wrong = true;
           }
         }

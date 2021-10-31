@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:maturita/Pages/HomePage/school/classful/correctAnswer.dart';
-import 'package:maturita/Pages/HomePage/school/classful/questionFour.dart';
-import 'package:maturita/Pages/HomePage/school/classful/questionOne.dart';
-import 'package:maturita/Pages/HomePage/school/classful/questionThree.dart';
-import 'package:maturita/Pages/HomePage/school/classful/questionTwo.dart';
-import 'package:maturita/Pages/HomePage/school/classful/results.dart';
+import 'questionFour.dart';
+import 'package:maturita/Pages/HomePage/school/classless/questionThreeLess.dart';
+import 'questionOne.dart';
+import 'package:maturita/Pages/HomePage/school/classful/questionThreeFul.dart';
+import 'questionTwo.dart';
+import 'package:maturita/Pages/HomePage/school/classful/resultsPageFul.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:provider/provider.dart';
 import 'package:maturita/Models/user.dart';
 
-class ClassFulQuestionsPage extends StatefulWidget {
+class QuestionsPage extends StatefulWidget {
   @override
-  _ClassFulQuestionsPageState createState() => _ClassFulQuestionsPageState();
+  _QuestionsPageState createState() => _QuestionsPageState();
 }
 
 final PageController questionController = PageController(initialPage: 0);
 
-class _ClassFulQuestionsPageState extends State<ClassFulQuestionsPage> {
+bool fulOrLessQuestions;
+
+class _QuestionsPageState extends State<QuestionsPage> {
 
   int questionPageIndex = 1;
 
@@ -28,13 +30,24 @@ class _ClassFulQuestionsPageState extends State<ClassFulQuestionsPage> {
     final user = Provider.of<MyUser>(context);
 
 
-    List<Widget> _pages = [
-      QuestionOne(),
-      QuestionTwo(),
-      QuestionThree(),
-      QuestionFour(),
-      ResultsPage(),
-    ];
+    List<Widget> _pages = [];
+
+    if (fulOrLessQuestions){
+      _pages = [
+        QuestionOne(),
+        QuestionTwo(),
+        QuestionThreeFul(),
+        QuestionFour(),
+        ResultsPageFul(),
+      ];
+    }else{
+      _pages = [
+        QuestionOne(),
+        QuestionTwo(),
+        QuestionThreeLess(),
+        QuestionFour(),
+      ];
+    }
 
 
     return KeyboardVisibilityBuilder(

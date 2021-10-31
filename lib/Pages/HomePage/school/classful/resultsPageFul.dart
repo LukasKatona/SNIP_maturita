@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/user.dart';
-import 'package:maturita/Pages/HomePage/school/classful/questionFour.dart';
+import '../questionFour.dart';
 import 'package:maturita/Pages/HomePage/school/school_card.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:provider/provider.dart';
 
-class ResultsPage extends StatefulWidget {
+class ResultsPageFul extends StatefulWidget {
   @override
-  _ResultsPageState createState() => _ResultsPageState();
+  _ResultsPageFulState createState() => _ResultsPageFulState();
 }
 
-List<bool> correctAnsList = List<bool>(8);
+List<bool> correctAnsListFul = List<bool>(8);
 
-class _ResultsPageState extends State<ResultsPage> {
+class _ResultsPageFulState extends State<ResultsPageFul> {
 
   int getNumOfCorrectAns() {
     int _correct = 0;
-    for(int i = 0; i < correctAnsList.length; i++){
-      if (correctAnsList[i]){
+    for(int i = 0; i < correctAnsListFul.length; i++){
+      if (correctAnsListFul[i]){
         _correct++;
       }
     }
@@ -26,8 +26,8 @@ class _ResultsPageState extends State<ResultsPage> {
 
   int getQuestionFourXp() {
     int xp = 0;
-    for (int i = 4; i < correctAnsList.length; i++){
-      if (correctAnsList[i]){
+    for (int i = 4; i < correctAnsListFul.length; i++){
+      if (correctAnsListFul[i]){
         xp++;
       }
     }
@@ -37,7 +37,7 @@ class _ResultsPageState extends State<ResultsPage> {
   int getQuestionThreeXp() {
     int xp = 0;
     for (int i = 2; i < 4; i++){
-      if (correctAnsList[i]){
+      if (correctAnsListFul[i]){
         xp++;
       }
     }
@@ -108,8 +108,8 @@ class _ResultsPageState extends State<ResultsPage> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Text("Class", style: TextStyle(color: correctAnsList[0] ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text(correctAnsList[0] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Text("Class", style: TextStyle(color: correctAnsListFul[0] ? Colors.green : Colors.red, fontSize: 24),),
+                          Expanded(child: Center(child: Text(correctAnsListFul[0] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -126,8 +126,8 @@ class _ResultsPageState extends State<ResultsPage> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Text("Mask", style: TextStyle(color: correctAnsList[1] ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text(correctAnsList[1] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Text("Mask", style: TextStyle(color: correctAnsListFul[1] ? Colors.green : Colors.red, fontSize: 24),),
+                          Expanded(child: Center(child: Text(correctAnsListFul[1] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -150,7 +150,7 @@ class _ResultsPageState extends State<ResultsPage> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Text("Bits", style: TextStyle(color: correctAnsList[2] && correctAnsList[3] ? Colors.green : Colors.red, fontSize: 24),),
+                          Text("Bits", style: TextStyle(color: correctAnsListFul[2] && correctAnsListFul[3] ? Colors.green : Colors.red, fontSize: 24),),
                           Expanded(child: Center(child: Text("+" + getQuestionThreeXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
@@ -168,7 +168,7 @@ class _ResultsPageState extends State<ResultsPage> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Text("Subnet", style: TextStyle(color: (correctAnsList[7] && correctAnsList[4] && correctAnsList[5] && correctAnsList[6]) ? Colors.green : Colors.red, fontSize: 24),),
+                          Text("Subnet", style: TextStyle(color: (correctAnsListFul[7] && correctAnsListFul[4] && correctAnsListFul[5] && correctAnsListFul[6]) ? Colors.green : Colors.red, fontSize: 24),),
                           Expanded(child: Center(child: Text("+" + getQuestionFourXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
                         ],
                       ),

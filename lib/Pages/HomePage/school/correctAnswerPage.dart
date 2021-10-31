@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:maturita/Pages/HomePage/school/classful/classFulQuestionsPage.dart';
+import 'questionsPage.dart';
 import 'package:maturita/main.dart';
 import 'package:maturita/shared/design.dart';
 

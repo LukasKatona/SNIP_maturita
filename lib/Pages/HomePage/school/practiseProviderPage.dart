@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'classFulQuestionsPage.dart';
+import 'questionsPage.dart';
 import 'package:maturita/Pages/HomePage/school/school_card.dart';
 import 'package:maturita/shared/design.dart';
 import 'dart:math';
@@ -9,12 +9,12 @@ import 'package:maturita/Models/user.dart';
 import 'package:maturita/Services/auth.dart';
 import 'package:maturita/Services/database.dart';
 
-class classfulPractisePage extends StatefulWidget {
+class PractiseProviderPage extends StatefulWidget {
   @override
-  _classfulPractisePageState createState() => _classfulPractisePageState();
+  _PractiseProviderPageState createState() => _PractiseProviderPageState();
 }
 
-class _classfulPractisePageState extends State<classfulPractisePage>{
+class _PractiseProviderPageState extends State<PractiseProviderPage>{
   @override
   Widget build(BuildContext context) {
 
@@ -27,7 +27,7 @@ class _classfulPractisePageState extends State<classfulPractisePage>{
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: MyColorTheme.Background,
-            body: ClassFulQuestionsPage(),
+            body: QuestionsPage(),
         ),
       ),
     );

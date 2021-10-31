@@ -2,20 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/user.dart';
-import 'package:maturita/Pages/HomePage/school/classful/classFulQuestionsPage.dart';
-import 'package:maturita/Pages/HomePage/school/classful/correctAnswer.dart';
-import 'package:maturita/Pages/HomePage/school/classful/results.dart';
-import 'package:maturita/Services/database.dart';
+import 'package:maturita/Pages/HomePage/school/classless/resultsPageLess.dart';
+import 'correctAnswerPage.dart';
+import 'questionsPage.dart';
+import 'package:maturita/Pages/HomePage/school/classful/resultsPageFul.dart';
 import 'package:maturita/shared/design.dart';
 import 'package:maturita/Pages/HomePage/school/school_card.dart';
+import 'package:maturita/Services/database.dart';
 import 'package:provider/provider.dart';
 
-class QuestionTwo extends StatefulWidget {
+class QuestionOne extends StatefulWidget {
   @override
-  _QuestionTwoState createState() => _QuestionTwoState();
+  _QuestionOneState createState() => _QuestionOneState();
 }
 
-class _QuestionTwoState extends State<QuestionTwo> {
+class _QuestionOneState extends State<QuestionOne> {
 
   String _answer = "Please answer first!";
   String _correctAnswer;
@@ -30,11 +31,11 @@ class _QuestionTwoState extends State<QuestionTwo> {
     final user = Provider.of<MyUser>(context);
 
     if (firstByte < 128){
-      _correctAnswer = "/8 - 255.0.0.0";
+      _correctAnswer = "Class A";
     } else if (firstByte > 127 && firstByte < 192){
-      _correctAnswer = "/16 - 255.255.0.0";
+      _correctAnswer = "Class B";
     } else if (firstByte > 191){
-      _correctAnswer = "/24 - 255.255.255.0";
+      _correctAnswer = "Class C";
     }
 
     void _afterConfirm() async {
@@ -42,16 +43,22 @@ class _QuestionTwoState extends State<QuestionTwo> {
         if (_answer == _correctAnswer){
           setState(() {
             _greenConfirm = true;
-            correctAnsList[1] = true;
+            fulOrLessQuestions ? correctAnsListFul[0] = true: correctAnsListLess[0] = true;
           });
           print("correct");
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier), userData.lessXp);
+
+          if (fulOrLessQuestions){
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier), userData.lessXp);
+          }else{
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (1*xpMultiplier));
+          }
+
           questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
         }else{
           print("incorrect");
           setState(() {
             _wrongAnswer = true;
-            correctAnsList[1] = false;
+            fulOrLessQuestions ? correctAnsListFul[0] = false: correctAnsListLess[0] = false;
           });
         }
       }else{
@@ -74,7 +81,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                   children: [
                     Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
                     SizedBox(height: 15,),
-                    Text("What is the default subnet mask for this IP address?", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
+                    Text("In what class does this IP address belong?", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
                   ],
                 ),
               ),
@@ -94,13 +101,13 @@ class _QuestionTwoState extends State<QuestionTwo> {
               child: FlatButton(
                 onPressed: () {
                   setState(() {
-                    _answer = "/8 - 255.0.0.0";
+                    _answer = "Class A";
                     _warningVisible = false;
                   });
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/8 - 255.0.0.0" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class A" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -110,7 +117,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                     constraints: BoxConstraints(minHeight: 59.0),
                     alignment: Alignment.center,
                     child: Text(
-                      "/8 - 255.0.0.0",
+                      "Class A",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -127,13 +134,13 @@ class _QuestionTwoState extends State<QuestionTwo> {
               child: FlatButton(
                 onPressed: () {
                   setState(() {
-                    _answer = "/16 - 255.255.0.0";
+                    _answer = "Class B";
                     _warningVisible = false;
                   });
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/16 - 255.255.0.0" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class B" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -143,7 +150,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                     constraints: BoxConstraints(minHeight: 59.0),
                     alignment: Alignment.center,
                     child: Text(
-                      "/16 - 255.255.0.0",
+                      "Class B",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -160,13 +167,13 @@ class _QuestionTwoState extends State<QuestionTwo> {
               child: FlatButton(
                 onPressed: () {
                   setState(() {
-                    _answer = "/24 - 255.255.255.0";
+                    _answer = "Class C";
                     _warningVisible = false;
                   });
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/24 - 255.255.255.0" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class C" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -176,7 +183,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                     constraints: BoxConstraints(minHeight: 59.0),
                     alignment: Alignment.center,
                     child: Text(
-                      "/24 - 255.255.255.0",
+                      "Class C",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -200,11 +207,11 @@ class _QuestionTwoState extends State<QuestionTwo> {
                     ),
                   ),
                   ButtonTheme(
-                    padding: EdgeInsets.zero,
-                    child: FlatButton(
-                      onPressed: _afterConfirm,
-                      child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
-                    ),
+                      padding: EdgeInsets.zero,
+                      child: FlatButton(
+                        onPressed: _afterConfirm,
+                        child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
+                      ),
                   ),
                   SizedBox(height: 15,),
                 ],
@@ -215,38 +222,67 @@ class _QuestionTwoState extends State<QuestionTwo> {
       );
     }else{
       return CorrectAnswerPage(yourAnswer: _answer, correctAnswer: _correctAnswer,
-          explanation: RichText(
-            textAlign: TextAlign.justify,
-            text: TextSpan(
-              style: TextStyle(fontSize: 16),
-              children: <TextSpan>[
-                TextSpan(text: "Slash format of the subnet mask represents the number of bits used for net part of the address. Default subnet mask for "),
-                TextSpan(text: "Class A", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: " is "),
-                TextSpan(text: "/8", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: ", which is one byte, therefore "),
-                TextSpan(text: "255.0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: ". \n\nDefault subnet mask for "),
-                TextSpan(text: "Class B", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: " is "),
-                TextSpan(text: "/16", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: ", which are two bytes, therefore "),
-                TextSpan(text: "255.255.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: ". You can see that the IP range is getting smaller and number of different networks is getting bigger. \n\nDefault subnet mask for "),
-                TextSpan(text: "Class C", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: " is "),
-                TextSpan(text: "/24", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: ", which are three bytes, therefore "),
-                TextSpan(text: "255.255.255.0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: ". This is also default subnet mask for "),
-                TextSpan(text: "Class D", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: ". and the last "),
-                TextSpan(text: "Class E", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                TextSpan(text: "."),
+      explanation: RichText(
+        textAlign: TextAlign.justify,
+        text: TextSpan(
+          style: TextStyle(fontSize: 16),
+          children: <TextSpan>[
+            TextSpan(text: "IPv4 addresses are devided into 5 classes based on their first byte. "),
+            TextSpan(text: "Class A", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " ranges from "),
+            TextSpan(text: "0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " to "),
+            TextSpan(text: "126", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: ", which in binary is from "),
+            TextSpan(text: "00000000", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " to "),
+            TextSpan(text: "01111110", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: ". IP address that starts with "),
+            TextSpan(text: "127", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " is called loopback and it's not used for routing.\n\n"),
 
-              ],
-            ),
-          ),);
+            TextSpan(text: "Class B", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " ranges from "),
+            TextSpan(text: "128", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " to "),
+            TextSpan(text: "191", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: ", which in binary is from "),
+            TextSpan(text: "10000000", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " to "),
+            TextSpan(text: "10111111", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: ".\n\n"),
+
+            TextSpan(text: "Class C", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " ranges from "),
+            TextSpan(text: "192", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " to "),
+            TextSpan(text: "223", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: ", which in binary is from "),
+            TextSpan(text: "11000000", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " to "),
+            TextSpan(text: "11011111", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: ". You can see that there is a pattern for that. first be begin with all bits set to "),
+            TextSpan(text: "0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " and than every new class has one more "),
+            TextSpan(text: "1", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " at the start of the first byte.\n\n"),
+
+            TextSpan(text: "Following this pattern, "),
+            TextSpan(text: "CLass D", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " starts with "),
+            TextSpan(text: "11100000 (224)", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " and ends with "),
+            TextSpan(text: "11101111 (239)", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: ". The last class is "),
+            TextSpan(text: "CLass E", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: ", which starts with "),
+            TextSpan(text: "11110000 (240)", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: " and ends with "),
+            TextSpan(text: "11111111 (255)", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "."),
+          ],
+        ),
+      ),);
     }
   }
 }
