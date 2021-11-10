@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:maturita/Pages/HomePage/school/classless/resultsPageLess.dart';
 import 'questionFour.dart';
 import 'package:maturita/Pages/HomePage/school/classless/questionThreeLess.dart';
 import 'questionOne.dart';
@@ -46,6 +47,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
         QuestionTwo(),
         QuestionThreeLess(),
         QuestionFour(),
+        ResultsPageLess(),
       ];
     }
 
