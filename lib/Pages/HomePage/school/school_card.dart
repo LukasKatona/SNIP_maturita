@@ -81,10 +81,10 @@ class _SchoolCardState extends State<SchoolCard> {
         child: Column(
           children: [
             Text(widget.name, style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24, fontWeight: FontWeight.bold),),
-            Text(widget.desc, style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.center),
+            //Text(widget.desc, style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.center),
             SizedBox(height: 15,),
             Text('Rank: ' + rank, style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16, fontWeight: FontWeight.bold),),
-            SizedBox(height: 15),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -110,6 +110,10 @@ class _SchoolCardState extends State<SchoolCard> {
               padding: EdgeInsets.zero,
               child: FlatButton(
                 onPressed: () async {
+                  setState(() {
+                    otherQuestions = 0;
+                  });
+
                   if(widget.fulLess){
                     setState(() {
                       fulOrLessQuestions = true;
