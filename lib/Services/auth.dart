@@ -29,7 +29,7 @@ class AuthService {
   }
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password, String teacherKey, String name, String correctKey) async {
+  Future registerWithEmailAndPassword(String email, String password, String teacherKey, String name, String correctKey, String group) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
@@ -42,10 +42,10 @@ class AuthService {
 
       if (teacherKey == correctKey){
         role = 'teacher';
-        await DatabaseService(uid: user.uid).updateUserData(name, role, false, 0, 0);
+        await DatabaseService(uid: user.uid).updateUserData(name, role, false, 0, 0, group);
       }else{
         role = 'student';
-        await DatabaseService(uid: user.uid).updateUserData(name, role, true, 0, 0);
+        await DatabaseService(uid: user.uid).updateUserData(name, role, true, 0, 0, group);
       }
 
       return _userFromFirebaseUser(user);

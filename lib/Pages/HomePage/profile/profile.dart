@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }
 
       if (searchString != ''){
-        snipers = snipers.where((element) => element.name.contains(searchString) || element.role.contains(searchString)).toList();
+        snipers = snipers.where((element) => element.name.contains(searchString) || element.role.contains(searchString) || element.group.contains(searchString)).toList();
       }
 
 
@@ -70,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(height: 5,),
             Text(
-              userData.role,
+              userData.role + " | " + userData.group,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

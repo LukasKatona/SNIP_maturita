@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maturita/Models/groups.dart';
 import 'package:maturita/Services/auth.dart';
 import 'package:maturita/shared/design.dart';
 import 'LoginPage.dart';
@@ -22,6 +23,7 @@ class _RegisterState extends State<Register> {
 
   String email = '';
   String name = '';
+  String group = '';
   String password = '';
   String error = '';
   String teacherKey = '';
@@ -62,6 +64,26 @@ class _RegisterState extends State<Register> {
                 style: TextStyle(color: Colors.white),
                 cursorColor: Color(0xFFFF6B00),
                 decoration: snipInputDecoration.copyWith(hintText: "Name"),
+              ),
+              SizedBox(height: 15,),
+              new Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: MyColorTheme.Secondary,
+                ),
+                child: DropdownButtonFormField(
+                  decoration: snipInputDecoration.copyWith(hintText: "enter your class", hintStyle: TextStyle(color: MyColorTheme.GreyText),),
+                  icon: Icon(Icons.menu_open, color: MyColorTheme.PrimaryAccent,),
+                  items: groups.map((String group) {
+                    return DropdownMenuItem(
+                      value: group,
+                      child: SizedBox(width: 100, child: Text(group, style: TextStyle(color: MyColorTheme.Text),)),
+                    );
+                  }).toList(),
+                  onChanged: (val) {
+                    setState(() => group = val);
+                  },/*
+                  value: group,*/
+                ),
               ),
               SizedBox(height: 15,),
               TextFormField(
@@ -115,7 +137,7 @@ class _RegisterState extends State<Register> {
                   onPressed: () async {
                     if (_formKey.currentState.validate()){
                       setState(() => loading = true);
-                      dynamic result = await _auth.registerWithEmailAndPassword(email, password, teacherKey, name, variables.teacherKey);
+                      dynamic result = await _auth.registerWithEmailAndPassword(email, password, teacherKey, name, variables.teacherKey, group);
                       if (result == null){
                         setState(() {
                           error = "please supply a valid email";

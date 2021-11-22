@@ -53,7 +53,7 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
             wrong = true;
           }
         }
-        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier*correct), userData.lessXp);
+        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier*correct), userData.lessXp, userData.group);
         if (!wrong){
           setState(() {
             _greenConfirm = true;

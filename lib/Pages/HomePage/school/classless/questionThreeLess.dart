@@ -93,7 +93,7 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
           }
         }
 
-        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (1*xpMultiplier*correct));
+        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (1*xpMultiplier*correct), userData.group);
 
         if (correct == 5){
           setState(() {

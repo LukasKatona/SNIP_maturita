@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maturita/Models/groups.dart';
 import 'package:maturita/Models/variables.dart';
 import 'package:maturita/Pages/HomePage/profile/profile.dart';
 import 'package:maturita/shared/design.dart';
@@ -22,6 +23,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
   final _formKey = GlobalKey<FormState>();
   AnimateIconController copyController = AnimateIconController();
   String _currentName;
+  String _currentGroup;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
     final variables = Provider.of<Variables>(context);
 
     if (userData != null && variables != null){
-      return Center(
+      return SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
@@ -41,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                 'Change your name:',
                 style: TextStyle(color: Colors.white),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 15,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
@@ -53,13 +55,41 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                   onChanged: (val) => setState(() => _currentName = val),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 15,),
+              Text(
+                'Change your class/group:',
+                style: TextStyle(color: Colors.white),
+              ),
+              SizedBox(height: 15,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: new Theme(
+                  data: Theme.of(context).copyWith(
+                      canvasColor: MyColorTheme.Secondary,
+                  ),
+                  child: DropdownButtonFormField(
+                    decoration: snipInputDecoration.copyWith(hintText: userData.group, hintStyle: TextStyle(color: MyColorTheme.Text),),
+                    icon: Icon(Icons.menu_open, color: MyColorTheme.PrimaryAccent,),
+                    items: groups.map((String group) {
+                      return DropdownMenuItem(
+                          value: group,
+                          child: SizedBox(width: 100, child: Text(group, style: TextStyle(color: MyColorTheme.Text),)),
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      setState(() => _currentGroup = val);
+                    },
+                    value: _currentGroup,
+                  ),
+                ),
+              ),
+              SizedBox(height: 15,),
               ButtonTheme(
                 padding: EdgeInsets.zero,
                 child: FlatButton(
                   onPressed: () async {
                     if(_formKey.currentState.validate()) {
-                      await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp);
+                      await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp, _currentGroup ?? userData.group);
                     }
                   },
                   child: Ink(
@@ -85,7 +115,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 15,),
               Visibility(
                 visible: userData.role == 'admin',
                 child: Column(
@@ -127,7 +157,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                           ),
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(height: 15,),
                     ButtonTheme(
                       padding: EdgeInsets.zero,
                       child: FlatButton(
@@ -159,7 +189,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                         ),
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(height: 15,),
                   ],
                 ),
               ),

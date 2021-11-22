@@ -46,13 +46,14 @@ class DatabaseService {
 
   // update user data
 
-  Future updateUserData(String name, String role, bool anon, int fulXp, int lessXp) async{
+  Future updateUserData(String name, String role, bool anon, int fulXp, int lessXp, String group) async{
     return await snipCollection.doc(uid).set({
       'name': name,
       'role': role,
       'anon': anon,
       'fulXp': fulXp,
       'lessXp': lessXp,
+      'group': group,
     });
   }
 
@@ -74,6 +75,7 @@ class DatabaseService {
         anon: doc.get('anon') ?? '',
         fulXp: doc.get('fulXp') ?? '',
         lessXp: doc.get('lessXp') ?? '',
+        group: doc.get('group') ?? '',
       );
     }).toList();
   }
@@ -87,6 +89,7 @@ class DatabaseService {
       anon: snapshot.get('anon') ?? '',
       fulXp: snapshot.get('fulXp') ?? '',
       lessXp: snapshot.get('lessXp') ?? '',
+      group: snapshot.get('group') ?? '',
     );
   }
 

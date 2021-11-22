@@ -48,9 +48,9 @@ class _QuestionOneState extends State<QuestionOne> {
           print("correct");
 
           if (fulOrLessQuestions){
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier), userData.lessXp);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group);
           }else{
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (1*xpMultiplier));
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group);
           }
 
           questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);

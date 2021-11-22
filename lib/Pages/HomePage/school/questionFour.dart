@@ -91,9 +91,9 @@ class _QuestionFourState extends State<QuestionFour> {
         }
 
         if (fulOrLessQuestions){
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (2*xpMultiplier*correct), userData.lessXp);
+          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (2*xpMultiplier*correct), userData.lessXp, userData.group);
         }else{
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (2*xpMultiplier*correct));
+          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (2*xpMultiplier*correct), userData.group);
         }
 
         if (!wrong){
