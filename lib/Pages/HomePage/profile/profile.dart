@@ -43,7 +43,10 @@ class _ProfilePageState extends State<ProfilePage> {
       }
 
       if (searchString != ''){
-        snipers = snipers.where((element) => element.name.contains(searchString) || element.role.contains(searchString) || element.group.contains(searchString)).toList();
+        List<String> searchList = searchString.split(" ");
+        for (int i = 0; i < searchList.length; i++) {
+          snipers = snipers.where((element) => element.name.contains(searchList[i]) || element.role.contains(searchList[i]) || element.group.contains(searchList[i])).toList();
+        }
       }
 
 
