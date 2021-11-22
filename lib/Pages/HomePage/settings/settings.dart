@@ -70,10 +70,11 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                   child: DropdownButtonFormField(
                     decoration: snipInputDecoration.copyWith(hintText: userData.group, hintStyle: TextStyle(color: MyColorTheme.Text),),
                     icon: Icon(Icons.menu_open, color: MyColorTheme.PrimaryAccent,),
+                    iconSize: 24,
                     items: groups.map((String group) {
                       return DropdownMenuItem(
                           value: group,
-                          child: SizedBox(width: 100, child: Text(group, style: TextStyle(color: MyColorTheme.Text),)),
+                          child: Text(group, style: TextStyle(color: MyColorTheme.Text),),
                       );
                     }).toList(),
                     onChanged: (val) {
@@ -136,22 +137,19 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                 padding: const EdgeInsets.only(left: 15),
                                 child: Text(variables.teacherKey, style: TextStyle(color: Colors.white, fontSize: 16),),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8),
-                                child: AnimateIcons(
-                                  startIcon: Icons.file_copy_outlined,
-                                  endIcon: Icons.check,
-                                  startIconColor: MyColorTheme.PrimaryAccent,
-                                  endIconColor: MyColorTheme.PrimaryAccent,
-                                  size: 35,
-                                  controller: copyController,
-                                  onStartIconPress: () {
-                                    Clipboard.setData(ClipboardData(text: variables.teacherKey));
-                                    return true;
-                                  },
-                                  duration: Duration(milliseconds: 300),
-                                  clockwise: false,
-                                ),
+                              AnimateIcons(
+                                startIcon: Icons.file_copy_outlined,
+                                endIcon: Icons.check,
+                                startIconColor: MyColorTheme.PrimaryAccent,
+                                endIconColor: MyColorTheme.PrimaryAccent,
+                                size: 24,
+                                controller: copyController,
+                                onStartIconPress: () {
+                                  Clipboard.setData(ClipboardData(text: variables.teacherKey));
+                                  return true;
+                                },
+                                duration: Duration(milliseconds: 300),
+                                clockwise: false,
                               ),
                             ],
                           ),
