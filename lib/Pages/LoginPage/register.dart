@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maturita/Models/groups.dart';
 import 'package:maturita/Services/auth.dart';
 import 'package:maturita/shared/design.dart';
 import 'LoginPage.dart';
@@ -38,6 +37,9 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
 
     final variables = Provider.of<Variables>(context);
+
+    String groupString = variables.groups.join(',');
+    List<String> groups = groupString.split(',');
 
     return loading ? Loading() : Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),

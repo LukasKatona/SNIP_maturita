@@ -1,8 +1,9 @@
 import 'dart:async';
-
+import 'dart:ffi';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:maturita/Models/groups.dart';
 import 'package:maturita/Models/variables.dart';
 import 'package:maturita/Pages/HomePage/profile/profile.dart';
 import 'package:maturita/shared/design.dart';
@@ -24,6 +25,8 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
   AnimateIconController copyController = AnimateIconController();
   String _currentName;
   String _currentGroup;
+  String _deleteGroup = 'none';
+  String _newGroup = '';
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,10 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
     final variables = Provider.of<Variables>(context);
 
     if (userData != null && variables != null){
+
+      String groupString = variables.groups.join(',');
+      List<String> groups = groupString.split(',');
+
       return SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -89,9 +96,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                 padding: EdgeInsets.zero,
                 child: FlatButton(
                   onPressed: () async {
-                    if(_formKey.currentState.validate()) {
-                      await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp, _currentGroup ?? userData.group);
-                    }
+                    await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp, _currentGroup ?? userData.group);
                   },
                   child: Ink(
                     decoration: BoxDecoration(
@@ -162,7 +167,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                         onPressed: () async {
                           var animateToStart = copyController.animateToStart;
                           animateToStart();
-                          await DatabaseService().updateTeacherKey();
+                          await DatabaseService().updateAdminVars(groups);
                         },
                         child: Ink(
                           decoration: BoxDecoration(
@@ -188,6 +193,93 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                       ),
                     ),
                     SizedBox(height: 15,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: new Theme(
+                              data: Theme.of(context).copyWith(
+                                canvasColor: MyColorTheme.Secondary,
+                              ),
+                              child: DropdownButtonFormField(
+                                decoration: snipInputDecoration.copyWith(hintText: groups[0], hintStyle: TextStyle(color: MyColorTheme.Text),),
+                                icon: Icon(Icons.menu_open, color: MyColorTheme.PrimaryAccent,),
+                                iconSize: 24,
+                                items: groups.map((String group) {
+                                  return DropdownMenuItem(
+                                    value: group,
+                                    child: Text(group, style: TextStyle(color: MyColorTheme.Text),),
+                                  );
+                                }).toList(),
+                                onChanged: (val) {
+                                  setState(() => _deleteGroup = val);
+                                },
+                                value: _deleteGroup,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 15,),
+                          Expanded(
+                            child:  TextField(
+                              style: TextStyle(color: Colors.white),
+                              cursorColor: Color(0xFFFF6B00),
+                              decoration: snipInputDecoration.copyWith(hintText: "enter new group"),
+                              onChanged: (val) {
+                                setState(() {
+                                  if (val.isNotEmpty){
+                                    _newGroup = val;
+                                  }else{
+                                    _newGroup = '';
+                                  }
+                                });
+                              }
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 15,),
+                    ButtonTheme(
+                      padding: EdgeInsets.zero,
+                      child: FlatButton(
+                        onPressed: () async {
+                          setState(() {
+                            if (_deleteGroup != 'none'){
+                              groups.removeWhere((element) => element == _deleteGroup);
+                            }
+                            if (_newGroup != ''){
+                              groups.insert(groups.length, _newGroup);
+                              _newGroup = '';
+                            }
+                            groups.sort();
+                          });
+                          await DatabaseService().updateAdminVars(groups);
+                        },
+                        child: Ink(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0)
+                          ),
+                          child: Container(
+                            constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Update",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15,),
                   ],
                 ),
               ),
@@ -201,3 +293,5 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
     }
   }
 }
+
+

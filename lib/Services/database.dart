@@ -14,7 +14,7 @@ class DatabaseService {
   final CollectionReference snipCollection = FirebaseFirestore.instance.collection('snip');
   final CollectionReference adminCollection = FirebaseFirestore.instance.collection('admin');
 
-  // update teacher key
+  // generate new teacher key
   String generatePassword({
     bool letter = true,
     bool isNumber = true,
@@ -38,9 +38,11 @@ class DatabaseService {
     }).join('');
   }
 
-  Future updateTeacherKey() async{
+  // update admin vars
+  Future updateAdminVars(List<String> updateGroups) async{
     return await adminCollection.doc('variables').set({
       'teacherKey': generatePassword(),
+      'groups': updateGroups,
     });
   }
 
@@ -61,6 +63,7 @@ class DatabaseService {
   Variables _variablesFromSnapshot(DocumentSnapshot snapshot) {
     return Variables(
       teacherKey: snapshot.get('teacherKey') ?? '',
+      groups: snapshot.get('groups') ?? '',
     );
   }
 
