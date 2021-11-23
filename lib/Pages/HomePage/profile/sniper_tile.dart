@@ -36,7 +36,12 @@ class _SniperTileState extends State<SniperTile> {
               child: ListTile(
                 leading: CircleAvatar(
                   radius: 20,
-                  backgroundColor: Colors.red,
+                  backgroundColor: MyColorTheme.PrimaryAccent,
+                  child: Visibility(
+                    visible: widget.sniper.role == 'student',
+                    replacement: Icon(Icons.work, color: MyColorTheme.Secondary,),
+                      child: Icon(Icons.school, color: MyColorTheme.Secondary,)
+                  ),
                 ),
                 title: Text(widget.sniper.name, style: TextStyle(color: Colors.white),),
                 subtitle: Text(widget.sniper.role + " | " + widget.sniper.group, style: TextStyle(color: Colors.white),),
@@ -47,7 +52,7 @@ class _SniperTileState extends State<SniperTile> {
               child: IconButton(
                 onPressed: () async{
                   if (userData.role != 'student'){
-                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.anon, widget.sniper.fulXp, widget.sniper.lessXp, userData.group);
+                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.anon, widget.sniper.fulXp, widget.sniper.lessXp, widget.sniper.group);
                   }
                 },
                 icon: Icon(
