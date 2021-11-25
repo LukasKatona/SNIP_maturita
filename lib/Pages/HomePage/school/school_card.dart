@@ -71,7 +71,10 @@ class _SchoolCardState extends State<SchoolCard> {
       if (widget.currentXp > rankList[i].minXp){
         minXp = rankList[i].minXp;
         minXp == 0 ? maxXp = 32 : maxXp = (rankList[i].minXp)*2;
-        rank = rankList[i].rank;
+        widget.currentXp == 0 ? rank = rankList[0].rank : rank = rankList[i].rank;
+      }
+      if (widget.currentXp == 0){
+        rank = rankList[0].rank;
       }
     }
 
@@ -97,7 +100,7 @@ class _SchoolCardState extends State<SchoolCard> {
               children: [
                 Expanded(flex: widget.currentXp-minXp, child: Container(height: 5,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
+                      gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -113,20 +116,19 @@ class _SchoolCardState extends State<SchoolCard> {
                   setState(() {
                     otherQuestions = 0;
                   });
-
                   if(widget.fulLess){
                     setState(() {
                       fulOrLessQuestions = true;
                       firstByte = GenerateQuestionVars();
                       xpMultiplier = getXpMultiplier();
                       if (firstByte < 128){
-                        subnets = new Random().nextInt(1024)+1;
+                        subnets = new Random().nextInt(512)+1;
                         hosts = new Random().nextInt(32768)+1;
                       } else if (firstByte > 127 && firstByte < 192){
-                        subnets = new Random().nextInt(128)+1;
+                        subnets = new Random().nextInt(64)+1;
                         hosts = new Random().nextInt(1024)+1;
                       } else if (firstByte > 191){
-                        subnets = new Random().nextInt(16)+1;
+                        subnets = new Random().nextInt(8)+1;
                         hosts = new Random().nextInt(32)+1;
                       }
                     });
@@ -151,7 +153,7 @@ class _SchoolCardState extends State<SchoolCard> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
+                      gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),

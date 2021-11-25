@@ -87,8 +87,8 @@ class _QuestionDecToBinState extends State<QuestionDecToBin> {
             ),
             TextFormField(
               keyboardType: TextInputType.number,
-              style: TextStyle(color: Colors.white),
-              cursorColor: Color(0xFFFF6B00),
+              style: TextStyle(color: MyColorTheme.Text),
+              cursorColor: MyColorTheme.PrimaryAccent,
               decoration: snipInputDecoration.copyWith(hintText: "Binary value"),
               onChanged: (val) {
                 setState(() {
@@ -158,7 +158,7 @@ class _QuestionDecToBinState extends State<QuestionDecToBin> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "Divide the number into powers of 2 and then convert these numbers into corresponding bits:\n\n"),
               TextSpan(text: "${question}", style: TextStyle(color: MyColorTheme.PrimaryAccent)),

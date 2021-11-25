@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:maturita/Pages/HomePage/calculator/calculator.dart';
+import 'package:maturita/shared/design.dart';
 import 'input.dart';
 import 'dart:math';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
@@ -14,11 +16,24 @@ class _MyOutputState extends State<MyOutput> {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
+    return outOfRange ? Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+              Icons.warning_rounded,
+            color: MyColorTheme.PrimaryAccent,
+            size: 150,
+          ),
+          Text("Out of range. Consider bigger network class or less hosts or subnets.", style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.center,),
+        ],
+      ),
+    ) : Visibility(
       visible: submitBool == true,
       child: Container(
         child: DraggableScrollbar.rrect(
-          backgroundColor: Color(0xFFFF6B00),
+          backgroundColor: MyColorTheme.PrimaryAccent,
           labelTextBuilder: (double offset) => Text("${offset ~/ 161}", style: TextStyle(color: Colors.white),),
           controller: _scrollController,
           child: ListView.builder(
@@ -38,14 +53,14 @@ class _MyOutputState extends State<MyOutput> {
                       child: Text(
                         "#" + index.toString() + " Subnet ",
                         style: TextStyle(
-                          color: Color(0xFF5B5B5B),
+                          color: MyColorTheme.GreyText,
                           fontSize: 16,
                         ),
                       ),
                     ),
                     Card(
                       elevation: 0.0,
-                      color: (index == 0 && fullOrLess || index == (subnetList.length - 1) && fullOrLess) ? Colors.red : Color(0xFF211D2D),
+                      color: (index == 0 && fullOrLess || index == (subnetList.length - 1) && fullOrLess) ? Colors.red : MyColorTheme.Secondary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
@@ -59,14 +74,14 @@ class _MyOutputState extends State<MyOutput> {
                                   Text(
                                     "IP",
                                     style: TextStyle(
-                                      color: Color(0xFF5B5B5B),
+                                      color: MyColorTheme.GreyText,
                                       fontSize: 16,
                                     ),
                                   ),
                                   Text(
                                     subnetList[index].address,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: MyColorTheme.Text,
                                       fontSize: 20,
                                     ),
                                   ),
@@ -74,14 +89,14 @@ class _MyOutputState extends State<MyOutput> {
                                   Text(
                                     "First Host",
                                     style: TextStyle(
-                                      color: Color(0xFF5B5B5B),
+                                      color: MyColorTheme.GreyText,
                                       fontSize: 16,
                                     ),
                                   ),
                                   Text(
                                     subnetList[index].firstHost,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: MyColorTheme.Text,
                                       fontSize: 20,
                                     ),
                                   ),
@@ -95,14 +110,14 @@ class _MyOutputState extends State<MyOutput> {
                                   Text(
                                     "Broadcast",
                                     style: TextStyle(
-                                      color: Color(0xFF5B5B5B),
+                                      color: MyColorTheme.GreyText,
                                       fontSize: 16,
                                     ),
                                   ),
                                   Text(
                                     subnetList[index].broadcast,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: MyColorTheme.Text,
                                       fontSize: 20,
                                     ),
                                   ),
@@ -110,14 +125,14 @@ class _MyOutputState extends State<MyOutput> {
                                   Text(
                                     "Last Host",
                                     style: TextStyle(
-                                      color: Color(0xFF5B5B5B),
+                                      color: MyColorTheme.GreyText,
                                       fontSize: 16,
                                     ),
                                   ),
                                   Text(
                                     subnetList[index].lastHost,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: MyColorTheme.Text,
                                       fontSize: 20,
                                     ),
                                   ),

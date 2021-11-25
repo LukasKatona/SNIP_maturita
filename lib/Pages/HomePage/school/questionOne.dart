@@ -48,9 +48,9 @@ class _QuestionOneState extends State<QuestionOne> {
           print("correct");
 
           if (fulOrLessQuestions){
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group);
           }else{
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group);
           }
 
           questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
@@ -107,7 +107,7 @@ class _QuestionOneState extends State<QuestionOne> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "Class A" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class A" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -120,7 +120,7 @@ class _QuestionOneState extends State<QuestionOne> {
                       "Class A",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.white,
+                          color:  _answer == "Class A" ? Colors.white : MyColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -140,7 +140,7 @@ class _QuestionOneState extends State<QuestionOne> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "Class B" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class B" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -153,7 +153,7 @@ class _QuestionOneState extends State<QuestionOne> {
                       "Class B",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.white,
+                          color:  _answer == "Class B" ? Colors.white : MyColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -173,7 +173,7 @@ class _QuestionOneState extends State<QuestionOne> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "Class C" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class C" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -186,7 +186,7 @@ class _QuestionOneState extends State<QuestionOne> {
                       "Class C",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.white,
+                          color: _answer == "Class C" ? Colors.white : MyColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -225,7 +225,7 @@ class _QuestionOneState extends State<QuestionOne> {
       explanation: RichText(
         textAlign: TextAlign.justify,
         text: TextSpan(
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
           children: <TextSpan>[
             TextSpan(text: "IPv4 addresses are devided into 5 classes based on their first byte. "),
             TextSpan(text: "Class A", style: TextStyle(color: MyColorTheme.PrimaryAccent)),

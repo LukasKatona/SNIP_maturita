@@ -39,20 +39,20 @@ class DatabaseService {
   }
 
   // update admin vars
-  Future updateAdminVars(List<String> updateGroups) async{
+  Future updateAdminVars(String teacherKey, List<String> updateGroups) async{
     return await adminCollection.doc('variables').set({
-      'teacherKey': generatePassword(),
+      'teacherKey': teacherKey,
       'groups': updateGroups,
     });
   }
 
   // update user data
 
-  Future updateUserData(String name, String role, bool anon, int fulXp, int lessXp, String group) async{
+  Future updateUserData(String name, String role, bool isCalLocked, int fulXp, int lessXp, String group) async{
     return await snipCollection.doc(uid).set({
       'name': name,
       'role': role,
-      'anon': anon,
+      'isCalLocked': isCalLocked,
       'fulXp': fulXp,
       'lessXp': lessXp,
       'group': group,
@@ -75,7 +75,7 @@ class DatabaseService {
         uid: doc.id,
         name: doc.get('name') ?? '',
         role: doc.get('role') ?? '',
-        anon: doc.get('anon') ?? '',
+        isCalLocked: doc.get('isCalLocked') ?? '',
         fulXp: doc.get('fulXp') ?? '',
         lessXp: doc.get('lessXp') ?? '',
         group: doc.get('group') ?? '',
@@ -89,7 +89,7 @@ class DatabaseService {
       uid: uid,
       name: snapshot.get('name') ?? '',
       role: snapshot.get('role') ?? '',
-      anon: snapshot.get('anon') ?? '',
+      isCalLocked: snapshot.get('isCalLocked') ?? '',
       fulXp: snapshot.get('fulXp') ?? '',
       lessXp: snapshot.get('lessXp') ?? '',
       group: snapshot.get('group') ?? '',

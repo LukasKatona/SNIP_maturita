@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:maturita/Models/sniper.dart';
 import 'package:maturita/Models/user.dart';
+import 'package:maturita/Pages/HomePage/HomePage.dart';
 import 'package:maturita/Services/auth.dart';
 import 'package:maturita/Services/database.dart';
 import 'package:maturita/shared/design.dart';
@@ -19,7 +21,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
 
   Color getColor(Set<MaterialState> states) {
-    return Color(0xFFFF6B00);
+    return MyColorTheme.PrimaryAccent;
   }
 
   String searchString = '';
@@ -35,6 +37,8 @@ class _ProfilePageState extends State<ProfilePage> {
     final userData = Provider.of<UserData>(context);
 
     if (snipers != null && userData != null){
+
+      snipers = snipers.where((element) => element.role != 'deleted').toList();
 
       if (userData.role == 'admin'){
         snipers = snipers.where((element) => element.role != 'admin').toList();
@@ -77,9 +81,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      userData.name,
+                      userData.name + isOnline.toString(),
                       style: TextStyle(
-                        color: Colors.white,
+                        color: MyColorTheme.Text,
                         fontSize: 24,
                       ),
                     ),
@@ -87,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text(
                       userData.role + " | " + userData.group,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: MyColorTheme.Text,
                         fontSize: 16,
                       ),
                     ),
@@ -103,8 +107,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   Expanded(
                     child: TextFormField(
                         onChanged: (val) {setState(() => searchString = val);},
-                        style: TextStyle(color: Colors.white),
-                        cursorColor: Color(0xFFFF6B00),
+                        style: TextStyle(color: MyColorTheme.Text),
+                        cursorColor: MyColorTheme.PrimaryAccent,
                         decoration: snipInputDecoration.copyWith(
                             suffixIcon: Icon(Icons.search, color: MyColorTheme.GreyText, size: 30,),
                         )
@@ -118,7 +122,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             lockAllCals = !lockAllCals;
                           });
                           for (int i = 0; i < snipers.length; i++){
-                            await DatabaseService(uid: snipers[i].uid).updateUserData(snipers[i].name, snipers[i].role, !lockAllCals, snipers[i].fulXp, snipers[i].lessXp, snipers[i].group);
+                            if (snipers[i].role == 'student'){
+                              await DatabaseService(uid: snipers[i].uid).updateUserData(snipers[i].name, snipers[i].role, !lockAllCals, snipers[i].fulXp, snipers[i].lessXp, snipers[i].group);
+                            }
                           }
                         },
                         icon: Icon(
@@ -161,12 +167,34 @@ class _SignOutButtonState extends State<SignOutButton> {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      color: Color(0xFFFF6B00),
-      child: Text("Sign out", style: TextStyle(color: Colors.white),),
-      onPressed: () async{
-        await _auth.signOut();
-      },
+    return ButtonTheme(
+      padding: EdgeInsets.zero,
+      child: FlatButton(
+        onPressed: () async {
+          await _auth.signOut();
+        },
+        child: Ink(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [Colors.red, Colors.redAccent],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+              ),
+              borderRadius: BorderRadius.circular(10.0)
+          ),
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
+            alignment: Alignment.center,
+            child: Text(
+              "Sign Out",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

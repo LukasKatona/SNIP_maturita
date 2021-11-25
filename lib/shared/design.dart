@@ -35,18 +35,35 @@ dynamic snipInputDecoration = InputDecoration(
 );
 
 class MyColorTheme {
+
+  //light orange
+
+  static const PrimaryAccent =  Color(0xFFFF6B00);
+  static const SecondaryAccent =  Color(0xFFFF8A00);
+
+  static const Primary =  Color(0xFFD2CAB9);
+  static const Secondary =  Color(0xFFF8F0DF);
+
+  static const Text = Color(0xFF000000);
+  static const GreyText =  Color(0xFFBBBBBB);
+
+  static const Background =  Color(0xFFFEFBF3);
+  static const InputBG =  Color(0xFFE9E1D3);
+  static const NavBar =  Color(0xFFD2CAB9);
+  /*
+  //dark orange
   static const PrimaryAccent =  Color(0xFFFF6B00);
   static const SecondaryAccent =  Color(0xFFFF8A00);
 
   static const Primary =  Color(0xFF1C1926);
   static const Secondary =  Color(0xFF211D2D);
-  static const Tertiary =  Color(0xFF363243);
 
   static const Text = Color(0xFFFFFFFF);
   static const GreyText =  Color(0xFF5B5B5B);
 
   static const Background =  Color(0xFF100B1F);
-  static const NavBar =  Color(0xFF1C1926);
+  static const InputBG =  Color(0xFFEEE8D8); prerobit tuto farbu
+  static const NavBar =  Color(0xFF1C1926);*/
 }
 
 class ConfirmButtonDecor extends StatefulWidget {

@@ -103,8 +103,8 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                 Expanded(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Color(0xFFFF6B00),
+                    style: TextStyle(color: MyColorTheme.Text),
+                    cursorColor: MyColorTheme.PrimaryAccent,
                     decoration: snipInputDecoration.copyWith(hintText: "1. byte"),
                     onChanged: (val) {
                       setState(() {
@@ -122,8 +122,8 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                 Expanded(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Color(0xFFFF6B00),
+                    style: TextStyle(color: MyColorTheme.Text),
+                    cursorColor: MyColorTheme.PrimaryAccent,
                     decoration: snipInputDecoration.copyWith(hintText: "2. byte"),
                     onChanged: (val) {
                       setState(() {
@@ -141,8 +141,8 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                 Expanded(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Color(0xFFFF6B00),
+                    style: TextStyle(color: MyColorTheme.Text),
+                    cursorColor: MyColorTheme.PrimaryAccent,
                     decoration: snipInputDecoration.copyWith(hintText: "3. byte"),
                     onChanged: (val) {
                       setState(() {
@@ -188,7 +188,7 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "1. byte = ${question} / 2^16 rounded down: "),
               TextSpan(text: "${(question/65536).floor()}\n", style: TextStyle(color: MyColorTheme.PrimaryAccent)),

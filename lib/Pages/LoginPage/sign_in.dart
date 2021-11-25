@@ -32,13 +32,13 @@ class _SignInState extends State<SignIn> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text("LOG IN", style: TextStyle(color: Colors.white, fontSize: 24),),
+              Text("LOG IN", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),),
               SizedBox(height: 15,),
               TextFormField(
                 validator: (val) => val.isEmpty ? "enter your email" : null,
                 onChanged: (val) {setState(() => email = val);},
-                style: TextStyle(color: Colors.white),
-                cursorColor: Color(0xFFFF6B00),
+                style: TextStyle(color: MyColorTheme.Text),
+                cursorColor: MyColorTheme.PrimaryAccent,
                 decoration: snipInputDecoration.copyWith(hintText: "Email")
               ),
               SizedBox(height: 15,),
@@ -46,12 +46,12 @@ class _SignInState extends State<SignIn> {
                 obscureText: obscure,
                 validator: (val) => val.length < 8 ? "enter your password" : null,
                 onChanged: (val) {setState(() => password = val);},
-                style: TextStyle(color: Colors.white),
-                cursorColor: Color(0xFFFF6B00),
+                style: TextStyle(color: MyColorTheme.Text),
+                cursorColor: MyColorTheme.PrimaryAccent,
                 decoration: snipInputDecoration.copyWith(
-                  hintText: "Paswword",
+                  hintText: "Password",
                   suffixIcon: IconButton(
-                    icon: Icon(obscure ? Icons.remove_red_eye_outlined : Icons.remove_red_eye, color: obscure ? Color(0xFF5B5B5B) : Color(0xFFFF6B00)),
+                    icon: Icon(obscure ? Icons.remove_red_eye_outlined : Icons.remove_red_eye, color: obscure ? MyColorTheme.GreyText : MyColorTheme.PrimaryAccent),
                     onPressed: () {setState(() => obscure = !obscure);},
                   ),
                 ),
@@ -74,7 +74,7 @@ class _SignInState extends State<SignIn> {
                   },
                   child: Ink(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
+                        gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
                           begin: Alignment.bottomLeft,
                           end: Alignment.topRight,
                         ),
@@ -99,14 +99,14 @@ class _SignInState extends State<SignIn> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account? ", style: TextStyle(color: Colors.white),),
+                  Text("Don't have an account? ", style: TextStyle(color: MyColorTheme.Text),),
                   GestureDetector(
                       onTap: () {
                        setState(() {
                          logInPageController.animateToPage(1, duration: Duration(milliseconds: 500), curve: Curves.ease);
                        });
                       },
-                      child: Text("Register", style: TextStyle(color: Color(0xFFFF6B00)),)),
+                      child: Text("Register", style: TextStyle(color: MyColorTheme.PrimaryAccent),)),
                 ],
               ),
               Visibility(

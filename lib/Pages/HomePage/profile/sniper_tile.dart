@@ -43,8 +43,8 @@ class _SniperTileState extends State<SniperTile> {
                       child: Icon(Icons.school, color: MyColorTheme.Secondary,)
                   ),
                 ),
-                title: Text(widget.sniper.name, style: TextStyle(color: Colors.white),),
-                subtitle: Text(widget.sniper.role + " | " + widget.sniper.group, style: TextStyle(color: Colors.white),),
+                title: Text(widget.sniper.name, style: TextStyle(color: MyColorTheme.Text),),
+                subtitle: Text(widget.sniper.role + " | " + widget.sniper.group, style: TextStyle(color: MyColorTheme.Text),),
               ),
             ),
             Visibility(
@@ -52,20 +52,20 @@ class _SniperTileState extends State<SniperTile> {
               child: IconButton(
                 onPressed: () async{
                   if (userData.role != 'student'){
-                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.anon, widget.sniper.fulXp, widget.sniper.lessXp, widget.sniper.group);
+                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.isCalLocked, widget.sniper.fulXp, widget.sniper.lessXp, widget.sniper.group);
                   }
                 },
                 icon: Icon(
                   Icons.calculate,
                   size: 30,
-                  color: widget.sniper.anon == false ? MyColorTheme.PrimaryAccent : MyColorTheme.GreyText,
+                  color: widget.sniper.isCalLocked == false ? MyColorTheme.PrimaryAccent : MyColorTheme.GreyText,
                 ),
               ),
             ),
             Visibility(
               visible: userData.role == 'admin',
               child: IconButton(
-                onPressed: () => showDialog(context: context, builder: (_) => DeleteDialog(uid: widget.sniper.uid, name: widget.sniper.name, role: widget.sniper.role,)),
+                onPressed: () => showDialog(context: context, builder: (_) => DeleteDialog(uid: widget.sniper.uid, name: widget.sniper.name, role: widget.sniper.role, fulXp: widget.sniper.fulXp, lessXp: widget.sniper.lessXp,)),
                 icon: Icon(Icons.delete, color: MyColorTheme.PrimaryAccent, size: 30,),
               ),
             ),

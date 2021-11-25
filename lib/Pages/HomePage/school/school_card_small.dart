@@ -52,7 +52,7 @@ class _SchoolCardSmallState extends State<SchoolCardSmall> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
+                      gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),

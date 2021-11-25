@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maturita/Pages/LoginPage/register.dart';
 import 'package:maturita/Pages/LoginPage/sign_in.dart';
+import 'package:maturita/shared/design.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFF100B1F),
+      backgroundColor: MyColorTheme.Background,
 
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

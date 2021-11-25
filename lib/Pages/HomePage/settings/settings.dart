@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maturita/Models/sniper.dart';
 import 'package:maturita/Models/variables.dart';
 import 'package:maturita/Pages/HomePage/profile/profile.dart';
 import 'package:maturita/shared/design.dart';
@@ -34,43 +34,47 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
     final userData = Provider.of<UserData>(context);
     final user = Provider.of<MyUser>(context);
     final variables = Provider.of<Variables>(context);
+    var snipers = Provider.of<List<Sniper>>(context);
 
     if (userData != null && variables != null){
 
       String groupString = variables.groups.join(',');
       List<String> groups = groupString.split(',');
+      List<String> updateGroups = groups;
 
       return SingleChildScrollView(
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              SizedBox(height: 100,),
-              Text(
-                'Change your name:',
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(height: 15,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TextFormField(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Settings',
+                  style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),
+                ),
+                SizedBox(height: 15,),
+                Text(
+                  'Name',
+                  style: TextStyle(color: MyColorTheme.GreyText, fontSize: 16),
+                ),
+                SizedBox(height: 5,),
+                TextFormField(
                   initialValue: userData.name,
-                  style: TextStyle(color: Colors.white),
-                  cursorColor: Color(0xFFFF6B00),
+                  style: TextStyle(color: MyColorTheme.Text),
+                  cursorColor: MyColorTheme.PrimaryAccent,
                   decoration: snipInputDecoration.copyWith(hintText: "enter new name"),
                   validator: (val) => val.isEmpty ? 'Please enter a name' : null,
                   onChanged: (val) => setState(() => _currentName = val),
                 ),
-              ),
-              SizedBox(height: 15,),
-              Text(
-                'Change your class/group:',
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(height: 15,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: new Theme(
+                SizedBox(height: 15,),
+                Text(
+                  'Group',
+                  style: TextStyle(color: MyColorTheme.GreyText, fontSize: 16),
+                ),
+                SizedBox(height: 5,),
+                new Theme(
                   data: Theme.of(context).copyWith(
                       canvasColor: MyColorTheme.Secondary,
                   ),
@@ -90,112 +94,138 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                     value: _currentGroup,
                   ),
                 ),
-              ),
-              SizedBox(height: 15,),
-              ButtonTheme(
-                padding: EdgeInsets.zero,
-                child: FlatButton(
-                  onPressed: () async {
-                    await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp, _currentGroup ?? userData.group);
-                  },
-                  child: Ink(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0)
-                    ),
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Update",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16
+                SizedBox(height: 15,),
+                ButtonTheme(
+                  padding: EdgeInsets.zero,
+                  child: FlatButton(
+                    onPressed: () async {
+                      await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp, _currentGroup ?? userData.group);
+                    },
+                    child: Ink(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0)
+                      ),
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Save Settings",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 15,),
-              Visibility(
-                visible: userData.role == 'admin',
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 59,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        elevation: 0,
-                        color: MyColorTheme.Secondary,
-                        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(variables.teacherKey, style: TextStyle(color: Colors.white, fontSize: 16),),
-                              ),
-                              AnimateIcons(
-                                startIcon: Icons.file_copy_outlined,
-                                endIcon: Icons.check,
-                                startIconColor: MyColorTheme.PrimaryAccent,
-                                endIconColor: MyColorTheme.PrimaryAccent,
-                                size: 24,
-                                controller: copyController,
-                                onStartIconPress: () {
-                                  Clipboard.setData(ClipboardData(text: variables.teacherKey));
-                                  return true;
-                                },
-                                duration: Duration(milliseconds: 300),
-                                clockwise: false,
-                              ),
-                            ],
-                          ),
+                SizedBox(height: 15,),
+                Visibility(
+                  visible: userData.role == 'admin',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Admin Panel',
+                        style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),
                       ),
-                    ),
-                    SizedBox(height: 15,),
-                    ButtonTheme(
-                      padding: EdgeInsets.zero,
-                      child: FlatButton(
-                        onPressed: () async {
-                          var animateToStart = copyController.animateToStart;
-                          animateToStart();
-                          await DatabaseService().updateAdminVars(groups);
-                        },
-                        child: Ink(
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
-                                begin: Alignment.bottomLeft,
-                                end: Alignment.topRight,
-                              ),
-                              borderRadius: BorderRadius.circular(10.0)
+                      SizedBox(height: 15,),
+                      Text(
+                        'Teacher Key',
+                        style: TextStyle(color: MyColorTheme.GreyText, fontSize: 16),
+                      ),
+                      SizedBox(height: 5,),
+                      Container(
+                        height: 59,
+                        child: Card(
+                          margin: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)
                           ),
-                          child: Container(
-                            constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Update Teacher Key",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16
+                          elevation: 0,
+                          color: MyColorTheme.Secondary,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Text(variables.teacherKey, style: TextStyle(color: MyColorTheme.Text, fontSize: 16),),
+                                ),
+                                AnimateIcons(
+                                  startIcon: Icons.file_copy_outlined,
+                                  endIcon: Icons.check,
+                                  startIconColor: MyColorTheme.PrimaryAccent,
+                                  endIconColor: MyColorTheme.PrimaryAccent,
+                                  size: 24,
+                                  controller: copyController,
+                                  onStartIconPress: () {
+                                    Clipboard.setData(ClipboardData(text: variables.teacherKey));
+                                    return true;
+                                  },
+                                  duration: Duration(milliseconds: 300),
+                                  clockwise: false,
+                                ),
+                              ],
+                            ),
+                        ),
+                      ),
+                      SizedBox(height: 15,),
+                      ButtonTheme(
+                        padding: EdgeInsets.zero,
+                        child: FlatButton(
+                          onPressed: () async {
+                            var animateToStart = copyController.animateToStart;
+                            animateToStart();
+                            await DatabaseService().updateAdminVars(DatabaseService().generatePassword(), groups);
+                          },
+                          child: Ink(
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0)
+                            ),
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Update Teacher Key",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 15,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
+                      SizedBox(height: 15,),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Delete Group',
+                              style: TextStyle(color: MyColorTheme.GreyText, fontSize: 16),
+                            ),
+                          ),
+                          SizedBox(width: 15,),
+                          Expanded(
+                            child: Text(
+                              'Add Group',
+                              style: TextStyle(color: MyColorTheme.GreyText, fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5,),
+                      Row(
                         children: [
                           Expanded(
                             child: new Theme(
@@ -222,8 +252,8 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                           SizedBox(width: 15,),
                           Expanded(
                             child:  TextField(
-                              style: TextStyle(color: Colors.white),
-                              cursorColor: Color(0xFFFF6B00),
+                              style: TextStyle(color: MyColorTheme.Text),
+                              cursorColor: MyColorTheme.PrimaryAccent,
                               decoration: snipInputDecoration.copyWith(hintText: "enter new group"),
                               onChanged: (val) {
                                 setState(() {
@@ -238,53 +268,65 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(height: 15,),
-                    ButtonTheme(
-                      padding: EdgeInsets.zero,
-                      child: FlatButton(
-                        onPressed: () async {
-                          setState(() {
-                            if (_deleteGroup != 'none'){
-                              groups.removeWhere((element) => element == _deleteGroup);
-                            }
-                            if (_newGroup != ''){
-                              groups.insert(groups.length, _newGroup);
-                              _newGroup = '';
-                            }
-                            groups.sort();
-                          });
-                          await DatabaseService().updateAdminVars(groups);
-                        },
-                        child: Ink(
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [Color(0xFFFF6B00), Color(0xFFFF8A00)],
-                                begin: Alignment.bottomLeft,
-                                end: Alignment.topRight,
-                              ),
-                              borderRadius: BorderRadius.circular(10.0)
-                          ),
-                          child: Container(
-                            constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Update",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16
+                      SizedBox(height: 15,),
+                      ButtonTheme(
+                        padding: EdgeInsets.zero,
+                        child: FlatButton(
+                          onPressed: () async {
+                            setState(() {
+                              if (_deleteGroup != 'none'){
+                                bool delete = true;
+                                for (int i = 0; i < snipers.length; i++){
+                                  if (snipers[i].group == _deleteGroup){
+                                    delete = false;
+                                  }
+                                }
+                                if (delete){
+                                  String temp = _deleteGroup;
+                                  _deleteGroup = 'none';
+                                  groups.removeWhere((element) => element == temp);
+                                }else{
+                                  print("SRY ale tato skupina sa pouziva");
+                                }
+                              }
+                              if (_newGroup != ''){
+                                groups.insert(groups.length, _newGroup);
+                                _newGroup = '';
+                              }
+                              groups.sort();
+                            });
+                            await DatabaseService().updateAdminVars(variables.teacherKey, groups);
+                          },
+                          child: Ink(
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0)
+                            ),
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Update Groups",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 15,),
-                  ],
+                      SizedBox(height: 15,),
+                    ],
+                  ),
                 ),
-              ),
-              SignOutButton(),
-            ],
+                SignOutButton(),
+              ],
+            ),
           ),
         ),
       );

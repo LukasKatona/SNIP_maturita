@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/HomePage/school/classless/resultsPageLess.dart';
 import '../questionsPage.dart';
@@ -93,7 +94,7 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
           }
         }
 
-        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (1*xpMultiplier*correct), userData.group);
+        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier*correct), userData.group);
 
         if (correct == 5){
           setState(() {
@@ -115,198 +116,206 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
     }
 
     if (!_wrongAnswer){
-      return Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
-                    SizedBox(height: 15,),
-                    Text("Arrange these host numbers in descending order.\nWhat address range do we need for each of these subnets?", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
-                  ],
-                ),
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              elevation: 0,
-              color: MyColorTheme.Secondary,
-            ),
-            SizedBox(height: 15,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return KeyboardVisibilityBuilder(
+          builder: (context, isKeyboardVisible) {
+            return Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text("Hosts", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
-                  Text("Rounded", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
-
-                ],
-              ),
-            ),
-
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Theme(
-                      data: ThemeData(
-                        canvasColor: Colors.transparent,
+                  Visibility(
+                    visible: isKeyboardVisible == false,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                            SizedBox(height: 15,),
+                            Text("Arrange these host numbers in descending order.\nWhat address range do we need for each of these subnets?", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
+                          ],
+                        ),
                       ),
-                      child: ReorderableListView(
-                        children: hostListForQuestionThree.map((hostNum) => Padding(
-                          key: Key("${hostNum}"),
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: Card(
-                            margin: EdgeInsets.zero,
-                            color: MyColorTheme.Secondary,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            elevation: 0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(21.5),
-                              child: Center(child: Text("${hostNum}", style: TextStyle(color: MyColorTheme.Text),)),
-                            ),
-                          ),
-                        )).toList(),
-                        onReorder: (int start, int current) {
-                          setState(() {
-                            // dragging from top to bottom
-                            if (start < current) {
-                              int end = current - 1;
-                              int startItem = hostListForQuestionThree[start];
-                              int i = 0;
-                              int local = start;
-                              do {
-                                hostListForQuestionThree[local] = hostListForQuestionThree[++local];
-                                i++;
-                              } while (i < end - start);
-                              hostListForQuestionThree[end] = startItem;
-                            }
-                            // dragging from bottom to top
-                            else if (start > current) {
-                              int startItem = hostListForQuestionThree[start];
-                              for (int i = start; i > current; i--) {
-                                hostListForQuestionThree[i] = hostListForQuestionThree[i - 1];
-                              }
-                              hostListForQuestionThree[current] = startItem;
-                            }
-                          });
-                        },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)
                       ),
+                      elevation: 0,
+                      color: MyColorTheme.Secondary,
                     ),
                   ),
-                  SizedBox(width: 15,),
-                  Expanded(
-                    child: Column(
+                  SizedBox(height: 15,),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Colors.white),
-                          cursorColor: Color(0xFFFF6B00),
-                          decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
-                          onChanged: (val) {
-                            setState(() {
-                              if (val.isNotEmpty){
-                                answers[0] = int.parse(val);
-                                _warningVisible = false;
-                              }else{
-                                answers[0] = null;
-                              }
-                            });
-                          },
+                        Text("Hosts", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+                        Text("Rounded", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Theme(
+                            data: ThemeData(
+                              canvasColor: Colors.transparent,
+                            ),
+                            child: ReorderableListView(
+                              children: hostListForQuestionThree.map((hostNum) => Padding(
+                                key: Key("${hostNum}"),
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Card(
+                                  margin: EdgeInsets.zero,
+                                  color: MyColorTheme.Secondary,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  elevation: 0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(21.5),
+                                    child: Center(child: Text("${hostNum}", style: TextStyle(color: MyColorTheme.Text),)),
+                                  ),
+                                ),
+                              )).toList(),
+                              onReorder: (int start, int current) {
+                                setState(() {
+                                  // dragging from top to bottom
+                                  if (start < current) {
+                                    int end = current - 1;
+                                    int startItem = hostListForQuestionThree[start];
+                                    int i = 0;
+                                    int local = start;
+                                    do {
+                                      hostListForQuestionThree[local] = hostListForQuestionThree[++local];
+                                      i++;
+                                    } while (i < end - start);
+                                    hostListForQuestionThree[end] = startItem;
+                                  }
+                                  // dragging from bottom to top
+                                  else if (start > current) {
+                                    int startItem = hostListForQuestionThree[start];
+                                    for (int i = start; i > current; i--) {
+                                      hostListForQuestionThree[i] = hostListForQuestionThree[i - 1];
+                                    }
+                                    hostListForQuestionThree[current] = startItem;
+                                  }
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                        SizedBox(height: 15,),
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Colors.white),
-                          cursorColor: Color(0xFFFF6B00),
-                          decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
-                          onChanged: (val) {
-                            setState(() {
-                              if (val.isNotEmpty){
-                                answers[1] = int.parse(val);
-                                _warningVisible = false;
-                              }else{
-                                answers[1] = null;
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(height: 15,),
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Colors.white),
-                          cursorColor: Color(0xFFFF6B00),
-                          decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
-                          onChanged: (val) {
-                            setState(() {
-                              if (val.isNotEmpty){
-                                answers[2] = int.parse(val);
-                                _warningVisible = false;
-                              }else{
-                                answers[2] = null;
-                              }
-                            });
-                          },
-                        ),
-                        SizedBox(height: 15,),
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Colors.white),
-                          cursorColor: Color(0xFFFF6B00),
-                          decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
-                          onChanged: (val) {
-                            setState(() {
-                              if (val.isNotEmpty){
-                                answers[3] = int.parse(val);
-                                _warningVisible = false;
-                              }else{
-                                answers[3] = null;
-                              }
-                            });
-                          },
+                        SizedBox(width: 15,),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(color: MyColorTheme.Text),
+                                cursorColor: MyColorTheme.PrimaryAccent,
+                                decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
+                                onChanged: (val) {
+                                  setState(() {
+                                    if (val.isNotEmpty){
+                                      answers[0] = int.parse(val);
+                                      _warningVisible = false;
+                                    }else{
+                                      answers[0] = null;
+                                    }
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 15,),
+                              TextFormField(
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(color: MyColorTheme.Text),
+                                cursorColor: MyColorTheme.PrimaryAccent,
+                                decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
+                                onChanged: (val) {
+                                  setState(() {
+                                    if (val.isNotEmpty){
+                                      answers[1] = int.parse(val);
+                                      _warningVisible = false;
+                                    }else{
+                                      answers[1] = null;
+                                    }
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 15,),
+                              TextFormField(
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(color: MyColorTheme.Text),
+                                cursorColor: MyColorTheme.PrimaryAccent,
+                                decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
+                                onChanged: (val) {
+                                  setState(() {
+                                    if (val.isNotEmpty){
+                                      answers[2] = int.parse(val);
+                                      _warningVisible = false;
+                                    }else{
+                                      answers[2] = null;
+                                    }
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 15,),
+                              TextFormField(
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(color: MyColorTheme.Text),
+                                cursorColor: MyColorTheme.PrimaryAccent,
+                                decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
+                                onChanged: (val) {
+                                  setState(() {
+                                    if (val.isNotEmpty){
+                                      answers[3] = int.parse(val);
+                                      _warningVisible = false;
+                                    }else{
+                                      answers[3] = null;
+                                    }
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
+
+
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: 30,
+                        child: Visibility(
+                          visible: _warningVisible,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Please fill up all fields!", style: TextStyle(color: Colors.red),),
+                          ),
+                        ),
+                      ),
+                      ButtonTheme(
+                        padding: EdgeInsets.zero,
+                        child: FlatButton(
+                          onPressed: _afterConfirm,
+                          child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
+                        ),
+                      ),
+                      SizedBox(height: 15,),
+                    ],
+                  ),
                 ],
               ),
-            ),
-
-
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  height: 30,
-                  child: Visibility(
-                    visible: _warningVisible,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Please fill up all fields!", style: TextStyle(color: Colors.red),),
-                    ),
-                  ),
-                ),
-                ButtonTheme(
-                  padding: EdgeInsets.zero,
-                  child: FlatButton(
-                    onPressed: _afterConfirm,
-                    child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
-                  ),
-                ),
-                SizedBox(height: 15,),
-              ],
-            ),
-          ],
-        ),
+            );
+          }
       );
+
     }else{
       return CorrectAnswerPage(
         yourAnswer: "${hostListForQuestionThree[0]}, ${hostListForQuestionThree[1]}, ${hostListForQuestionThree[2]}, ${hostListForQuestionThree[3]} rounded to ${answers[0]}, ${answers[1]}, ${answers[2]}, ${answers[3]}",
@@ -314,7 +323,7 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "It is important to arrange your subnets in "),
               TextSpan(text: "descending", style: TextStyle(color: MyColorTheme.PrimaryAccent)),

@@ -91,9 +91,9 @@ class _QuestionFourState extends State<QuestionFour> {
         }
 
         if (fulOrLessQuestions){
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (2*xpMultiplier*correct), userData.lessXp, userData.group);
+          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (2*xpMultiplier*correct), userData.lessXp, userData.group);
         }else{
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (2*xpMultiplier*correct), userData.group);
+          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (2*xpMultiplier*correct), userData.group);
         }
 
         if (!wrong){
@@ -133,7 +133,7 @@ class _QuestionFourState extends State<QuestionFour> {
                             RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
                                 children: fulOrLessQuestions ? <TextSpan>[
                                   TextSpan(text: "We have "),
                                   TextSpan(text: subnets.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
@@ -170,8 +170,8 @@ class _QuestionFourState extends State<QuestionFour> {
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Color(0xFFFF6B00),
+                    style: TextStyle(color: MyColorTheme.Text),
+                    cursorColor: MyColorTheme.PrimaryAccent,
                     decoration: snipInputDecoration.copyWith(hintText: "Subnet IP address"),
                     onChanged: (val) {
                       setState(() {
@@ -187,8 +187,8 @@ class _QuestionFourState extends State<QuestionFour> {
                   SizedBox(height: 15,),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Color(0xFFFF6B00),
+                    style: TextStyle(color: MyColorTheme.Text),
+                    cursorColor: MyColorTheme.PrimaryAccent,
                     decoration: snipInputDecoration.copyWith(hintText: "IP address of the first host"),
                     onChanged: (val) {
                       setState(() {
@@ -204,8 +204,8 @@ class _QuestionFourState extends State<QuestionFour> {
                   SizedBox(height: 15,),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Color(0xFFFF6B00),
+                    style: TextStyle(color: MyColorTheme.Text),
+                    cursorColor: MyColorTheme.PrimaryAccent,
                     decoration: snipInputDecoration.copyWith(hintText: "IP address of the last host"),
                     onChanged: (val) {
                       setState(() {
@@ -221,8 +221,8 @@ class _QuestionFourState extends State<QuestionFour> {
                   SizedBox(height: 15,),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Color(0xFFFF6B00),
+                    style: TextStyle(color: MyColorTheme.Text),
+                    cursorColor: MyColorTheme.PrimaryAccent,
                     decoration: snipInputDecoration.copyWith(hintText: "Broadcast IP address"),
                     onChanged: (val) {
                       setState(() {
@@ -236,6 +236,10 @@ class _QuestionFourState extends State<QuestionFour> {
                     },
                   ),
                   SizedBox(height: 15,),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Note: if there are any spare bits, they are added to the subnet bits.", style: TextStyle(color: MyColorTheme.Text),),
+                  ),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -270,7 +274,7 @@ class _QuestionFourState extends State<QuestionFour> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
             children: fulOrLessQuestions ? <TextSpan>[
               TextSpan(text: "Solution to this question is easy but it takes time. First multiply the number of the subnet with magic number, which is the host range of one subnet. This will give you the "),
               TextSpan(text: "IP", style: TextStyle(color: MyColorTheme.PrimaryAccent)),

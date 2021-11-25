@@ -48,9 +48,9 @@ class _QuestionTwoState extends State<QuestionTwo> {
           print("correct");
 
           if (fulOrLessQuestions){
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group);
           }else{
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group);
           }
 
           questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
@@ -107,7 +107,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/8 - 255.0.0.0" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "/8 - 255.0.0.0" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -120,7 +120,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                       "/8 - 255.0.0.0",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.white,
+                          color: _answer == "/8 - 255.0.0.0" ? Colors.white : MyColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -140,7 +140,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/16 - 255.255.0.0" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "/16 - 255.255.0.0" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -153,7 +153,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                       "/16 - 255.255.0.0",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.white,
+                          color: _answer == "/16 - 255.255.0.0" ? Colors.white : MyColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -173,7 +173,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/24 - 255.255.255.0" ? [Color(0xFFFF6B00), Color(0xFFFF8A00)] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "/24 - 255.255.255.0" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -186,7 +186,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                       "/24 - 255.255.255.0",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.white,
+                          color: _answer == "/24 - 255.255.255.0" ? Colors.white : MyColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -225,7 +225,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
           explanation: RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
               children: <TextSpan>[
                 TextSpan(text: "Slash format of the subnet mask represents the number of bits used for net part of the address. Default subnet mask for "),
                 TextSpan(text: "Class A", style: TextStyle(color: MyColorTheme.PrimaryAccent)),

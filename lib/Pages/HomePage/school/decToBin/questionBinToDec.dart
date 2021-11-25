@@ -86,8 +86,8 @@ class _QuestionBinToDecState extends State<QuestionBinToDec> {
             ),
             TextFormField(
               keyboardType: TextInputType.number,
-              style: TextStyle(color: Colors.white),
-              cursorColor: Color(0xFFFF6B00),
+              style: TextStyle(color: MyColorTheme.Text),
+              cursorColor: MyColorTheme.PrimaryAccent,
               decoration: snipInputDecoration.copyWith(hintText: "Decimal value"),
               onChanged: (val) {
                 setState(() {
@@ -173,7 +173,7 @@ class _QuestionBinToDecState extends State<QuestionBinToDec> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "Convert each bit into it's corresponding decimal value. Then simply add up the numbers of bits which are set to 1.\n\n"),
               TextSpan(text: "${DecToBin(question)}", style: TextStyle(color: MyColorTheme.PrimaryAccent)),

@@ -53,7 +53,7 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
             wrong = true;
           }
         }
-        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.anon, userData.fulXp + (1*xpMultiplier*correct), userData.lessXp, userData.group);
+        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier*correct), userData.lessXp, userData.group);
         if (!wrong){
           setState(() {
             _greenConfirm = true;
@@ -87,9 +87,9 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
                         children: <TextSpan>[
-                          TextSpan(text: "We have "),
+                          TextSpan(text: "We have ", ),
                           TextSpan(text: subnets.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
                           TextSpan(text: " subnets witch "),
                           TextSpan(text: hosts.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
@@ -119,8 +119,8 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        cursorColor: Color(0xFFFF6B00),
+                        style: TextStyle(color: MyColorTheme.Text),
+                        cursorColor: MyColorTheme.PrimaryAccent,
                         decoration: snipInputDecoration.copyWith(hintText: "Bits for subnets"),
                         onChanged: (val) {
                           setState(() {
@@ -147,8 +147,8 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: Colors.white),
-                        cursorColor: Color(0xFFFF6B00),
+                        style: TextStyle(color: MyColorTheme.Text),
+                        cursorColor: MyColorTheme.PrimaryAccent,
                         decoration: snipInputDecoration.copyWith(hintText: "Bits for hosts"),
                         onChanged: (val) {
                           setState(() {
@@ -199,7 +199,7 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "Solution one: add "),
               TextSpan(text: "1", style: TextStyle(color: MyColorTheme.PrimaryAccent)),

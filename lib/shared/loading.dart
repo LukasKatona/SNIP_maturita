@@ -8,7 +8,7 @@ class Loading extends StatelessWidget {
     return Container(
       color: MyColorTheme.Background,
       child: Center(
-        child: SpinKitThreeBounce(
+        child: SpinKitCircle(
           size: 50,
           color: MyColorTheme.PrimaryAccent,
         ),

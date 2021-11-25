@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -16,16 +17,21 @@ class CalculatorPage extends StatefulWidget {
 class _CalculatorPageState extends State<CalculatorPage> {
   @override
   Widget build(BuildContext context) {
+
     return SizedBox.expand(
       child: Stack(
         children: [
           MyOutput(),
-          Visibility(
-            visible: hideInputBool == false,
-            child: GestureDetector(
-              onTap: (){myKey.currentState.hideInput();},
-              child: Container(
-                color: Color(0x55000000),
+          AnimatedOpacity(
+            duration: Duration(milliseconds: 300),
+            opacity: hideInputBool ? 0 : 1,
+            child: Container(
+              color: Color(0x55000000),
+              child: Visibility(
+                visible: hideInputBool == false,
+                child: GestureDetector(
+                  onTap: myKey.currentState.hideInput,
+                ),
               ),
             ),
           ),
@@ -54,6 +60,8 @@ int DecToBin(input) {
   }
   return bin;
 }
+
+bool outOfRange = false;
 
 void calculateIP(){
   subnetList.clear();
@@ -103,42 +111,54 @@ void calculateIP(){
     int slashFormat = 0;
 
     if (intByte < 224 && intByte > 191){
+      if (binRooms.toString().length + binHost.toString().length <= 8){
+        if (spareSwitch){
+          bitSN = binRooms.toString().length;
+          bitHost = 8 - bitSN;
+        }else {
+          bitHost = binHost.toString().length;
+          bitSN = 8 - bitHost;
+        }
+        if(bitSN+bitHost>8){
 
-      if (spareSwitch){
-        bitSN = binRooms.toString().length;
-        bitHost = 8 - bitSN;
-      }else {
-        bitHost = binHost.toString().length;
-        bitSN = 8 - bitHost;
+        }
+        slashFormat = 24 + bitSN;
+        outOfRange = false;
+      }else{
+        outOfRange = true;
       }
-      slashFormat = 24 + bitSN;
-
     }
 
     if (intByte < 192 && intByte > 127){
-
-      if (spareSwitch){
-        bitSN = binRooms.toString().length;
-        bitHost = 16 - bitSN;
-      }else {
-        bitHost = binHost.toString().length;
-        bitSN = 16 - bitHost;
+      if (binRooms.toString().length + binHost.toString().length <= 16){
+        if (spareSwitch){
+          bitSN = binRooms.toString().length;
+          bitHost = 16 - bitSN;
+        }else {
+          bitHost = binHost.toString().length;
+          bitSN = 16 - bitHost;
+        }
+        slashFormat = 16 + bitSN;
+        outOfRange = false;
+      }else{
+        outOfRange = true;
       }
-      slashFormat = 16 + bitSN;
-
     }
 
     if (intByte < 127 && intByte > 0){
-
-      if (spareSwitch){
-        bitSN = binRooms.toString().length;
-        bitHost = 24 - bitSN;
-      }else {
-        bitHost = binHost.toString().length;
-        bitSN = 24 - bitHost;
+      if (binRooms.toString().length + binHost.toString().length <= 24){
+        if (spareSwitch){
+          bitSN = binRooms.toString().length;
+          bitHost = 24 - bitSN;
+        }else {
+          bitHost = binHost.toString().length;
+          bitSN = 24 - bitHost;
+        }
+        slashFormat = 8 + bitSN;
+        outOfRange = false;
+      }else{
+        outOfRange = true;
       }
-      slashFormat = 8 + bitSN;
-
     }
 
     maxSN = pow(2, bitSN);
@@ -188,6 +208,19 @@ void calculateIP(){
         subnetList.add(Subnet(address, firstHost, lastHost, broadcast));
       }
 
+    }
+
+    //check range
+    String lastBC = subnetList[subnetList.length-1].broadcast;
+    List<String> lastBCBytes = lastBC.split('.');
+    if (intByte < 224 && intByte > 191){
+      lastBCBytes[2] == '0' ? outOfRange = false : outOfRange = true;
+    }
+    if (intByte < 192 && intByte > 127){
+      lastBCBytes[1] == '0' ? outOfRange = false : outOfRange = true;
+    }
+    if (intByte < 127 && intByte > 0){
+      int.parse(lastBCBytes[1]) < 256 ? outOfRange = false : outOfRange = true;
     }
 
   }
