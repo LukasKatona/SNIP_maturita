@@ -21,7 +21,7 @@ class _LockedCalState extends State<LockedCal> {
       visible: userData.isCalLocked == true,
       child: SizedBox.expand(
           child: Container(
-            color: Color(0xFF100B1F),
+            color: MyColorTheme.Background,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

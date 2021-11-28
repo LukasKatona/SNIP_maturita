@@ -43,6 +43,7 @@ class AuthService {
       if (teacherKey == correctKey){
         role = 'teacher';
         await DatabaseService(uid: user.uid).updateUserData(name, role, false, 0, 0, group);
+        //await DatabaseService().updateAdminVars(DatabaseService().generatePassword(), updateGroups);
       }else{
         role = 'student';
         await DatabaseService(uid: user.uid).updateUserData(name, role, true, 0, 0, group);

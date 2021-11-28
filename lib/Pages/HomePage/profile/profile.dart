@@ -81,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      userData.name + isOnline.toString(),
+                      userData.name,
                       style: TextStyle(
                         color: MyColorTheme.Text,
                         fontSize: 24,

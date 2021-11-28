@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maturita/Services/auth.dart';
+import 'package:maturita/Services/database.dart';
 import 'package:maturita/shared/design.dart';
 import 'LoginPage.dart';
 import 'package:maturita/shared/loading.dart';
@@ -141,6 +142,9 @@ class _RegisterState extends State<Register> {
                         if (_formKey.currentState.validate()){
                           setState(() => loading = true);
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password, teacherKey, name, variables.teacherKey, group);
+                          if (teacherKey == variables.teacherKey){
+                            await DatabaseService().updateAdminVars(DatabaseService().generatePassword(), groups);
+                          }
                           if (result == null){
                             setState(() {
                               error = "please supply a valid email";
