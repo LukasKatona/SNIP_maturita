@@ -31,6 +31,9 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
   String _newGroup = '';
   bool _deleteGroupLabel = true;
 
+  bool confirmSaveSettings = false;
+  bool confirmUpdateGroups = false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -100,7 +103,12 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                   ),
                 ),
                 validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                onChanged: (val) => setState(() => _currentName = val),
+                onChanged: (val) {
+                  setState(() {
+                    _currentName = val;
+                    confirmSaveSettings = false;
+                  });
+                },
               ),
               SizedBox(height: 15,),
               Text(
@@ -161,9 +169,46 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     onChanged: (val) {
-                      setState(() => _currentGroup = val);
+                      setState(() {
+                        _currentGroup = val;
+                        confirmSaveSettings = false;
+                      });
                     },
                     value: _currentGroup,
+                  ),
+                ),
+              ),
+              SizedBox(height: 15,),
+              ButtonTheme(
+                padding: EdgeInsets.zero,
+                child: FlatButton(
+                  onPressed: () async {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp, _currentGroup ?? userData.group, DarkOrLight);
+                    setState(() {
+                      confirmSaveSettings = true;
+                    });
+                  },
+                  child: Ink(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: !confirmSaveSettings ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [Colors.green, Colors.greenAccent],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0)
+                    ),
+                    child: Container(
+                      constraints: BoxConstraints(minHeight: 59.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Save Settings",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -181,6 +226,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                       padding: EdgeInsets.zero,
                       child: FlatButton(
                         onPressed: () async{
+                          FocusScope.of(context).requestFocus(FocusNode());
                           await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp, userData.group, !userData.darkOrLight);
                           setState(() {
                             myColorTheme = new MyColorTheme();
@@ -218,6 +264,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                       padding: EdgeInsets.zero,
                       child: FlatButton(
                         onPressed: () async{
+                          FocusScope.of(context).requestFocus(FocusNode());
                           await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp, userData.group, !userData.darkOrLight);
                           setState(() {
                             myColorTheme = new MyColorTheme();
@@ -250,36 +297,6 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                     ),
                   ),
                 ],
-              ),
-              SizedBox(height: 15,),
-              ButtonTheme(
-                padding: EdgeInsets.zero,
-                child: FlatButton(
-                  onPressed: () async {
-                    await DatabaseService(uid: user.uid).updateUserData(_currentName ?? userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp, _currentGroup ?? userData.group, DarkOrLight);
-                  },
-                  child: Ink(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent],
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0)
-                    ),
-                    child: Container(
-                      constraints: BoxConstraints(minHeight: 59.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Save Settings",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ),
               SizedBox(height: 15,),
               Visibility(
@@ -336,6 +353,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                       padding: EdgeInsets.zero,
                       child: FlatButton(
                         onPressed: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           var animateToStart = copyController.animateToStart;
                           animateToStart();
                           await DatabaseService().updateAdminVars(DatabaseService().generatePassword(), groups);
@@ -441,7 +459,10 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                   });
                                 },
                                 onChanged: (val) {
-                                  setState(() => _deleteGroup = val);
+                                  setState(() {
+                                    _deleteGroup = val;
+                                    confirmUpdateGroups = false;
+                                  });
                                 },
                                 value: _deleteGroup,
                               ),
@@ -491,6 +512,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                                 ),
                                 onChanged: (val) {
                                   setState(() {
+                                    confirmUpdateGroups = false;
                                     if (val.isNotEmpty){
                                       _newGroup = val;
                                     }else{
@@ -508,6 +530,7 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                       padding: EdgeInsets.zero,
                       child: FlatButton(
                         onPressed: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           setState(() {
                             if (_deleteGroup != 'none'){
                               bool delete = true;
@@ -529,12 +552,13 @@ class _SettingsPageState extends State<SettingsPage> with TickerProviderStateMix
                               _newGroup = '';
                             }
                             groups.sort();
+                            confirmUpdateGroups = true;
                           });
                           await DatabaseService().updateAdminVars(variables.teacherKey, groups);
                         },
                         child: Ink(
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent],
+                              gradient: LinearGradient(colors: !confirmUpdateGroups ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [Colors.green, Colors.greenAccent],
                                 begin: Alignment.bottomLeft,
                                 end: Alignment.topRight,
                               ),
