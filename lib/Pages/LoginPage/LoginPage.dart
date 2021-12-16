@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: MyColorTheme.Background,
+      backgroundColor: myColorTheme.Background,
 
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

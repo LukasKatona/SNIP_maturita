@@ -83,16 +83,16 @@ class _SchoolCardState extends State<SchoolCard> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Text(widget.name, style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24, fontWeight: FontWeight.bold),),
+            Text(widget.name, style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24, fontWeight: FontWeight.bold),),
             //Text(widget.desc, style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.center),
             SizedBox(height: 15,),
-            Text('Rank: ' + rank, style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16, fontWeight: FontWeight.bold),),
+            Text('Rank: ' + rank, style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16, fontWeight: FontWeight.bold),),
             SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.currentXp.toString() + ' Xp', style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                Text(maxXp.toString() + ' Xp', style: TextStyle(color: MyColorTheme.Text)),
+                Text(widget.currentXp.toString() + ' Xp', style: TextStyle(color: myColorTheme.PrimaryAccent)),
+                Text(maxXp.toString() + ' Xp', style: TextStyle(color: myColorTheme.Text)),
               ],
             ),
             SizedBox(height: 10,),
@@ -100,12 +100,12 @@ class _SchoolCardState extends State<SchoolCard> {
               children: [
                 Expanded(flex: widget.currentXp-minXp, child: Container(height: 5,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
+                      gradient: LinearGradient(colors: [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
                   ),)),
-                Expanded(flex: maxXp-widget.currentXp, child: Container(height: 5, color: MyColorTheme.GreyText,)),
+                Expanded(flex: maxXp-widget.currentXp, child: Container(height: 5, color: myColorTheme.GreyText,)),
               ],
             ),
             SizedBox(height: 20,),
@@ -153,14 +153,14 @@ class _SchoolCardState extends State<SchoolCard> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
+                      gradient: LinearGradient(colors: [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
                       borderRadius: BorderRadius.circular(10.0)
                   ),
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
+                    constraints: BoxConstraints(minHeight: 59.0),
                     alignment: Alignment.center,
                     child: Text(
                       "Practise",
@@ -181,7 +181,7 @@ class _SchoolCardState extends State<SchoolCard> {
           borderRadius: BorderRadius.circular(10)
       ),
       elevation: 0,
-      color: MyColorTheme.Secondary,
+      color: myColorTheme.Secondary,
     );
   }
 }

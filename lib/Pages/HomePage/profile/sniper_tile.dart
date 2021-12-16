@@ -28,7 +28,7 @@ class _SniperTileState extends State<SniperTile> {
           borderRadius: BorderRadius.circular(10)
         ),
         elevation: 0,
-        color: MyColorTheme.Secondary,
+        color: myColorTheme.Secondary,
         margin: EdgeInsets.fromLTRB(20, 6, 20, 0),
         child: Row(
           children: [
@@ -36,15 +36,15 @@ class _SniperTileState extends State<SniperTile> {
               child: ListTile(
                 leading: CircleAvatar(
                   radius: 20,
-                  backgroundColor: MyColorTheme.PrimaryAccent,
+                  backgroundColor: myColorTheme.PrimaryAccent,
                   child: Visibility(
                     visible: widget.sniper.role == 'student',
-                    replacement: Icon(Icons.work, color: MyColorTheme.Secondary,),
-                      child: Icon(Icons.school, color: MyColorTheme.Secondary,)
+                    replacement: Icon(Icons.work, color: myColorTheme.Secondary,),
+                      child: Icon(Icons.school, color: myColorTheme.Secondary,)
                   ),
                 ),
-                title: Text(widget.sniper.name, style: TextStyle(color: MyColorTheme.Text),),
-                subtitle: Text(widget.sniper.role + " | " + widget.sniper.group, style: TextStyle(color: MyColorTheme.Text),),
+                title: Text(widget.sniper.name, style: TextStyle(color: myColorTheme.Text),),
+                subtitle: Text(widget.sniper.role + " | " + widget.sniper.group, style: TextStyle(color: myColorTheme.Text),),
               ),
             ),
             Visibility(
@@ -52,13 +52,13 @@ class _SniperTileState extends State<SniperTile> {
               child: IconButton(
                 onPressed: () async{
                   if (userData.role != 'student'){
-                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.isCalLocked, widget.sniper.fulXp, widget.sniper.lessXp, widget.sniper.group);
+                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.isCalLocked, widget.sniper.fulXp, widget.sniper.lessXp, widget.sniper.group, userData.darkOrLight);
                   }
                 },
                 icon: Icon(
                   Icons.calculate,
                   size: 30,
-                  color: widget.sniper.isCalLocked == false ? MyColorTheme.PrimaryAccent : MyColorTheme.GreyText,
+                  color: widget.sniper.isCalLocked == false ? myColorTheme.PrimaryAccent : myColorTheme.GreyText,
                 ),
               ),
             ),
@@ -66,7 +66,7 @@ class _SniperTileState extends State<SniperTile> {
               visible: userData.role == 'admin',
               child: IconButton(
                 onPressed: () => showDialog(context: context, builder: (_) => DeleteDialog(uid: widget.sniper.uid, name: widget.sniper.name, role: widget.sniper.role, fulXp: widget.sniper.fulXp, lessXp: widget.sniper.lessXp,)),
-                icon: Icon(Icons.delete, color: MyColorTheme.PrimaryAccent, size: 30,),
+                icon: Icon(Icons.delete, color: myColorTheme.PrimaryAccent, size: 30,),
               ),
             ),
           ],

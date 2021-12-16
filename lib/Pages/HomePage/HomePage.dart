@@ -5,6 +5,7 @@ import 'package:maturita/Models/user.dart';
 import 'package:maturita/Pages/HomePage/profile/profile.dart';
 import 'package:maturita/Pages/HomePage/school/school.dart';
 import 'package:maturita/Pages/HomePage/settings/settings.dart';
+import 'package:maturita/main.dart';
 import 'package:maturita/shared/loading.dart';
 import 'calculator/input.dart';
 import 'calculator/calculator.dart';
@@ -94,9 +95,11 @@ class HomePageState extends State<HomePage> {
     }
 
     if (userData != null) {
+      DarkOrLight = userData.darkOrLight;
+      myColorTheme = new MyColorTheme();
       if (userData.role != 'deleted'){
         return !isOnline ? Scaffold(
-          backgroundColor: MyColorTheme.Background,
+          backgroundColor: myColorTheme.Background,
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -104,17 +107,17 @@ class HomePageState extends State<HomePage> {
               children: [
                 Icon(
                   Icons.wifi_off_sharp,
-                  color: MyColorTheme.PrimaryAccent,
+                  color: myColorTheme.PrimaryAccent,
                   size: 150,
                 ),
-                Text("You are offline, to continue, please check your internet connection.", style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.center,),
+                Text("You are offline, to continue, please check your internet connection.", style: TextStyle(color: myColorTheme.Text), textAlign: TextAlign.center,),
               ],
             ),
           ),
         ) : StreamProvider<List<Sniper>>.value(
           value: DatabaseService().snipers,
           child: Scaffold(
-            backgroundColor: MyColorTheme.Background,
+            backgroundColor: myColorTheme.Background,
 
             body: PageView(
               controller: mainPageController,
@@ -132,30 +135,30 @@ class HomePageState extends State<HomePage> {
             bottomNavigationBar: BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              selectedItemColor: MyColorTheme.PrimaryAccent,
+              selectedItemColor: myColorTheme.PrimaryAccent,
               currentIndex: bottomSelectedIndex,
               onTap: (index) {
                 bottomTapped(index);
               },
-              items: const <BottomNavigationBarItem>[
+              items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
-                  backgroundColor: MyColorTheme.NavBar,
+                  backgroundColor: myColorTheme.NavBar,
                   label: 'Settings',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.account_box),
-                  backgroundColor: MyColorTheme.NavBar,
+                  backgroundColor: myColorTheme.NavBar,
                   label: 'Profile',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.school),
-                  backgroundColor: MyColorTheme.NavBar,
+                  backgroundColor: myColorTheme.NavBar,
                   label: 'School',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.calculate),
-                  backgroundColor: MyColorTheme.NavBar,
+                  backgroundColor: myColorTheme.NavBar,
                   label: 'Calculator',
                 ),
               ],
@@ -164,7 +167,7 @@ class HomePageState extends State<HomePage> {
         );
       }else{
         return Scaffold(
-          backgroundColor: MyColorTheme.Background,
+          backgroundColor: myColorTheme.Background,
           body: Padding(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -172,11 +175,11 @@ class HomePageState extends State<HomePage> {
               children: [
                 Icon(
                   Icons.block,
-                  color: MyColorTheme.PrimaryAccent,
+                  color: myColorTheme.PrimaryAccent,
                   size: 200,
                 ),
                 Text("Your account ${userData.name} has been deleted.\nIf you want more information or recover your account, please contact the administrator.",
-                  style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+                  style: TextStyle(color: myColorTheme.Text), textAlign: TextAlign.center,),
                 SizedBox(height: 15,),
                 SignOutButton(),
               ],

@@ -94,7 +94,7 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
           }
         }
 
-        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier*correct), userData.group);
+        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier*correct), userData.group, userData.darkOrLight);
 
         if (correct == 5){
           setState(() {
@@ -130,9 +130,9 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: [
-                            Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                            Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
                             SizedBox(height: 15,),
-                            Text("Arrange these host numbers in descending order.\nWhat address range do we need for each of these subnets?", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
+                            Text("Arrange these host numbers in descending order.\nWhat address range do we need for each of these subnets?", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
                           ],
                         ),
                       ),
@@ -140,7 +140,7 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
                           borderRadius: BorderRadius.circular(10)
                       ),
                       elevation: 0,
-                      color: MyColorTheme.Secondary,
+                      color: myColorTheme.Secondary,
                     ),
                   ),
                   SizedBox(height: 15,),
@@ -149,8 +149,8 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Hosts", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
-                        Text("Rounded", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+                        Text("Hosts", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
+                        Text("Rounded", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
 
                       ],
                     ),
@@ -170,14 +170,14 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
                                 padding: const EdgeInsets.only(bottom: 15),
                                 child: Card(
                                   margin: EdgeInsets.zero,
-                                  color: MyColorTheme.Secondary,
+                                  color: myColorTheme.Secondary,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)
                                   ),
                                   elevation: 0,
                                   child: Padding(
                                     padding: const EdgeInsets.all(21.5),
-                                    child: Center(child: Text("${hostNum}", style: TextStyle(color: MyColorTheme.Text),)),
+                                    child: Center(child: Text("${hostNum}", style: TextStyle(color: myColorTheme.Text),)),
                                   ),
                                 ),
                               )).toList(),
@@ -214,9 +214,42 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
                             children: [
                               TextFormField(
                                 keyboardType: TextInputType.number,
-                                style: TextStyle(color: MyColorTheme.Text),
-                                cursorColor: MyColorTheme.PrimaryAccent,
-                                decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
+                                style: TextStyle(color: myColorTheme.Text),
+                                cursorColor: myColorTheme.PrimaryAccent,
+                                decoration: InputDecoration(
+                                  hintText: "Power of 2",
+                                  hintStyle: TextStyle(color: myColorTheme.GreyText),
+                                  fillColor: myColorTheme.Secondary,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: myColorTheme.Secondary,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color:myColorTheme.PrimaryAccent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: myColorTheme.PrimaryAccent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
                                 onChanged: (val) {
                                   setState(() {
                                     if (val.isNotEmpty){
@@ -231,9 +264,42 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
                               SizedBox(height: 15,),
                               TextFormField(
                                 keyboardType: TextInputType.number,
-                                style: TextStyle(color: MyColorTheme.Text),
-                                cursorColor: MyColorTheme.PrimaryAccent,
-                                decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
+                                style: TextStyle(color: myColorTheme.Text),
+                                cursorColor: myColorTheme.PrimaryAccent,
+                                decoration: InputDecoration(
+                                  hintText: "Power of 2",
+                                  hintStyle: TextStyle(color: myColorTheme.GreyText),
+                                  fillColor: myColorTheme.Secondary,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: myColorTheme.Secondary,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color:myColorTheme.PrimaryAccent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: myColorTheme.PrimaryAccent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
                                 onChanged: (val) {
                                   setState(() {
                                     if (val.isNotEmpty){
@@ -248,9 +314,42 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
                               SizedBox(height: 15,),
                               TextFormField(
                                 keyboardType: TextInputType.number,
-                                style: TextStyle(color: MyColorTheme.Text),
-                                cursorColor: MyColorTheme.PrimaryAccent,
-                                decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
+                                style: TextStyle(color: myColorTheme.Text),
+                                cursorColor: myColorTheme.PrimaryAccent,
+                                decoration: InputDecoration(
+                                  hintText: "Power of 2",
+                                  hintStyle: TextStyle(color: myColorTheme.GreyText),
+                                  fillColor: myColorTheme.Secondary,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: myColorTheme.Secondary,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color:myColorTheme.PrimaryAccent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: myColorTheme.PrimaryAccent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
                                 onChanged: (val) {
                                   setState(() {
                                     if (val.isNotEmpty){
@@ -265,9 +364,42 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
                               SizedBox(height: 15,),
                               TextFormField(
                                 keyboardType: TextInputType.number,
-                                style: TextStyle(color: MyColorTheme.Text),
-                                cursorColor: MyColorTheme.PrimaryAccent,
-                                decoration: snipInputDecoration.copyWith(hintText: "power of 2"),
+                                style: TextStyle(color: myColorTheme.Text),
+                                cursorColor: myColorTheme.PrimaryAccent,
+                                decoration: InputDecoration(
+                                  hintText: "Power of 2",
+                                  hintStyle: TextStyle(color: myColorTheme.GreyText),
+                                  fillColor: myColorTheme.Secondary,
+                                  filled: true,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: myColorTheme.Secondary,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color:myColorTheme.PrimaryAccent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: myColorTheme.PrimaryAccent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
                                 onChanged: (val) {
                                   setState(() {
                                     if (val.isNotEmpty){
@@ -323,16 +455,16 @@ class _QuestionThreeLessState extends State<QuestionThreeLess> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+            style: TextStyle(fontSize: 16, color: myColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "It is important to arrange your subnets in "),
-              TextSpan(text: "descending", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "descending", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " order based on the number of hosts, otherwise their ranges could overlap.\n\n"),
 
               TextSpan(text: "You also need to "),
-              TextSpan(text: "round up", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "round up", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " the number of hosts in each subnet to the closest "),
-              TextSpan(text: "power of 2", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "power of 2", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ", because the address range cannot be anything else."),
 
             ],

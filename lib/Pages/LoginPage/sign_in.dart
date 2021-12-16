@@ -32,26 +32,90 @@ class _SignInState extends State<SignIn> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text("LOG IN", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),),
+              Text("LOG IN", style: TextStyle(color: myColorTheme.Text, fontSize: 24),),
               SizedBox(height: 15,),
               TextFormField(
                 validator: (val) => val.isEmpty ? "enter your email" : null,
                 onChanged: (val) {setState(() => email = val);},
-                style: TextStyle(color: MyColorTheme.Text),
-                cursorColor: MyColorTheme.PrimaryAccent,
-                decoration: snipInputDecoration.copyWith(hintText: "Email")
+                style: TextStyle(color: myColorTheme.Text),
+                cursorColor: myColorTheme.PrimaryAccent,
+                decoration: InputDecoration(
+                  hintText: "Email",
+                  hintStyle: TextStyle(color: myColorTheme.GreyText),
+                  fillColor: myColorTheme.Secondary,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: myColorTheme.Secondary,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color:myColorTheme.PrimaryAccent,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: myColorTheme.PrimaryAccent,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 15,),
               TextFormField(
                 obscureText: obscure,
                 validator: (val) => val.length < 8 ? "enter your password" : null,
                 onChanged: (val) {setState(() => password = val);},
-                style: TextStyle(color: MyColorTheme.Text),
-                cursorColor: MyColorTheme.PrimaryAccent,
-                decoration: snipInputDecoration.copyWith(
+                style: TextStyle(color: myColorTheme.Text),
+                cursorColor: myColorTheme.PrimaryAccent,
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(color: myColorTheme.GreyText),
+                  fillColor: myColorTheme.Secondary,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: myColorTheme.Secondary,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color:myColorTheme.PrimaryAccent,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: myColorTheme.PrimaryAccent,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
                   hintText: "Password",
                   suffixIcon: IconButton(
-                    icon: Icon(obscure ? Icons.remove_red_eye_outlined : Icons.remove_red_eye, color: obscure ? MyColorTheme.GreyText : MyColorTheme.PrimaryAccent),
+                    icon: Icon(obscure ? Icons.remove_red_eye_outlined : Icons.remove_red_eye, color: obscure ? myColorTheme.GreyText : myColorTheme.PrimaryAccent),
                     onPressed: () {setState(() => obscure = !obscure);},
                   ),
                 ),
@@ -74,14 +138,14 @@ class _SignInState extends State<SignIn> {
                   },
                   child: Ink(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
+                        gradient: LinearGradient(colors: [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent],
                           begin: Alignment.bottomLeft,
                           end: Alignment.topRight,
                         ),
                         borderRadius: BorderRadius.circular(10.0)
                     ),
                     child: Container(
-                      constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
+                      constraints: BoxConstraints(minHeight: 59.0),
                       alignment: Alignment.center,
                       child: Text(
                         "LOG IN",
@@ -99,14 +163,14 @@ class _SignInState extends State<SignIn> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account? ", style: TextStyle(color: MyColorTheme.Text),),
+                  Text("Don't have an account? ", style: TextStyle(color: myColorTheme.Text),),
                   GestureDetector(
                       onTap: () {
                        setState(() {
                          logInPageController.animateToPage(1, duration: Duration(milliseconds: 500), curve: Curves.ease);
                        });
                       },
-                      child: Text("Register", style: TextStyle(color: MyColorTheme.PrimaryAccent),)),
+                      child: Text("Register", style: TextStyle(color: myColorTheme.PrimaryAccent),)),
                 ],
               ),
               Visibility(

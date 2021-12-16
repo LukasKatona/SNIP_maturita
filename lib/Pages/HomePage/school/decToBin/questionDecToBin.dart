@@ -68,9 +68,9 @@ class _QuestionDecToBinState extends State<QuestionDecToBin> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Text(formatter.format(question).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                    Text(formatter.format(question).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
                     SizedBox(height: 15,),
-                    Text("Convert this number into binary value.", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
+                    Text("Convert this number into binary value.", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
                   ],
                 ),
               ),
@@ -78,18 +78,51 @@ class _QuestionDecToBinState extends State<QuestionDecToBin> {
                   borderRadius: BorderRadius.circular(10)
               ),
               elevation: 0,
-              color: MyColorTheme.Secondary,
+              color: myColorTheme.Secondary,
             ),
             SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Answer:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+              child: Text("Answer:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
             ),
             TextFormField(
               keyboardType: TextInputType.number,
-              style: TextStyle(color: MyColorTheme.Text),
-              cursorColor: MyColorTheme.PrimaryAccent,
-              decoration: snipInputDecoration.copyWith(hintText: "Binary value"),
+              style: TextStyle(color: myColorTheme.Text),
+              cursorColor: myColorTheme.PrimaryAccent,
+              decoration: InputDecoration(
+                hintText: "Binary Value",
+                hintStyle: TextStyle(color: myColorTheme.GreyText),
+                fillColor: myColorTheme.Secondary,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: myColorTheme.Secondary,
+                    width: 2,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color:myColorTheme.PrimaryAccent,
+                    width: 2,
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: myColorTheme.PrimaryAccent,
+                    width: 2,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.red,
+                    width: 2,
+                  ),
+                ),
+              ),
               onChanged: (val) {
                 setState(() {
                   if (val.isNotEmpty){
@@ -104,11 +137,11 @@ class _QuestionDecToBinState extends State<QuestionDecToBin> {
             SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Tip:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+              child: Text("Tip:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Subtract the highest power of 2 possible. Then continue down until you come to 2^0, which is 1. Each time you can make the subtraction, write down 1. If you can not, write down 0.\n\nA calculator might help.", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.justify,),
+              child: Text("Subtract the highest power of 2 possible. Then continue down until you come to 2^0, which is 1. Each time you can make the subtraction, write down 1. If you can not, write down 0.\n\nA calculator might help.", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.justify,),
             ),
             Expanded(
               child: Column(
@@ -121,12 +154,20 @@ class _QuestionDecToBinState extends State<QuestionDecToBin> {
                       child: Text("Please fill up all fields!", style: TextStyle(color: Colors.red),),
                     ),
                   ),
-                  ButtonTheme(
-                    padding: EdgeInsets.zero,
-                    child: FlatButton(
-                      onPressed: _afterConfirm,
-                      child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
-                    ),
+                  Row(
+                    children: [
+                      MyBackButton(),
+                      SizedBox(width: 15,),
+                      Expanded(
+                        child: ButtonTheme(
+                          padding: EdgeInsets.zero,
+                          child: FlatButton(
+                            onPressed: _afterConfirm,
+                            child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 15,),
                 ],
@@ -158,12 +199,12 @@ class _QuestionDecToBinState extends State<QuestionDecToBin> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+            style: TextStyle(fontSize: 16, color: myColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "Divide the number into powers of 2 and then convert these numbers into corresponding bits:\n\n"),
-              TextSpan(text: "${question}", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${question}", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " ${powOfTwo}\n\n"),
-              TextSpan(text: "${question}", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${question}", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " = ${DecToBin(question)}"),
             ],
           ),

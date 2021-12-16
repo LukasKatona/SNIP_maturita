@@ -56,7 +56,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  Text("Practise Results", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),),
+                  Text("Practise Results", style: TextStyle(color: myColorTheme.Text, fontSize: 24),),
                   SizedBox(height: 25,),
                   SizedBox(
                     height: 150,
@@ -68,8 +68,8 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                           width: 150,
                           child: CircularProgressIndicator(
                             value: getNumOfCorrectAns()/8,
-                            valueColor: AlwaysStoppedAnimation<Color>(MyColorTheme.PrimaryAccent),
-                            backgroundColor: MyColorTheme.Primary,
+                            valueColor: AlwaysStoppedAnimation<Color>(myColorTheme.PrimaryAccent),
+                            backgroundColor: myColorTheme.Primary,
                             strokeWidth: 15,
                           ),
                         ),
@@ -79,8 +79,8 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                             text: TextSpan(
                               style: TextStyle(fontSize: 32),
                               children: <TextSpan>[
-                                TextSpan(text: (getNumOfCorrectAns()/8*100).ceil().toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                                TextSpan(text: "%", style: TextStyle(color: MyColorTheme.Text)),
+                                TextSpan(text: (getNumOfCorrectAns()/8*100).ceil().toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
+                                TextSpan(text: "%", style: TextStyle(color: myColorTheme.Text)),
                               ],
                             ),
                           ),
@@ -96,7 +96,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                 borderRadius: BorderRadius.circular(10)
             ),
             elevation: 0,
-            color: MyColorTheme.Secondary,
+            color: myColorTheme.Secondary,
           ),
           SizedBox(height: 15,),
           Expanded(
@@ -109,7 +109,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                       child: Column(
                         children: [
                           Text("Class", style: TextStyle(color: correctAnsListFul[0] ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text(correctAnsListFul[0] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Expanded(child: Center(child: Text(correctAnsListFul[0] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: myColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -117,7 +117,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     elevation: 0,
-                    color: MyColorTheme.Secondary,
+                    color: myColorTheme.Secondary,
                   ),
                 ),
                 Expanded(
@@ -127,7 +127,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                       child: Column(
                         children: [
                           Text("Mask", style: TextStyle(color: correctAnsListFul[1] ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text(correctAnsListFul[1] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Expanded(child: Center(child: Text(correctAnsListFul[1] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: myColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -135,7 +135,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     elevation: 0,
-                    color: MyColorTheme.Secondary,
+                    color: myColorTheme.Secondary,
                   ),
                 ),
               ],
@@ -151,7 +151,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                       child: Column(
                         children: [
                           Text("Bits", style: TextStyle(color: correctAnsListFul[2] && correctAnsListFul[3] ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text("+" + getQuestionThreeXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Expanded(child: Center(child: Text("+" + getQuestionThreeXp().toString() + " XP", style: TextStyle(color: myColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -159,7 +159,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     elevation: 0,
-                    color: MyColorTheme.Secondary,
+                    color: myColorTheme.Secondary,
                   ),
                 ),
                 Expanded(
@@ -169,7 +169,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                       child: Column(
                         children: [
                           Text("Subnet", style: TextStyle(color: (correctAnsListFul[7] && correctAnsListFul[4] && correctAnsListFul[5] && correctAnsListFul[6]) ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text("+" + getQuestionFourXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Expanded(child: Center(child: Text("+" + getQuestionFourXp().toString() + " XP", style: TextStyle(color: myColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -177,7 +177,7 @@ class _ResultsPageFulState extends State<ResultsPageFul> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     elevation: 0,
-                    color: MyColorTheme.Secondary,
+                    color: myColorTheme.Secondary,
                   ),
                 ),
               ],

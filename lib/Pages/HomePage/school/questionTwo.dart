@@ -48,9 +48,9 @@ class _QuestionTwoState extends State<QuestionTwo> {
           print("correct");
 
           if (fulOrLessQuestions){
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group, userData.darkOrLight);
           }else{
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group, userData.darkOrLight);
           }
 
           questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
@@ -79,9 +79,9 @@ class _QuestionTwoState extends State<QuestionTwo> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                    Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
                     SizedBox(height: 15,),
-                    Text("What is the default subnet mask for this IP address?", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
+                    Text("What is the default subnet mask for this IP address?", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
                   ],
                 ),
               ),
@@ -89,12 +89,12 @@ class _QuestionTwoState extends State<QuestionTwo> {
                   borderRadius: BorderRadius.circular(10)
               ),
               elevation: 0,
-              color: MyColorTheme.Secondary,
+              color: myColorTheme.Secondary,
             ),
             SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Answers:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+              child: Text("Answers:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
             ),
             ButtonTheme(
               padding: EdgeInsets.zero,
@@ -107,7 +107,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/8 - 255.0.0.0" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "/8 - 255.0.0.0" ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [myColorTheme.Secondary, myColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -120,7 +120,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                       "/8 - 255.0.0.0",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: _answer == "/8 - 255.0.0.0" ? Colors.white : MyColorTheme.Text,
+                          color: _answer == "/8 - 255.0.0.0" ? Colors.white : myColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -140,7 +140,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/16 - 255.255.0.0" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "/16 - 255.255.0.0" ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [myColorTheme.Secondary, myColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -153,7 +153,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                       "/16 - 255.255.0.0",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: _answer == "/16 - 255.255.0.0" ? Colors.white : MyColorTheme.Text,
+                          color: _answer == "/16 - 255.255.0.0" ? Colors.white : myColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -173,7 +173,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "/24 - 255.255.255.0" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "/24 - 255.255.255.0" ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [myColorTheme.Secondary, myColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -186,7 +186,7 @@ class _QuestionTwoState extends State<QuestionTwo> {
                       "/24 - 255.255.255.0",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: _answer == "/24 - 255.255.255.0" ? Colors.white : MyColorTheme.Text,
+                          color: _answer == "/24 - 255.255.255.0" ? Colors.white : myColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -225,30 +225,30 @@ class _QuestionTwoState extends State<QuestionTwo> {
           explanation: RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
-              style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+              style: TextStyle(fontSize: 16, color: myColorTheme.Text),
               children: <TextSpan>[
                 TextSpan(text: "Slash format of the subnet mask represents the number of bits used for net part of the address. Default subnet mask for "),
-                TextSpan(text: "Class A", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "Class A", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: " is "),
-                TextSpan(text: "/8", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "/8", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: ", which is one byte, therefore "),
-                TextSpan(text: "255.0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "255.0.0.0", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: ". \n\nDefault subnet mask for "),
-                TextSpan(text: "Class B", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "Class B", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: " is "),
-                TextSpan(text: "/16", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "/16", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: ", which are two bytes, therefore "),
-                TextSpan(text: "255.255.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "255.255.0.0", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: ". You can see that the IP range is getting smaller and number of different networks is getting bigger. \n\nDefault subnet mask for "),
-                TextSpan(text: "Class C", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "Class C", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: " is "),
-                TextSpan(text: "/24", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "/24", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: ", which are three bytes, therefore "),
-                TextSpan(text: "255.255.255.0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "255.255.255.0", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: ". This is also default subnet mask for "),
-                TextSpan(text: "Class D", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "Class D", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: ". and the last "),
-                TextSpan(text: "Class E", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                TextSpan(text: "Class E", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                 TextSpan(text: "."),
 
               ],

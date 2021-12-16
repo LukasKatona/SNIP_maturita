@@ -21,16 +21,16 @@ class _DeleteDialogState extends State<DeleteDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: MyColorTheme.Secondary,
+      backgroundColor: myColorTheme.Secondary,
       child: Wrap(
         children: [
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Text('Delete User', style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+            child: Text('Delete User', style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: Text('Do you really want to delete ${widget.role} ${widget.name}?\nThis account will be suspended. You can recover it from the Firebase console.', style: TextStyle(color: MyColorTheme.Text),),
+            child: Text('Do you really want to delete ${widget.role} ${widget.name}?\nThis account will be suspended. You can recover it from the Firebase console.', style: TextStyle(color: myColorTheme.Text),),
           ),
           Row(
             children: [
@@ -39,7 +39,7 @@ class _DeleteDialogState extends State<DeleteDialog> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                     )),
-                    color: MyColorTheme.Primary,
+                    color: myColorTheme.Primary,
                     height: 59,
                     onPressed: () => Navigator.pop(context),
                     child: Text('Exit', style: TextStyle(color: Colors.white, fontSize: 16),),
@@ -50,10 +50,10 @@ class _DeleteDialogState extends State<DeleteDialog> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(10),
                     )),
-                    color: MyColorTheme.PrimaryAccent,
+                    color: myColorTheme.PrimaryAccent,
                     height: 59,
                     onPressed: () async {
-                      await DatabaseService(uid: widget.uid).updateUserData(widget.name, "deleted", false, widget.fulXp, widget.lessXp, 'none');
+                      await DatabaseService(uid: widget.uid).updateUserData(widget.name, "deleted", false, widget.fulXp, widget.lessXp, 'none', true);
                       Navigator.pop(context);
                     },
                     child: Text('Delete', style: TextStyle(color: Colors.white, fontSize: 16),),

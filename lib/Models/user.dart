@@ -13,6 +13,7 @@ class UserData {
   final int fulXp;
   final int lessXp;
   final String group;
+  bool darkOrLight;
 
-  UserData({ this.uid, this.name, this.role, this.isCalLocked, this.fulXp, this.lessXp, this.group });
+  UserData({ this.uid, this.name, this.role, this.isCalLocked, this.fulXp, this.lessXp, this.group, this.darkOrLight });
 }

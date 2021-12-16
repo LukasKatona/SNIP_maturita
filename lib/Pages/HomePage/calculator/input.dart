@@ -58,7 +58,7 @@ class _MyInputState extends State<MyInput> {
                     flex: 1,
                     child: Row(
                       children: [
-                        SizedBox(width: 30, child: Icon(Icons.clear, color: MyColorTheme.Text,)),
+                        SizedBox(width: 30, child: Icon(Icons.clear, color: myColorTheme.Text,)),
                         Expanded(flex: 1, child: MultiTextField(i)),
                         SizedBox(width: 15,),
                         _addRemoveButton(i == snList.length-1, i),
@@ -92,7 +92,10 @@ class _MyInputState extends State<MyInput> {
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-          color: (add) ? Colors.green : Colors.red,
+          gradient: LinearGradient(colors: (add) ? [Colors.green, Colors.greenAccent] : [Colors.red, Colors.red[400]],
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+          ),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
@@ -118,23 +121,23 @@ class _MyInputState extends State<MyInput> {
                 },
                 controller: _IPcontroller,
                 keyboardType: TextInputType.number,
-                style: TextStyle(color: MyColorTheme.Text),
-                cursorColor: MyColorTheme.PrimaryAccent,
+                style: TextStyle(color: myColorTheme.Text),
+                cursorColor: myColorTheme.PrimaryAccent,
                 decoration: InputDecoration(
                   hintText: "First Byte of IP Address",
-                  hintStyle: TextStyle(color: MyColorTheme.GreyText),
-                  fillColor: MyColorTheme.Secondary, filled: true,
+                  hintStyle: TextStyle(color: myColorTheme.GreyText),
+                  fillColor: myColorTheme.Secondary, filled: true,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
-                      color: MyColorTheme.Secondary,
+                      color: myColorTheme.Secondary,
                       width: 2,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
-                      color: MyColorTheme.PrimaryAccent,
+                      color: myColorTheme.PrimaryAccent,
                       width: 2,
                     ),
                   ),
@@ -145,11 +148,11 @@ class _MyInputState extends State<MyInput> {
               flex: 1,
               child: Row(
                 children: [
-                  SizedBox(width: 30, child: Icon(Icons.add, color: MyColorTheme.Text,)),
+                  SizedBox(width: 30, child: Icon(Icons.add, color: myColorTheme.Text,)),
                   Expanded(
                     child: FlatButton(onPressed: (){myKey.currentState.changeSpare();},
                       height: 59,
-                      color: spareSwitch ? MyColorTheme.SecondaryAccent : MyColorTheme.Primary,
+                      color: spareSwitch ? myColorTheme.SecondaryAccent : myColorTheme.Primary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.horizontal(
                             left: Radius.circular(10),
@@ -162,7 +165,7 @@ class _MyInputState extends State<MyInput> {
                   Expanded(
                     child: FlatButton(onPressed: (){myKey.currentState.changeSpare();},
                       height: 59,
-                      color: !spareSwitch ? MyColorTheme.SecondaryAccent : MyColorTheme.Primary,
+                      color: !spareSwitch ? myColorTheme.SecondaryAccent : myColorTheme.Primary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.horizontal(
                             left: Radius.circular(0),
@@ -206,7 +209,7 @@ class _MyInputState extends State<MyInput> {
             padding: const EdgeInsets.only(top: 29),
             child: Container(
                 decoration: BoxDecoration(
-                  color: MyColorTheme.InputBG,
+                  color: myColorTheme.InputBG,
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(0),
                     top: Radius.circular(10),
@@ -249,36 +252,79 @@ class _MyInputState extends State<MyInput> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: FlatButton(onPressed: (){myKey.currentState.changeClass();},
-                    color: fullOrLess ? MyColorTheme.SecondaryAccent : MyColorTheme.Primary,
-                    height: 59,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.horizontal(
-                          left: Radius.circular(10),
-                          right: Radius.circular(0),
-                        )),
-                    child: Text('CLASSFUL', style: TextStyle(color: Colors.white, fontSize: 16),),
+                  child: ButtonTheme(
+                    padding: EdgeInsets.zero,
+                    child: FlatButton(onPressed: (){myKey.currentState.changeClass();},
+                      child: Ink(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: fullOrLess ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [myColorTheme.Primary, myColorTheme.Primary],
+                              end: Alignment.bottomLeft,
+                              begin: Alignment.topRight,
+                            ),
+                            borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(10),
+                              right: Radius.circular(0),
+                            )
+                        ),
+                        child: Container(
+                          constraints: BoxConstraints(minHeight: 59.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('CLASSFUL', style: TextStyle(color: Colors.white, fontSize: 16),),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                FlatButton(onPressed: (){myKey.currentState.onSubmited();},
-                    color: MyColorTheme.PrimaryAccent,
-                    height: 59,
-                    minWidth: 59,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,),
-                    child: Icon((!hideInputBool) ? Icons.publish_rounded : Icons.edit, color: Colors.white, size: 27.0,)),
+                ButtonTheme(
+                  padding: EdgeInsets.zero,
+                  child: FlatButton(onPressed: (){myKey.currentState.onSubmited();},
+                      color: myColorTheme.PrimaryAccent,
+                      height: 59,
+                      minWidth: 59,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,),
+                      child: Icon((!hideInputBool) ? Icons.publish_rounded : Icons.edit, color: Colors.white, size: 27.0,)),
+                ),
                 //color: (add) ? Colors.green : Colors.red,
                 Expanded(
                   flex: 1,
-                  child: FlatButton(onPressed: (){myKey.currentState.changeClass();},
-                      color: (!fullOrLess) ? MyColorTheme.SecondaryAccent : MyColorTheme.Primary,
-                      height: 59,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(0),
-                            right: Radius.circular(10),
-                          )),
-                      child: Text('CLASSLESS', style: TextStyle(color: Colors.white, fontSize: 16),)),
+                  child: ButtonTheme(
+                    padding: EdgeInsets.zero,
+                    child: FlatButton(onPressed: (){myKey.currentState.changeClass();},
+                        color: (!fullOrLess) ? myColorTheme.SecondaryAccent : myColorTheme.Primary,
+                        height: 59,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(0),
+                              right: Radius.circular(10),
+                            )),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: !fullOrLess ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [myColorTheme.Primary, myColorTheme.Primary],
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                              ),
+                              borderRadius: BorderRadius.horizontal(
+                                left: Radius.circular(0),
+                                right: Radius.circular(10),
+                              )
+                          ),
+                          child: Container(
+                            constraints: BoxConstraints(minHeight: 59.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('CLASSLESS', style: TextStyle(color: Colors.white, fontSize: 16),),
+                              ],
+                            ),
+                          ),
+                        ),
+                  ),
+                ),
                 ),
               ],
             ),
@@ -341,23 +387,23 @@ class _SubnetTextfieldState extends State<SubnetTextfield> {
       controller: _snController,
       onChanged: (v) => snList[widget.index] = v,
       keyboardType: TextInputType.number,
-      style: TextStyle(color: MyColorTheme.Text),
-      cursorColor: MyColorTheme.PrimaryAccent,
+      style: TextStyle(color: myColorTheme.Text),
+      cursorColor: myColorTheme.PrimaryAccent,
       decoration: InputDecoration(
         hintText: "Number of Hosts",
-        hintStyle: TextStyle(color: MyColorTheme.GreyText),
-        fillColor: MyColorTheme.Secondary, filled: true,
+        hintStyle: TextStyle(color: myColorTheme.GreyText),
+        fillColor: myColorTheme.Secondary, filled: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
-            color: MyColorTheme.Secondary,
+            color: myColorTheme.Secondary,
             width: 2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
-            color: MyColorTheme.PrimaryAccent,
+            color: myColorTheme.PrimaryAccent,
             width: 2,
           ),
         ),
@@ -407,23 +453,23 @@ class _MultiTextFieldState extends State<MultiTextField> {
       controller: _multiController,
       onChanged: (v) => multiList[widget.index] = v,
       keyboardType: TextInputType.number,
-      style: TextStyle(color: MyColorTheme.Text),
-      cursorColor: MyColorTheme.PrimaryAccent,
+      style: TextStyle(color: myColorTheme.Text),
+      cursorColor: myColorTheme.PrimaryAccent,
       decoration: InputDecoration(
         hintText: "x",
-        hintStyle: TextStyle(color: MyColorTheme.GreyText),
-        fillColor: MyColorTheme.Secondary, filled: true,
+        hintStyle: TextStyle(color: myColorTheme.GreyText),
+        fillColor: myColorTheme.Secondary, filled: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
-            color: MyColorTheme.Secondary,
+            color: myColorTheme.Secondary,
             width: 2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
-            color: MyColorTheme.PrimaryAccent,
+            color: myColorTheme.PrimaryAccent,
             width: 2,
           ),
         ),

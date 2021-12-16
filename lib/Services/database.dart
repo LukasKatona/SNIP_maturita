@@ -48,7 +48,7 @@ class DatabaseService {
 
   // update user data
 
-  Future updateUserData(String name, String role, bool isCalLocked, int fulXp, int lessXp, String group) async{
+  Future updateUserData(String name, String role, bool isCalLocked, int fulXp, int lessXp, String group, bool darkOrLight) async{
     return await snipCollection.doc(uid).set({
       'name': name,
       'role': role,
@@ -56,6 +56,7 @@ class DatabaseService {
       'fulXp': fulXp,
       'lessXp': lessXp,
       'group': group,
+      'darkOrLight':  darkOrLight,
     });
   }
 
@@ -79,6 +80,7 @@ class DatabaseService {
         fulXp: doc.get('fulXp') ?? '',
         lessXp: doc.get('lessXp') ?? '',
         group: doc.get('group') ?? '',
+        darkOrLight: doc.get('darkOrLight'),
       );
     }).toList();
   }
@@ -93,6 +95,7 @@ class DatabaseService {
       fulXp: snapshot.get('fulXp') ?? '',
       lessXp: snapshot.get('lessXp') ?? '',
       group: snapshot.get('group') ?? '',
+      darkOrLight: snapshot.get('darkOrLight') ?? true,
     );
   }
 

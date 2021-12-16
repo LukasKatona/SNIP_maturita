@@ -91,9 +91,9 @@ class _QuestionFourState extends State<QuestionFour> {
         }
 
         if (fulOrLessQuestions){
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (2*xpMultiplier*correct), userData.lessXp, userData.group);
+          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (2*xpMultiplier*correct), userData.lessXp, userData.group, userData.darkOrLight);
         }else{
-          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (2*xpMultiplier*correct), userData.group);
+          await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (2*xpMultiplier*correct), userData.group, userData.darkOrLight);
         }
 
         if (!wrong){
@@ -128,27 +128,27 @@ class _QuestionFourState extends State<QuestionFour> {
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: [
-                            Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                            Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
                             SizedBox(height: 15,),
                             RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+                                style: TextStyle(fontSize: 16, color: myColorTheme.Text),
                                 children: fulOrLessQuestions ? <TextSpan>[
                                   TextSpan(text: "We have "),
-                                  TextSpan(text: subnets.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                                  TextSpan(text: subnets.toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
                                   TextSpan(text: " subnets witch "),
-                                  TextSpan(text: hosts.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                                  TextSpan(text: hosts.toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
                                   TextSpan(text: " hosts in each. Describe subnet number "),
-                                  TextSpan(text: _SNindex.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                                  TextSpan(text: _SNindex.toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
                                   TextSpan(text: "."),
                                 ] : <TextSpan>[
                                   TextSpan(text: "We have "),
-                                  TextSpan(text: "4", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                                  TextSpan(text: "4", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                                   TextSpan(text: " subnets witch these ranges: "),
-                                  TextSpan(text: "${correctHostsOrderAndValues[3]}, ${correctHostsOrderAndValues[2]}, ${correctHostsOrderAndValues[1]}, ${correctHostsOrderAndValues[0]}", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                                  TextSpan(text: "${correctHostsOrderAndValues[3]}, ${correctHostsOrderAndValues[2]}, ${correctHostsOrderAndValues[1]}, ${correctHostsOrderAndValues[0]}", style: TextStyle(color: myColorTheme.PrimaryAccent)),
                                   TextSpan(text: ". Describe subnet number "),
-                                  TextSpan(text: _SNindex.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                                  TextSpan(text: _SNindex.toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
                                   TextSpan(text: "."),
                                 ],
                               ),
@@ -160,19 +160,52 @@ class _QuestionFourState extends State<QuestionFour> {
                           borderRadius: BorderRadius.circular(10)
                       ),
                       elevation: 0,
-                      color: MyColorTheme.Secondary,
+                      color: myColorTheme.Secondary,
                     ),
                   ),
                   SizedBox(height: 15,),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Answer:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+                    child: Text("Answer:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "Subnet IP address"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "Subnet IP address",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         if (val.isNotEmpty){
@@ -187,9 +220,42 @@ class _QuestionFourState extends State<QuestionFour> {
                   SizedBox(height: 15,),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "IP address of the first host"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "IP address of the first host",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         if (val.isNotEmpty){
@@ -204,9 +270,42 @@ class _QuestionFourState extends State<QuestionFour> {
                   SizedBox(height: 15,),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "IP address of the last host"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "IP address of the last host",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         if (val.isNotEmpty){
@@ -221,9 +320,42 @@ class _QuestionFourState extends State<QuestionFour> {
                   SizedBox(height: 15,),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "Broadcast IP address"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "Broadcast IP address",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         if (val.isNotEmpty){
@@ -238,7 +370,7 @@ class _QuestionFourState extends State<QuestionFour> {
                   SizedBox(height: 15,),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Note: if there are any spare bits, they are added to the subnet bits.", style: TextStyle(color: MyColorTheme.Text),),
+                    child: Text("Note: if there are any spare bits, they are added to the subnet bits.", style: TextStyle(color: myColorTheme.Text),),
                   ),
                   Expanded(
                     child: Column(
@@ -274,38 +406,38 @@ class _QuestionFourState extends State<QuestionFour> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+            style: TextStyle(fontSize: 16, color: myColorTheme.Text),
             children: fulOrLessQuestions ? <TextSpan>[
               TextSpan(text: "Solution to this question is easy but it takes time. First multiply the number of the subnet with magic number, which is the host range of one subnet. This will give you the "),
-              TextSpan(text: "IP", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "IP", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " of the subnet.\n\nTo get the "),
-              TextSpan(text: "first host", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "first host", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ", add 1. "),
-              TextSpan(text: "Broadcast", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "Broadcast", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " is just IP of the next subnet minus 1 and the "),
-              TextSpan(text: "last host", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "last host", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " is just the broadcast minus 1.\n\nThe tricky part of this is that in "),
-              TextSpan(text: "Class A", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "Class A", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " and "),
-              TextSpan(text: "Class B", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "Class B", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " we are working with more that one byte. To learn how to divide big numbers into two and more bytes, please do the "),
-              TextSpan(text: "Dividing Numbers into Bytes", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "Dividing Numbers into Bytes", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " exercise."),
             ] : <TextSpan>[
               TextSpan(text: "In Classless IP addressing, subnets take from the network IP range only that amount of IP addresses they need. To calculate the IP address of a subnet, simply "),
-              TextSpan(text: "add up the ranges", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "add up the ranges", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " of previous subnets.\n\nTo calculate the "),
-              TextSpan(text: "first host", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "first host", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ", add 1. "),
-              TextSpan(text: "Broadcast", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "Broadcast", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " is just IP address of the subnet plus subnet range  minus 1 and the "),
-              TextSpan(text: "last host", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "last host", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " is just the broadcast minus 1.\n\nThe tricky part of this is that in "),
-              TextSpan(text: "Class A", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "Class A", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " and "),
-              TextSpan(text: "Class B", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "Class B", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " we are working with more that one byte. To learn how to divide big numbers into two and more bytes, please do the "),
-              TextSpan(text: "Dividing Numbers into Bytes", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "Dividing Numbers into Bytes", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " exercise."),
             ],
           ),

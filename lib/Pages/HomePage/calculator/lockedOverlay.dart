@@ -21,16 +21,16 @@ class _LockedCalState extends State<LockedCal> {
       visible: userData.isCalLocked == true,
       child: SizedBox.expand(
           child: Container(
-            color: MyColorTheme.Background,
+            color: myColorTheme.Background,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   Icons.block,
-                  color: MyColorTheme.PrimaryAccent,
+                  color: myColorTheme.PrimaryAccent,
                   size: 200,
                 ),
-                Text("The calculator is locked.\nTo continue, please contact your teacher.", style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.center,),
+                Text("The calculator is locked.\nTo continue, please contact your teacher.", style: TextStyle(color: myColorTheme.Text), textAlign: TextAlign.center,),
               ],
             ),
           )

@@ -81,7 +81,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
           return Column(
             children: [
               SizedBox(height: 75,),
-              Text(pageNumber, style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24, fontWeight: FontWeight.bold),),
+              Text(pageNumber, style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24, fontWeight: FontWeight.bold),),
               Expanded(
                 child: PageView.builder(
                   itemBuilder: (context, index) {

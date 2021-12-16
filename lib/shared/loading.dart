@@ -5,12 +5,13 @@ import 'design.dart';
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return Container(
-      color: MyColorTheme.Background,
+      color: myColorTheme.Background,
       child: Center(
         child: SpinKitCircle(
           size: 50,
-          color: MyColorTheme.PrimaryAccent,
+          color: myColorTheme.PrimaryAccent,
         ),
       ),
     );

@@ -48,9 +48,9 @@ class _QuestionOneState extends State<QuestionOne> {
           print("correct");
 
           if (fulOrLessQuestions){
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier), userData.lessXp, userData.group, userData.darkOrLight);
           }else{
-            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group);
+            await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp, userData.lessXp + (1*xpMultiplier), userData.group, userData.darkOrLight);
           }
 
           questionController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInCubic);
@@ -79,9 +79,9 @@ class _QuestionOneState extends State<QuestionOne> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                    Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
                     SizedBox(height: 15,),
-                    Text("In what class does this IP address belong?", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
+                    Text("In what class does this IP address belong?", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
                   ],
                 ),
               ),
@@ -89,12 +89,12 @@ class _QuestionOneState extends State<QuestionOne> {
                   borderRadius: BorderRadius.circular(10)
               ),
               elevation: 0,
-              color: MyColorTheme.Secondary,
+              color: myColorTheme.Secondary,
             ),
             SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Answers:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+              child: Text("Answers:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
             ),
             ButtonTheme(
               padding: EdgeInsets.zero,
@@ -107,7 +107,7 @@ class _QuestionOneState extends State<QuestionOne> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "Class A" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class A" ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [myColorTheme.Secondary, myColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -120,7 +120,7 @@ class _QuestionOneState extends State<QuestionOne> {
                       "Class A",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color:  _answer == "Class A" ? Colors.white : MyColorTheme.Text,
+                          color:  _answer == "Class A" ? Colors.white : myColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -140,7 +140,7 @@ class _QuestionOneState extends State<QuestionOne> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "Class B" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class B" ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [myColorTheme.Secondary, myColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -153,7 +153,7 @@ class _QuestionOneState extends State<QuestionOne> {
                       "Class B",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color:  _answer == "Class B" ? Colors.white : MyColorTheme.Text,
+                          color:  _answer == "Class B" ? Colors.white : myColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -173,7 +173,7 @@ class _QuestionOneState extends State<QuestionOne> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: _answer == "Class C" ? [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent] : [MyColorTheme.Secondary, MyColorTheme.Secondary],
+                      gradient: LinearGradient(colors: _answer == "Class C" ? [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent] : [myColorTheme.Secondary, myColorTheme.Secondary],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
                       ),
@@ -186,7 +186,7 @@ class _QuestionOneState extends State<QuestionOne> {
                       "Class C",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: _answer == "Class C" ? Colors.white : MyColorTheme.Text,
+                          color: _answer == "Class C" ? Colors.white : myColorTheme.Text,
                           fontSize: 16
                       ),
                     ),
@@ -225,60 +225,60 @@ class _QuestionOneState extends State<QuestionOne> {
       explanation: RichText(
         textAlign: TextAlign.justify,
         text: TextSpan(
-          style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+          style: TextStyle(fontSize: 16, color: myColorTheme.Text),
           children: <TextSpan>[
             TextSpan(text: "IPv4 addresses are devided into 5 classes based on their first byte. "),
-            TextSpan(text: "Class A", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "Class A", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " ranges from "),
-            TextSpan(text: "0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "0", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " to "),
-            TextSpan(text: "126", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "126", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: ", which in binary is from "),
-            TextSpan(text: "00000000", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "00000000", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " to "),
-            TextSpan(text: "01111110", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "01111110", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: ". IP address that starts with "),
-            TextSpan(text: "127", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "127", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " is called loopback and it's not used for routing.\n\n"),
 
-            TextSpan(text: "Class B", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "Class B", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " ranges from "),
-            TextSpan(text: "128", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "128", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " to "),
-            TextSpan(text: "191", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "191", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: ", which in binary is from "),
-            TextSpan(text: "10000000", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "10000000", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " to "),
-            TextSpan(text: "10111111", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "10111111", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: ".\n\n"),
 
-            TextSpan(text: "Class C", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "Class C", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " ranges from "),
-            TextSpan(text: "192", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "192", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " to "),
-            TextSpan(text: "223", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "223", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: ", which in binary is from "),
-            TextSpan(text: "11000000", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "11000000", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " to "),
-            TextSpan(text: "11011111", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "11011111", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: ". You can see that there is a pattern for that. first be begin with all bits set to "),
-            TextSpan(text: "0", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "0", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " and than every new class has one more "),
-            TextSpan(text: "1", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "1", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " at the start of the first byte.\n\n"),
 
             TextSpan(text: "Following this pattern, "),
-            TextSpan(text: "CLass D", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "CLass D", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " starts with "),
-            TextSpan(text: "11100000 (224)", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "11100000 (224)", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " and ends with "),
-            TextSpan(text: "11101111 (239)", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "11101111 (239)", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: ". The last class is "),
-            TextSpan(text: "CLass E", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "CLass E", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: ", which starts with "),
-            TextSpan(text: "11110000 (240)", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "11110000 (240)", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: " and ends with "),
-            TextSpan(text: "11111111 (255)", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+            TextSpan(text: "11111111 (255)", style: TextStyle(color: myColorTheme.PrimaryAccent)),
             TextSpan(text: "."),
           ],
         ),

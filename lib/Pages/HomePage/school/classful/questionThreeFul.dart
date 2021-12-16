@@ -53,7 +53,7 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
             wrong = true;
           }
         }
-        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier*correct), userData.lessXp, userData.group);
+        await DatabaseService(uid: user.uid).updateUserData(userData.name, userData.role, userData.isCalLocked, userData.fulXp + (1*xpMultiplier*correct), userData.lessXp, userData.group, userData.darkOrLight);
         if (!wrong){
           setState(() {
             _greenConfirm = true;
@@ -82,17 +82,17 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                    Text(firstByte.toString() + ".0.0.0", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
                     SizedBox(height: 15,),
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+                        style: TextStyle(fontSize: 16, color: myColorTheme.Text),
                         children: <TextSpan>[
                           TextSpan(text: "We have ", ),
-                          TextSpan(text: subnets.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                          TextSpan(text: subnets.toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
                           TextSpan(text: " subnets witch "),
-                          TextSpan(text: hosts.toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+                          TextSpan(text: hosts.toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
                           TextSpan(text: " hosts in each. How many bits do we need?"),
                         ],
                       ),
@@ -104,7 +104,7 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
                   borderRadius: BorderRadius.circular(10)
               ),
               elevation: 0,
-              color: MyColorTheme.Secondary,
+              color: myColorTheme.Secondary,
             ),
             SizedBox(height: 15,),
             Row(
@@ -115,13 +115,46 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Subnets:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+                        child: Text("Subnets:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: MyColorTheme.Text),
-                        cursorColor: MyColorTheme.PrimaryAccent,
-                        decoration: snipInputDecoration.copyWith(hintText: "Bits for subnets"),
+                        style: TextStyle(color: myColorTheme.Text),
+                        cursorColor: myColorTheme.PrimaryAccent,
+                        decoration: InputDecoration(
+    hintText: "Bits for subnets",
+    hintStyle: TextStyle(color: myColorTheme.GreyText),
+    fillColor: myColorTheme.Secondary,
+    filled: true,
+    enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10.0),
+    borderSide: BorderSide(
+    color: myColorTheme.Secondary,
+    width: 2,
+    ),
+    ),
+    focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10.0),
+    borderSide: BorderSide(
+    color:myColorTheme.PrimaryAccent,
+    width: 2,
+    ),
+    ),
+    focusedErrorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10.0),
+    borderSide: BorderSide(
+    color: myColorTheme.PrimaryAccent,
+    width: 2,
+    ),
+    ),
+    errorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10.0),
+    borderSide: BorderSide(
+    color: Colors.red,
+    width: 2,
+    ),
+    ),
+    ),
                         onChanged: (val) {
                           setState(() {
                             if (val.isNotEmpty){
@@ -143,13 +176,46 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Hosts:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+                        child: Text("Hosts:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        style: TextStyle(color: MyColorTheme.Text),
-                        cursorColor: MyColorTheme.PrimaryAccent,
-                        decoration: snipInputDecoration.copyWith(hintText: "Bits for hosts"),
+                        style: TextStyle(color: myColorTheme.Text),
+                        cursorColor: myColorTheme.PrimaryAccent,
+                        decoration: InputDecoration(
+                          hintText: "Bits for Hosts",
+                          hintStyle: TextStyle(color: myColorTheme.GreyText),
+                          fillColor: myColorTheme.Secondary,
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: myColorTheme.Secondary,
+                              width: 2,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color:myColorTheme.PrimaryAccent,
+                              width: 2,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: myColorTheme.PrimaryAccent,
+                              width: 2,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 2,
+                            ),
+                          ),
+                        ),
                         onChanged: (val) {
                           setState(() {
                             if (val.isNotEmpty){
@@ -199,26 +265,26 @@ class _QuestionThreeFulState extends State<QuestionThreeFul> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+            style: TextStyle(fontSize: 16, color: myColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "Solution one: add "),
-              TextSpan(text: "1", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "1", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ". This is because the first IP address of the subnet is reserved for the subnet itself and the last IP address is used for broadcast. In binary we count from 0 so we only need to add 1. \n\nNext step: convert into binary, "),
-              TextSpan(text: (subnets+1).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: (subnets+1).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " in binary is "),
-              TextSpan(text: DecToBin(subnets+1).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: DecToBin(subnets+1).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ", which are "),
-              TextSpan(text: ((subnets+1).bitLength).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: ((subnets+1).bitLength).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " bits.\n\nSolution two: This time add "),
-              TextSpan(text: "2", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "2", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ", because now we wont use binary numbers so we count from 1 and we must count in 2 additional addresses. \n\nNext step: find the closest power of 2, closest to "),
-              TextSpan(text: (subnets+2).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: (subnets+2).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " is "),
-              TextSpan(text: (pow(2, (subnets+1).bitLength)).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: (pow(2, (subnets+1).bitLength)).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ". At this point you should now that this is 2 to the power of "),
-              TextSpan(text: ((subnets+1).bitLength).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: ((subnets+1).bitLength).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ", so you need "),
-              TextSpan(text: ((subnets+1).bitLength).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: ((subnets+1).bitLength).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " bits."),
             ],
           ),

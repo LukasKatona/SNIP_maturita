@@ -57,7 +57,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  Text("Practise Results", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),),
+                  Text("Practise Results", style: TextStyle(color: myColorTheme.Text, fontSize: 24),),
                   SizedBox(height: 25,),
                   SizedBox(
                     height: 150,
@@ -69,8 +69,8 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                           width: 150,
                           child: CircularProgressIndicator(
                             value: getNumOfCorrectAns()/11,
-                            valueColor: AlwaysStoppedAnimation<Color>(MyColorTheme.PrimaryAccent),
-                            backgroundColor: MyColorTheme.Primary,
+                            valueColor: AlwaysStoppedAnimation<Color>(myColorTheme.PrimaryAccent),
+                            backgroundColor: myColorTheme.Primary,
                             strokeWidth: 15,
                           ),
                         ),
@@ -80,8 +80,8 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                             text: TextSpan(
                               style: TextStyle(fontSize: 32),
                               children: <TextSpan>[
-                                TextSpan(text: (getNumOfCorrectAns()/11*100).ceil().toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent)),
-                                TextSpan(text: "%", style: TextStyle(color: MyColorTheme.Text)),
+                                TextSpan(text: (getNumOfCorrectAns()/11*100).ceil().toString(), style: TextStyle(color: myColorTheme.PrimaryAccent)),
+                                TextSpan(text: "%", style: TextStyle(color: myColorTheme.Text)),
                               ],
                             ),
                           ),
@@ -97,7 +97,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                 borderRadius: BorderRadius.circular(10)
             ),
             elevation: 0,
-            color: MyColorTheme.Secondary,
+            color: myColorTheme.Secondary,
           ),
           SizedBox(height: 15,),
           Expanded(
@@ -110,7 +110,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                       child: Column(
                         children: [
                           Text("Class", style: TextStyle(color: correctAnsListLess[0] ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text(correctAnsListLess[0] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Expanded(child: Center(child: Text(correctAnsListLess[0] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: myColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -118,7 +118,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     elevation: 0,
-                    color: MyColorTheme.Secondary,
+                    color: myColorTheme.Secondary,
                   ),
                 ),
                 Expanded(
@@ -128,7 +128,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                       child: Column(
                         children: [
                           Text("Mask", style: TextStyle(color: correctAnsListLess[1] ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text(correctAnsListLess[1] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Expanded(child: Center(child: Text(correctAnsListLess[1] ? "+" + (1*xpMultiplier).toString() + " XP" : "+0 XP", style: TextStyle(color: myColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -136,7 +136,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     elevation: 0,
-                    color: MyColorTheme.Secondary,
+                    color: myColorTheme.Secondary,
                   ),
                 ),
               ],
@@ -152,7 +152,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                       child: Column(
                         children: [
                           Text("Bits", style: TextStyle(color: correctAnsListLess[2] && correctAnsListLess[3] && correctAnsListLess[4] && correctAnsListLess[5] && correctAnsListLess[6] ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text("+" + getQuestionThreeXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Expanded(child: Center(child: Text("+" + getQuestionThreeXp().toString() + " XP", style: TextStyle(color: myColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -160,7 +160,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     elevation: 0,
-                    color: MyColorTheme.Secondary,
+                    color: myColorTheme.Secondary,
                   ),
                 ),
                 Expanded(
@@ -170,7 +170,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                       child: Column(
                         children: [
                           Text("Subnet", style: TextStyle(color: (correctAnsListLess[7] && correctAnsListLess[8] && correctAnsListLess[9] && correctAnsListLess[10]) ? Colors.green : Colors.red, fontSize: 24),),
-                          Expanded(child: Center(child: Text("+" + getQuestionFourXp().toString() + " XP", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),))),
+                          Expanded(child: Center(child: Text("+" + getQuestionFourXp().toString() + " XP", style: TextStyle(color: myColorTheme.Text, fontSize: 24),))),
                         ],
                       ),
                     ),
@@ -178,7 +178,7 @@ class _ResultsPageLessState extends State<ResultsPageLess> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     elevation: 0,
-                    color: MyColorTheme.Secondary,
+                    color: myColorTheme.Secondary,
                   ),
                 ),
               ],

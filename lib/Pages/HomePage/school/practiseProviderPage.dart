@@ -35,7 +35,7 @@ class _PractiseProviderPageState extends State<PractiseProviderPage>{
     final user = Provider.of<MyUser>(context);
 
     return !isOnline ? Scaffold(
-      backgroundColor: MyColorTheme.Background,
+      backgroundColor: myColorTheme.Background,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -43,10 +43,10 @@ class _PractiseProviderPageState extends State<PractiseProviderPage>{
           children: [
             Icon(
               Icons.wifi_off_sharp,
-              color: MyColorTheme.PrimaryAccent,
+              color: myColorTheme.PrimaryAccent,
               size: 150,
             ),
-            Text("You are offline, to continue, please check your internet connection.", style: TextStyle(color: MyColorTheme.Text), textAlign: TextAlign.center,),
+            Text("You are offline, to continue, please check your internet connection.", style: TextStyle(color: myColorTheme.Text), textAlign: TextAlign.center,),
           ],
         ),
       ),
@@ -56,7 +56,7 @@ class _PractiseProviderPageState extends State<PractiseProviderPage>{
         value: DatabaseService(uid: user.uid).userData,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: MyColorTheme.Background,
+          backgroundColor: myColorTheme.Background,
             body: QuestionsPage(),
         ),
       ),

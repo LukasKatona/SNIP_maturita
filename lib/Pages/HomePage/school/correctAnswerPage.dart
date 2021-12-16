@@ -30,13 +30,13 @@ class _CorrectAnswerPageState extends State<CorrectAnswerPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Your answer:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
-                Text(widget.yourAnswer, style: TextStyle(color: MyColorTheme.Text, fontSize: 16),),
+                Text("Your answer:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
+                Text(widget.yourAnswer, style: TextStyle(color: myColorTheme.Text, fontSize: 16),),
                 SizedBox(height: 15,),
-                Text("Correct answer:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
-                Text(widget.correctAnswer, style: TextStyle(color: MyColorTheme.Text, fontSize: 16),),
+                Text("Correct answer:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
+                Text(widget.correctAnswer, style: TextStyle(color: myColorTheme.Text, fontSize: 16),),
                 SizedBox(height: 15,),
-                Text("Explanation:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+                Text("Explanation:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
                 widget.explanation,
               ],
             ),
@@ -54,7 +54,7 @@ class _CorrectAnswerPageState extends State<CorrectAnswerPage> {
                     },
                     child: Ink(
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
+                          gradient: LinearGradient(colors: [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
                           ),

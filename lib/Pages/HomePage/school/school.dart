@@ -17,29 +17,28 @@ class _SchoolPageState extends State<SchoolPage> {
 
     final userData = Provider.of<UserData>(context);
 
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 15,),
-              SchoolCard(name: 'CLASSFUL', desc: 'In this type of subnetting, we divide the whole IP range into subnets with equal amount of IP addresses.', currentXp: userData.fulXp, fulLess: true,),
-              SizedBox(height: 5,),
-              SchoolCard(name: 'CLASSLESS', desc: 'In this type of subnetting, we take only necessary amount of IP addresses for each individual subnet.', currentXp: userData.lessXp, fulLess: false,),
-              SizedBox(height: 5,),
-              Row(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SchoolCard(name: 'CLASSFUL', desc: 'In this type of subnetting, we divide the whole IP range into subnets with equal amount of IP addresses.', currentXp: userData.fulXp, fulLess: true,),
+            SizedBox(height: 5,),
+            SchoolCard(name: 'CLASSLESS', desc: 'In this type of subnetting, we take only necessary amount of IP addresses for each individual subnet.', currentXp: userData.lessXp, fulLess: false,),
+            SizedBox(height: 5,),
+            IntrinsicHeight(
+              child: Row(
                 children: [
                   Expanded(child: SchoolCardSmall(name: 'BYTES', desc: 'Divide numbers bigger than 255 into bytes.', questionID: 1,)),
                   SizedBox(width: 5,),
                   Expanded(child: SchoolCardSmall(name: 'BINARY', desc: 'Convert numbers between decimal and binary.', questionID: 2,)),
                 ],
               ),
-              SizedBox(height: 15,),
-            ],
-          ),
+            ),
+            SizedBox(height: 15,),
+          ],
         ),
       ),
     );

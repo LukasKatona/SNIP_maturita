@@ -7,7 +7,8 @@ class Sniper {
   final int fulXp;
   final int lessXp;
   final String group;
+  bool darkOrLight;
 
-  Sniper({ this.uid, this.name, this.role, this.isCalLocked, this.fulXp, this.lessXp, this.group });
+  Sniper({ this.uid, this.name, this.role, this.isCalLocked, this.fulXp, this.lessXp, this.group, this.darkOrLight });
 
 }

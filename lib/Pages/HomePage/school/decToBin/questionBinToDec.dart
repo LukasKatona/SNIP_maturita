@@ -67,9 +67,9 @@ class _QuestionBinToDecState extends State<QuestionBinToDec> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Text(DecToBin(question).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                    Text(DecToBin(question).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
                     SizedBox(height: 15,),
-                    Text("Convert this number into decimal value.", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
+                    Text("Convert this number into decimal value.", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
                   ],
                 ),
               ),
@@ -77,18 +77,51 @@ class _QuestionBinToDecState extends State<QuestionBinToDec> {
                   borderRadius: BorderRadius.circular(10)
               ),
               elevation: 0,
-              color: MyColorTheme.Secondary,
+              color: myColorTheme.Secondary,
             ),
             SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Answer:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+              child: Text("Answer:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
             ),
             TextFormField(
               keyboardType: TextInputType.number,
-              style: TextStyle(color: MyColorTheme.Text),
-              cursorColor: MyColorTheme.PrimaryAccent,
-              decoration: snipInputDecoration.copyWith(hintText: "Decimal value"),
+              style: TextStyle(color: myColorTheme.Text),
+              cursorColor: myColorTheme.PrimaryAccent,
+              decoration: InputDecoration(
+                hintText: "Decimal Value",
+                hintStyle: TextStyle(color: myColorTheme.GreyText),
+                fillColor: myColorTheme.Secondary,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: myColorTheme.Secondary,
+                    width: 2,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color:myColorTheme.PrimaryAccent,
+                    width: 2,
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: myColorTheme.PrimaryAccent,
+                    width: 2,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.red,
+                    width: 2,
+                  ),
+                ),
+              ),
               onChanged: (val) {
                 setState(() {
                   if (val.isNotEmpty){
@@ -103,11 +136,11 @@ class _QuestionBinToDecState extends State<QuestionBinToDec> {
             SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Tip:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+              child: Text("Tip:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Each bit is a representation of powers of 2. The first on the right is 2^0, second is 2^1 and so on. Convert each bit which is a 1 and add them together.\n\nA calculator might help.", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.justify,),
+              child: Text("Each bit is a representation of powers of 2. The first on the right is 2^0, second is 2^1 and so on. Convert each bit which is a 1 and add them together.\n\nA calculator might help.", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.justify,),
             ),
             Expanded(
               child: Column(
@@ -120,12 +153,20 @@ class _QuestionBinToDecState extends State<QuestionBinToDec> {
                       child: Text("Please fill up all fields!", style: TextStyle(color: Colors.red),),
                     ),
                   ),
-                  ButtonTheme(
-                    padding: EdgeInsets.zero,
-                    child: FlatButton(
-                      onPressed: _afterConfirm,
-                      child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
-                    ),
+                  Row(
+                    children: [
+                      MyBackButton(),
+                      SizedBox(width: 15,),
+                      Expanded(
+                        child: ButtonTheme(
+                          padding: EdgeInsets.zero,
+                          child: FlatButton(
+                            onPressed: _afterConfirm,
+                            child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 15,),
                 ],
@@ -173,14 +214,14 @@ class _QuestionBinToDecState extends State<QuestionBinToDec> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+            style: TextStyle(fontSize: 16, color: myColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "Convert each bit into it's corresponding decimal value. Then simply add up the numbers of bits which are set to 1.\n\n"),
-              TextSpan(text: "${DecToBin(question)}", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${DecToBin(question)}", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " ${powOfTwo}\n\n"),
-              TextSpan(text: "${DecToBin(question)}", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${DecToBin(question)}", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " ${bitsWOne}\n\n"),
-              TextSpan(text: "${DecToBin(question)}", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${DecToBin(question)}", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: " = ${question}"),
             ],
           ),

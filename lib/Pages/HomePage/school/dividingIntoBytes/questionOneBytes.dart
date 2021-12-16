@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/user.dart';
@@ -80,9 +81,9 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Text(formatter.format(question).toString(), style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 24),),
+                    Text(formatter.format(question).toString(), style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 24),),
                     SizedBox(height: 15,),
-                    Text("Divide this number into three bytes.", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
+                    Text("Divide this number into three bytes.", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),
                   ],
                 ),
               ),
@@ -90,12 +91,12 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                   borderRadius: BorderRadius.circular(10)
               ),
               elevation: 0,
-              color: MyColorTheme.Secondary,
+              color: myColorTheme.Secondary,
             ),
             SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Answer:", style: TextStyle(color: MyColorTheme.PrimaryAccent, fontSize: 16),),
+              child: Text("Answer:", style: TextStyle(color: myColorTheme.PrimaryAccent, fontSize: 16),),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -103,9 +104,42 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                 Expanded(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "1. byte"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "1. byte",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         if (val.isNotEmpty){
@@ -118,13 +152,46 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                     },
                   ),
                 ),
-                SizedBox(width: 15, child: Text(".", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),),
+                SizedBox(width: 15, child: Text(".", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),),
                 Expanded(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "2. byte"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "2. byte",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         if (val.isNotEmpty){
@@ -137,13 +204,46 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                     },
                   ),
                 ),
-                SizedBox(width: 15, child: Text(".", style: TextStyle(color: MyColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),),
+                SizedBox(width: 15, child: Text(".", style: TextStyle(color: myColorTheme.Text, fontSize: 16), textAlign: TextAlign.center,),),
                 Expanded(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "3. byte"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "3. byte",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                     onChanged: (val) {
                       setState(() {
                         if (val.isNotEmpty){
@@ -169,12 +269,20 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
                       child: Text("Please fill up all fields!", style: TextStyle(color: Colors.red),),
                     ),
                   ),
-                  ButtonTheme(
-                    padding: EdgeInsets.zero,
-                    child: FlatButton(
-                      onPressed: _afterConfirm,
-                      child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
-                    ),
+                  Row(
+                    children: [
+                      MyBackButton(),
+                      SizedBox(width: 15,),
+                      Expanded(
+                        child: ButtonTheme(
+                          padding: EdgeInsets.zero,
+                          child: FlatButton(
+                            onPressed: _afterConfirm,
+                            child: ConfirmButtonDecor(greenConfirm: _greenConfirm,),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 15,),
                 ],
@@ -188,26 +296,26 @@ class _QuestionOneBytesState extends State<QuestionOneBytes> {
         explanation: RichText(
           textAlign: TextAlign.justify,
           text: TextSpan(
-            style: TextStyle(fontSize: 16, color: MyColorTheme.Text),
+            style: TextStyle(fontSize: 16, color: myColorTheme.Text),
             children: <TextSpan>[
               TextSpan(text: "1. byte = ${question} / 2^16 rounded down: "),
-              TextSpan(text: "${(question/65536).floor()}\n", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${(question/65536).floor()}\n", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: "We continue only with the reminder of the division.\n"),
-              TextSpan(text: "${question} - ${(question/65536).floor()} * 2^16 = ${question%65536}\n\n", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${question} - ${(question/65536).floor()} * 2^16 = ${question%65536}\n\n", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: "2. byte = ${question%65536} / 2^8 rounded down: "),
-              TextSpan(text: "${(question%65536/256).floor()}\n", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${(question%65536/256).floor()}\n", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: "The last byte is just the reminder of the previous division.\n\n"),
               TextSpan(text: "3. byte = ${question%65536} - ${(question%65536/256).floor()} * 2^8: "),
-              TextSpan(text: "${(question%65536%256).floor()}\n\n", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${(question%65536%256).floor()}\n\n", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: "Easier way to do this is using modulo ("),
-              TextSpan(text: "%", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "%", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: ") function:\n"),
               TextSpan(text: "1. byte = ${question} / 2^16 rounded down: "),
-              TextSpan(text: "${(question/65536).floor()}\n", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${(question/65536).floor()}\n", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: "2. byte = ${question} % 2^16 / 2^8 rounded down: "),
-              TextSpan(text: "${(question%65536/256).floor()}\n", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${(question%65536/256).floor()}\n", style: TextStyle(color: myColorTheme.PrimaryAccent)),
               TextSpan(text: "3. byte = ${question} % 2^16 % 2^8 rounded down: "),
-              TextSpan(text: "${(question%65536%256).floor()}\n", style: TextStyle(color: MyColorTheme.PrimaryAccent)),
+              TextSpan(text: "${(question%65536%256).floor()}\n", style: TextStyle(color: myColorTheme.PrimaryAccent)),
 
             ],
           ),

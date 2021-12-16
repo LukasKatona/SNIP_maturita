@@ -31,7 +31,7 @@ class _RegisterState extends State<Register> {
   bool obscure = true;
 
   Color getColor(Set<MaterialState> states) {
-    return MyColorTheme.PrimaryAccent;
+    return myColorTheme.PrimaryAccent;
   }
 
   @override
@@ -52,35 +52,134 @@ class _RegisterState extends State<Register> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("REGISTER", style: TextStyle(color: MyColorTheme.Text, fontSize: 24),),
+                  Text("REGISTER", style: TextStyle(color: myColorTheme.Text, fontSize: 24),),
                   SizedBox(height: 15,),
                   TextFormField(
                     validator: (val) => val.isEmpty ? "enter a valid email" : null,
                     onChanged: (val) {setState(() => email = val);},
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "Email"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(height: 15,),
                   TextFormField(
                     validator: (val) => val.isEmpty ? "enter your name" : null,
                     onChanged: (val) {setState(() => name = val);},
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(hintText: "Name"),
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
+                      hintText: "Name",
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(height: 15,),
                   new Theme(
                     data: Theme.of(context).copyWith(
-                      canvasColor: MyColorTheme.Secondary,
+                      canvasColor: myColorTheme.Secondary,
                     ),
                     child: DropdownButtonFormField(
-                      decoration: snipInputDecoration.copyWith(hintText: "enter your class", hintStyle: TextStyle(color: MyColorTheme.GreyText),),
-                      icon: Icon(Icons.menu_open, color: MyColorTheme.PrimaryAccent,),
+                      decoration: InputDecoration(
+                        hintText: "enter your class",
+                        hintStyle: TextStyle(color: myColorTheme.GreyText),
+                        fillColor: myColorTheme.Secondary,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: myColorTheme.Secondary,
+                            width: 2,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color:myColorTheme.PrimaryAccent,
+                            width: 2,
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: myColorTheme.PrimaryAccent,
+                            width: 2,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.red,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                      icon: Icon(Icons.menu_open, color: myColorTheme.PrimaryAccent,),
                       items: groups.map((String group) {
                         return DropdownMenuItem(
                           value: group,
-                          child: SizedBox(width: 100, child: Text(group, style: TextStyle(color: MyColorTheme.Text),)),
+                          child: SizedBox(width: 100, child: Text(group, style: TextStyle(color: myColorTheme.Text),)),
                         );
                       }).toList(),
                       onChanged: (val) {
@@ -94,13 +193,44 @@ class _RegisterState extends State<Register> {
                     obscureText: obscure,
                     validator: (val) => val.length < 8 ? "enter a password with 8+ characters" : null,
                     onChanged: (val) {setState(() => password = val);},
-                    style: TextStyle(color: MyColorTheme.Text),
-                    cursorColor: MyColorTheme.PrimaryAccent,
-                    decoration: snipInputDecoration.copyWith(
+                    style: TextStyle(color: myColorTheme.Text),
+                    cursorColor: myColorTheme.PrimaryAccent,
+                    decoration: InputDecoration(
                       hintText: "Password",
                       suffixIcon: IconButton(
-                        icon: Icon(obscure ? Icons.remove_red_eye_outlined : Icons.remove_red_eye, color: obscure ? MyColorTheme.GreyText : MyColorTheme.PrimaryAccent),
+                        icon: Icon(obscure ? Icons.remove_red_eye_outlined : Icons.remove_red_eye, color: obscure ? myColorTheme.GreyText : myColorTheme.PrimaryAccent),
                         onPressed: () {setState(() => obscure = !obscure);},
+                      ),
+                      hintStyle: TextStyle(color: myColorTheme.GreyText),
+                      fillColor: myColorTheme.Secondary,
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.Secondary,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color:myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: myColorTheme.PrimaryAccent,
+                          width: 2,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                          width: 2,
+                        ),
                       ),
                     ),
                   ),
@@ -112,7 +242,7 @@ class _RegisterState extends State<Register> {
                         child: Checkbox(
                           value: teacherReg,
                           onChanged: (val) {setState(() => teacherReg = !teacherReg);},
-                          activeColor: MyColorTheme.PrimaryAccent,
+                          activeColor: myColorTheme.PrimaryAccent,
                           fillColor: MaterialStateProperty.resolveWith(getColor),
                         ),
                       ),
@@ -120,15 +250,48 @@ class _RegisterState extends State<Register> {
                         visible: teacherReg == true,
                         replacement: Text(
                           'Register as teacher.',
-                          style: TextStyle(color: MyColorTheme.Text),
+                          style: TextStyle(color: myColorTheme.Text),
                         ),
                         child: Expanded(
                           child: TextFormField(
                             validator: (val) => val != variables.teacherKey ? "enter a valid teacher key" : null,
                             onChanged: (val) {setState(() => teacherKey = val);},
-                            style: TextStyle(color: MyColorTheme.Text),
-                            cursorColor: MyColorTheme.PrimaryAccent,
-                            decoration: snipInputDecoration.copyWith(hintText: "Teacher Key"),
+                            style: TextStyle(color: myColorTheme.Text),
+                            cursorColor: myColorTheme.PrimaryAccent,
+                            decoration: InputDecoration(
+                              hintText: "Teacher Key",
+                              hintStyle: TextStyle(color: myColorTheme.GreyText),
+                              fillColor: myColorTheme.Secondary,
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: myColorTheme.Secondary,
+                                  width: 2,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color:myColorTheme.PrimaryAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: myColorTheme.PrimaryAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                  width: 2,
+                                ),
+                              ),
+                            )
                           ),
                         ),
                       ),
@@ -155,14 +318,14 @@ class _RegisterState extends State<Register> {
                       },
                       child: Ink(
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [MyColorTheme.PrimaryAccent, MyColorTheme.SecondaryAccent],
+                            gradient: LinearGradient(colors: [myColorTheme.PrimaryAccent, myColorTheme.SecondaryAccent],
                               begin: Alignment.bottomLeft,
                               end: Alignment.topRight,
                             ),
                             borderRadius: BorderRadius.circular(10.0)
                         ),
                         child: Container(
-                          constraints: BoxConstraints(maxWidth: 350.0, minHeight: 59.0),
+                          constraints: BoxConstraints(minHeight: 59.0),
                           alignment: Alignment.center,
                           child: Text(
                             "REGISTER",
@@ -180,14 +343,14 @@ class _RegisterState extends State<Register> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account? ", style: TextStyle(color: MyColorTheme.Text),),
+                      Text("Already have an account? ", style: TextStyle(color: myColorTheme.Text),),
                       GestureDetector(
                           onTap: () {
                             setState(() {
                               logInPageController.animateToPage(0, duration: Duration(milliseconds: 500), curve: Curves.ease);
                             });
                           },
-                          child: Text("Log in", style: TextStyle(color: MyColorTheme.PrimaryAccent),)),
+                          child: Text("Log in", style: TextStyle(color: myColorTheme.PrimaryAccent),)),
                     ],
                   ),
                   Visibility(
