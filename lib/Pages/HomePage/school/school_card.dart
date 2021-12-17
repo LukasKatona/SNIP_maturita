@@ -37,7 +37,7 @@ class _SchoolCardState extends State<SchoolCard> {
 
   int GenerateQuestionVars(){
     for (int i = 0; i < 9; i++) {
-      if (widget.currentXp > rankList[i].minXp) {
+      if (widget.currentXp >= rankList[i].minXp) {
         if (i < 3) {
           firstByte = new Random().nextInt(32) + 192;
         } else if (i < 6) {
@@ -68,13 +68,10 @@ class _SchoolCardState extends State<SchoolCard> {
     final userData = Provider.of<UserData>(context);
 
     for (int i = 0; i < 9; i++){
-      if (widget.currentXp > rankList[i].minXp){
+      if (widget.currentXp >= rankList[i].minXp){
         minXp = rankList[i].minXp;
         minXp == 0 ? maxXp = 32 : maxXp = (rankList[i].minXp)*2;
-        widget.currentXp == 0 ? rank = rankList[0].rank : rank = rankList[i].rank;
-      }
-      if (widget.currentXp == 0){
-        rank = rankList[0].rank;
+        rank = rankList[i].rank;
       }
     }
 

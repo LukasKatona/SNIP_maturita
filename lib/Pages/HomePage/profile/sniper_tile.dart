@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maturita/Models/sniper.dart';
 import 'package:maturita/Pages/HomePage/profile/deleteCard.dart';
@@ -43,8 +44,20 @@ class _SniperTileState extends State<SniperTile> {
                       child: Icon(Icons.school, color: myColorTheme.Secondary,)
                   ),
                 ),
-                title: Text(widget.sniper.name, style: TextStyle(color: myColorTheme.Text),),
-                subtitle: Text(widget.sniper.role + " | " + widget.sniper.group, style: TextStyle(color: myColorTheme.Text),),
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(widget.sniper.name, style: TextStyle(color: myColorTheme.Text, fontWeight: FontWeight.bold),),
+                ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.sniper.role + " | " + widget.sniper.group, style: TextStyle(color: myColorTheme.Text),),
+                      Text("XP: " + widget.sniper.fulXp.toString() + " | " + widget.sniper.lessXp.toString(), style: TextStyle(color: myColorTheme.Text),),
+                    ],
+                  ),
+                ),
               ),
             ),
             Visibility(
@@ -52,7 +65,7 @@ class _SniperTileState extends State<SniperTile> {
               child: IconButton(
                 onPressed: () async{
                   if (userData.role != 'student'){
-                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.isCalLocked, widget.sniper.fulXp, widget.sniper.lessXp, widget.sniper.group, userData.darkOrLight);
+                    await DatabaseService(uid: widget.sniper.uid).updateUserData(widget.sniper.name, widget.sniper.role, !widget.sniper.isCalLocked, widget.sniper.fulXp, widget.sniper.lessXp, widget.sniper.group, widget.sniper.darkOrLight);
                   }
                 },
                 icon: Icon(
