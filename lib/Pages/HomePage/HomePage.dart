@@ -27,7 +27,7 @@ bool isOnline = false;
 
 class HomePageState extends State<HomePage> {
 
-  void onSubmited(){
+  void onSubmitted(){
     if (hideInputBool == false){
       calculateIP();
     }

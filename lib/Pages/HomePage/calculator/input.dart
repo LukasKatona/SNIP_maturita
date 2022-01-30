@@ -281,7 +281,7 @@ class _MyInputState extends State<MyInput> {
                 ),
                 ButtonTheme(
                   padding: EdgeInsets.zero,
-                  child: FlatButton(onPressed: (){myKey.currentState.onSubmited();},
+                  child: FlatButton(onPressed: (){myKey.currentState.onSubmitted();},
                       color: myColorTheme.PrimaryAccent,
                       height: 59,
                       minWidth: 59,
