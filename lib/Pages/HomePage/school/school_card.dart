@@ -54,7 +54,7 @@ class _SchoolCardState extends State<SchoolCard> {
 
   int getXpMultiplier(){
     for (int i = 0; i < 9; i++) {
-      if (widget.currentXp > rankList[i].minXp) {
+      if (widget.currentXp >= rankList[i].minXp) {
         xpMultiplier = (i+1);
       }
     }
